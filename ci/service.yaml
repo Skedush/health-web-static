@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: property-management-static-web-service
+  namespace: dev-test
+  labels:
+    app: property-management-static-web
+    version: 1.0.1
+spec:
+  selector:
+    app: property-management-static-web
+    version: 1.0.1
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+  type: LoadBalancer

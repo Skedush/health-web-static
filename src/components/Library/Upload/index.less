@@ -1,0 +1,49 @@
+@import '~@/themes/vars.less';
+
+.upload {
+  // display: none;
+  background: @body-background !important;
+  border-radius: 0 !important;
+  :global {
+    .ant-upload .ant-upload-drag {
+      background: @body-background;
+      border-radius: 0;
+    }
+    .ant-upload-list-picture-card .ant-upload-list-item-actions .anticon-delete:hover {
+      color: @alert-error-icon-color;
+    }
+    .ant-upload-list-picture-card .ant-upload-list-item-actions .anticon-eye-o:hover {
+      color: @primary-color;
+    }
+    .ant-upload-list-picture-card.ant-upload-list-item.ant-upload-list-item-info span:first-child {
+      height: 100%;
+    }
+    .ant-upload-list {
+      .ant-upload-list-item-error {
+        border-color: @text-selection-bg;
+      }
+    }
+  }
+  .subTitle {
+    color: @text-color-inverse;
+  }
+  .title {
+    color: @text-color-secondary;
+  }
+}
+
+.hiddenList {
+  :global {
+    .ant-upload-list {
+      display: none;
+    }
+  }
+}
+.hidden {
+  display: none;
+  :global {
+    .ant-upload-drag {
+      display: none;
+    }
+  }
+}

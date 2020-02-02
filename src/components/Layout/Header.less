@@ -1,0 +1,219 @@
+@import '~@/themes/vars.less';
+
+.header {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.18);
+  position: relative;
+  display: flex;
+  z-index: 99;
+  align-items: center;
+  height: 68px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 22px;
+
+  .logo {
+    font-size: 24px;
+    height: 100%;
+    width: 48.6%;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 40px;
+      width: 40px;
+      margin-right: 12px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+    }
+  }
+
+  .right {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+    .admin {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      padding-right: 0;
+      color: #aab5cc;
+      .name {
+        font-size: 16px;
+        color: rgba(102, 102, 102, 1);
+      }
+      .position {
+        font-size: 12px;
+        color: rgba(153, 153, 153, 1);
+      }
+    }
+    .loginOut {
+      height: 100%;
+      text-align: center;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      width: 60px;
+      justify-content: center;
+      .quitIcon {
+        font-size: 20px;
+        color: #aab5cc;
+        cursor: pointer;
+        &:hover {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+}
+:global {
+  .ant-layout-header {
+    line-height: normal;
+  }
+}
+.details {
+  width: 430px;
+  height: 460px;
+  position: fixed;
+  z-index: 1000;
+  top: 68px;
+  background: rgba(35, 48, 58, 1);
+  right: 140px;
+  box-shadow: 0 1px 3px 0 rgba(255, 255, 255, 0.1);
+  :global(.ant-tabs) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  :global(.ant-tabs-bar) {
+    border: 1px solid rgba(235, 235, 235, 0.1);
+    color: #fff;
+    font-size: 14px;
+  }
+  :global(.ant-tabs-tab) {
+    margin: 0;
+  }
+  :global(.ant-tabs .ant-tabs-top-content) {
+    height: 380px;
+  }
+  :global(.ant-tabs-ink-bar) {
+    background-color: #22c2fe;
+  }
+  :global(.ant-tabs-nav .ant-tabs-tab):hover {
+    color: #fff;
+  }
+  :global(.ant-tabs-nav .ant-tabs-tab-active) {
+    color: #fff;
+  }
+  .imgBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    img {
+      width: 62px;
+      height: 40px;
+      opacity: 0.8;
+    }
+    span {
+      font-size: 14px;
+      line-height: 14px;
+      margin-top: 8px;
+      color: #fff;
+    }
+  }
+}
+
+.helpBox {
+  color: #22c2fe;
+  // width:940px;
+  .helpModal {
+    width: 100%;
+    flex-wrap: wrap;
+    .item {
+      width: 24%;
+      padding: 10px;
+      align-items: center;
+      img {
+        width: 88px;
+        height: 88px;
+      }
+      .name {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 16px;
+        margin-top: 10px;
+      }
+      .buttonUpload {
+        margin-top: 10px;
+      }
+    }
+  }
+  :global {
+    .ant-modal-footer {
+      background: rgba(245, 248, 251, 1);
+      border-radius: 0;
+    }
+    .ant-modal-body {
+      max-height: 382px;
+      overflow-y: scroll;
+    }
+    .ant-modal-header {
+      // font-size: 12px;
+      // padding: 6px;
+      // color: #22c2fe;
+      // // background: #f0f3fa;
+      // border-bottom: 1px solid #e8e8e8;
+      border-radius: 0;
+      // height: 39px;
+      background: rgba(245, 248, 251, 1);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    width: 100% !important;
+  }
+}
+
+.dropdown {
+  cursor: pointer;
+  color: @text-color-inverse;
+}
+
+.overlayClassName {
+  :global {
+    .ant-dropdown-menu-item {
+      color: @text-color-secondary;
+      .anticon,
+      .iconfont {
+        color: @text-color-inverse;
+      }
+      &:hover {
+        color: @text-selection-bg;
+      }
+    }
+  }
+}
+
+.dropTitle {
+  color: @text-color-inverse;
+  padding-left: 12px;
+  font-size: 14px;
+}

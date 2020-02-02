@@ -1,0 +1,279 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/themes/vars.less';
+
+.cardTable {
+  flex: 1;
+  width: 100%;
+  flex-wrap: wrap;
+  overflow: auto;
+  display: flex;
+  background: @component-background;
+
+  .cardBase {
+    height: 50%;
+    width: 20%;
+    padding: 8px;
+    .companyLook {
+      float: right;
+    }
+    .companyMsg {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .name {
+        width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #333;
+        font-size: @ld-font-m;
+      }
+      .time {
+        color: #999;
+        font-size: @ld-font-s;
+      }
+    }
+    .compantAddress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .address {
+        width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #999;
+      }
+      .tradeTypeStr {
+        color: #999;
+        font-size: @ld-font-s;
+      }
+    }
+    .companyCover {
+      height: 100%;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .btn {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .companyText {
+      position: absolute;
+      z-index: 1000;
+      padding: 0 5px;
+      height: 22px;
+      background: rgba(34, 194, 254, 1);
+      top: 8px;
+      right: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 22px;
+      text-align: center;
+    }
+    .checkType {
+      z-index: 1000;
+      position: relative;
+      top: -149px;
+      left: 10px;
+    }
+  }
+
+  :global {
+    .ant-spin-nested-loading {
+      flex: 1 1;
+      width: 100%;
+      flex-wrap: wrap;
+      overflow: auto;
+      display: flex;
+      .ant-spin-container {
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex: 1 1;
+        flex-wrap: wrap;
+        overflow: auto;
+        display: flex;
+      }
+    }
+    .ant-card {
+      // height: 100%;
+      border: 1px solid #fff;
+      .ant-card-cover {
+        width: 100%;
+        height: 70%;
+        // position: relative;
+      }
+      .ant-card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 30%;
+        padding: 5px 24px;
+      }
+      &:hover {
+        background: #fff;
+      }
+      .ant-card-hoverable:hover {
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.09);
+      }
+    }
+
+    .antd-pro-components-library-button-index-look,
+    .antd-pro-components-library-button-index-edit {
+      width: 130px;
+    }
+  }
+}
+.paginationBox {
+  width: 100%;
+  padding: 0 20px;
+  border: 1px solid @border-color-base;
+  z-index: 999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: @border-color-base;
+  :global {
+    .ant-pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 10px;
+      text-align: end;
+      color: @text-color-inverse;
+      height: 50px;
+      line-height: 50px;
+      .ant-pagination-prev .ant-pagination-item-link,
+      .ant-pagination-next .ant-pagination-item-link,
+      .ant-select-selection {
+        background-color: @body-background;
+        border: 1px solid @body-background;
+        color: @text-color-inverse;
+      }
+      .ant-pagination-item {
+        border: 1px solid @body-background;
+        color: @text-color-inverse;
+        background-color: @body-background;
+      }
+      .ant-pagination-item:hover {
+        border: 1px solid @primary-color;
+      }
+      .ant-pagination-item-active {
+        color: @primary-color;
+        background-color: @border-color-base;
+        border: 1px solid @primary-color;
+      }
+      .ant-pagination-item-active:hover {
+        border: 1px solid @primary-color;
+        background-color: @border-color-base;
+      }
+      .ant-select-dropdown-menu-item {
+        background-color: @border-color-base;
+        color: @text-color-inverse;
+        padding: 9px 20px;
+      }
+      .ant-pagination-options {
+        display: flex;
+      }
+      .ant-pagination-options-quick-jumper input {
+        background-color: @body-background;
+        border: 1px solid @body-background;
+        color: @text-color-inverse;
+      }
+      // 上一页下一页箭头颜色
+      .ant-pagination-item-link {
+        color: @text-color-inverse;
+      }
+      .ant-pagination-prev:hover .ant-pagination-item-link {
+        border: 1px solid @primary-color;
+        color: @primary-color;
+      }
+      .ant-pagination-next:hover .ant-pagination-item-link {
+        border: 1px solid @primary-color;
+        color: @primary-color;
+      }
+      .ant-pagination-disabled,
+      .ant-pagination-disabled:hover {
+        .ant-pagination-item-link {
+          border: none;
+          color: @component-background;
+        }
+      }
+
+      //每页几条数据icon颜色
+
+      .ant-select-arrow {
+        color: @text-color-inverse;
+      }
+      .ant-select-selection:hover {
+        border: 1px solid @primary-color;
+        color: @primary-color;
+        .ant-select-arrow {
+          color: @primary-color;
+        }
+      }
+      //分页数字颜色
+      .ant-pagination-item-active a {
+        color: @primary-color !important;
+      }
+      .ant-pagination-item a {
+        color: @text-color-inverse;
+      }
+      .ant-pagination-item:focus a,
+      .ant-pagination-item:hover a {
+        color: @primary-color !important;
+      }
+
+      .ant-pagination-disabled:focus a {
+        color: @text-color-inverse;
+      }
+    }
+  }
+}
+
+.personModelStyle {
+  :global {
+    .ant-modal-content {
+      border-radius: 0;
+      background: @component-background;
+    }
+    .ant-modal-header {
+      border-radius: 0;
+      background: @component-background;
+      border-bottom: 1px solid @border-color-base;
+    }
+    .ant-form-item-children {
+      textarea {
+        // resize: none;
+        background: @body-background;
+        border-radius: 0;
+      }
+    }
+    .antd-pro-components-library-table-index-container {
+      height: 400px;
+    }
+    .antd-pro-components-library-search-form-index-searchForm {
+      margin-bottom: 0;
+      padding: 0;
+    }
+    .antd-pro-components-library-button-group-index-actionWrapper {
+      padding: 10px 0 15px 0;
+    }
+  }
+}
+.noData {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  color: #999;
+  img {
+    width: 200px;
+  }
+}

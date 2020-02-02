@@ -1,0 +1,3 @@
+.hiddenTabsBtn :global .ant-tabs-bar {
+  display: none;
+}

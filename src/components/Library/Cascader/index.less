@@ -1,0 +1,35 @@
+.cascader {
+  :global {
+    .ant-cascader-picker {
+      color: @text-color-secondary;
+    }
+    .ant-cascader-input {
+      border-radius: 0;
+      background-color: @body-background !important;
+    }
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: @text-color-inverse;
+      opacity: 1; /* Firefox */
+    }
+    .anticon {
+      background-color: transparent;
+    }
+  }
+}
+.popupDown {
+  color: @text-color-secondary;
+  :global {
+    .ant-cascader-menu-item:hover {
+      background: @table-row-hover-bg;
+    }
+    .ant-cascader-menu-item-active {
+      background: @body-background;
+    }
+  }
+}
+:global {
+  .has-error .ant-input {
+    background: #f3e1e1 !important;
+  }
+}

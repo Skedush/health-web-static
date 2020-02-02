@@ -1,0 +1,72 @@
+@import '~@/themes/vars.less';
+.content {
+  flex: 1;
+  .list {
+    flex: 1;
+    overflow: auto;
+    padding: @ld-spacing-m;
+    .item {
+      margin-right: 2%;
+    }
+    .item:nth-child(5n) {
+      margin-right: 0;
+    }
+    .itemNormal {
+      padding: @ld-spacing-s;
+      width: 18.4%;
+      height: 160px;
+      margin-bottom: @ld-spacing-m;
+      border: 1px solid #c5cddc;
+      .title {
+        padding-left: @ld-spacing-xs;
+        font-size: @ld-font-m;
+        font-weight: bold;
+      }
+      .icon {
+        width: 30px;
+        height: 30px;
+      }
+      .iconS {
+        width: 15px;
+        height: 15px;
+        margin-right: @ld-spacing-xs;
+      }
+    }
+    .itemNormal:hover {
+      border: 2px solid @primary-color;
+    }
+
+    .addItem {
+      width: 18.4%;
+      margin-bottom: @ld-spacing-m;
+      cursor: pointer;
+      height: 160px;
+      border: 1px dashed #c5cddc;
+      .addText {
+        margin-top: 20px;
+        color: @text-color-inverse;
+      }
+      :global {
+        .anticon::before {
+          font-size: @ld-font-l;
+          color: @btn-default-color;
+        }
+      }
+    }
+    .addItem:hover {
+      border: 2px dashed @item-hover-bg;
+      .addText {
+        color: @item-hover-bg;
+      }
+      :global {
+        .anticon::before {
+          font-size: @ld-font-l;
+          color: @item-hover-bg;
+        }
+      }
+    }
+  }
+  .bottomButton {
+    height: 60px;
+  }
+}

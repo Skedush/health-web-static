@@ -1,0 +1,311 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/themes/vars.less';
+
+.container {
+  height: 100%;
+  background: @border-color-base;
+  border: 1px solid @border-color-base;
+  overflow: hidden;
+  :global {
+    .ant-table {
+      flex: auto;
+      overflow: hidden;
+      font-size: 14px;
+    }
+    .ant-table-wrapper {
+      height: 100%;
+    }
+    // .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    //   color: red;
+    // }
+    .ant-spin-nested-loading {
+      height: 100%;
+      .ant-spin-container {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+        height: 100%;
+      }
+    }
+    .ant-table-pagination {
+      // position: absolute;
+      // bottom: 0;
+      // margin: 0;
+      // right: 10px;
+      text-align: right;
+      color: @text-color-inverse;
+      padding-right: @ld-spacing-m;
+      // padding: 10px 0;
+    }
+    .ant-table-body {
+      overflow: auto !important;
+      max-height: unset !important;
+    }
+    .ant-table-scroll > .ant-table-header {
+      overflow-y: hidden !important;
+      // padding: 0 10px;
+      margin-bottom: 0 !important;
+    }
+    // .ant-table-fixed-header .ant-table-body-inner {
+    //   overflow-y: auto !important;
+    // }
+    .ant-table-header table {
+      table-layout: fixed;
+    }
+    .ant-table td {
+      // background-color: @component-background;
+      color: @text-color-inverse;
+    }
+    .ant-table div {
+      color: @text-color-inverse;
+    }
+    .ant-table-body > table {
+      width: 100%;
+      table-layout: fixed;
+      // border-spacing: 0 3px;
+      // border-color: transparent;
+      // border-collapse: separate;
+      background-color: @component-background;
+    }
+    .ant-table-header {
+      background: transparent;
+      // padding-right: @ld-webkit-scrollbar;
+      background-color: @border-color-base;
+      border-bottom: 1px solid @body-background;
+    }
+
+    .ant-table-thead > tr > th {
+      background-color: @border-color-base;
+      color: @text-color-inverse;
+      // border-bottom: 5px solid @body-background;
+      padding: 8px 9px 9px 9px;
+    }
+    .ant-table-tbody > tr:hover > td {
+      background: @table-row-hover-bg;
+      div {
+        color: @text-color-secondary;
+      }
+    }
+    .ant-radio-inner {
+      border-color: @text-color-inverse;
+    }
+    .ant-table-fixed-left {
+      border-radius: 0;
+    }
+
+    // .ant-table-fixed-right table {
+    //   background: transparent;
+    // }
+
+    // .ant-table-fixed {
+    //   border-spacing: 0 3px;
+    //   // border-color: transparent;
+    //   border-collapse: separate;
+    // }
+
+    // .ant-table-fixed-right .ant-table-tbody > table {
+    //   border-spacing: 0 3px;
+    // }
+    .ant-table-tbody {
+      overflow: hidden;
+    }
+
+    .ant-table-tbody > tr > td {
+      border-bottom-width: 0;
+      // border-bottom-color: @component-background;
+      background-color: @component-background;
+      padding: 13px 9px 11px;
+    }
+
+    // .ant-table-fixed-header .ant-table-fixed-right .ant-table-body-outer .ant-table-body-inner  {
+    //   padding: 3px;
+
+    //   .ant-table-fixed {
+    //     background-color: green;
+    //   }
+    // }
+
+    // .ant-table table {
+    //   border-spacing: 0 3px;
+    // }
+
+    .ant-pagination-prev .ant-pagination-item-link,
+    .ant-pagination-next .ant-pagination-item-link,
+    .ant-select-selection {
+      background-color: @body-background;
+      border: none;
+      color: @text-color-inverse;
+    }
+    .ant-pagination-item {
+      // border: none;
+      color: @text-color-inverse;
+      background-color: @body-background;
+    }
+    .ant-pagination-item-active {
+      color: @primary-color;
+      background-color: @border-color-base;
+      border: 1px solid @primary-color;
+    }
+    .ant-pagination-item-active:hover {
+      border: 1px solid @primary-color;
+      background-color: @border-color-base;
+    }
+    .ant-select-dropdown-menu-item {
+      background-color: @border-color-base;
+      color: @text-color-inverse;
+      padding: 9px 20px;
+    }
+    .ant-pagination-options-quick-jumper input {
+      background-color: @body-background;
+      border: 1px solid @body-background;
+      color: @text-color-inverse;
+    }
+    .ant-table-tbody > tr.ant-table-row-selected td {
+      // border: none;
+      color: @text-color-secondary;
+      background: fadeout(@primary-color, 80%);
+    }
+    .ant-table-tbody > tr.ant-table-row-selected {
+      :global .anticon {
+        color: @primary-color;
+      }
+    }
+    .ant-checkbox-inner {
+      background-color: transparent;
+      border: 1px solid @text-color-inverse;
+    }
+    .ant-checkbox-checked {
+      .ant-checkbox-inner {
+        background-color: @primary-color !important;
+        border: 0 !important;
+      }
+    }
+
+    .ant-checkbox-indeterminate {
+      .ant-checkbox-inner {
+        background-color: @primary-color !important;
+        border: 0 !important;
+      }
+    }
+    .ant-table-placeholder {
+      background-color: transparent;
+      border-bottom: none;
+      border-top: none;
+      position: absolute;
+      width: 100%;
+      top: 53px;
+      color: @text-color-inverse;
+      img {
+        width: 120px;
+      }
+    }
+    .ant-table-header::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .ant-table-content,
+    .ant-table-scroll,
+    .ant-table-body {
+      height: 100%;
+      background: @component-background !important;
+    }
+    .ant-table-body::-webkit-scrollbar {
+      width: @ld-webkit-scrollbar;
+    }
+    .ant-table-body::-webkit-scrollbar-thumb {
+      background: @normal-color;
+      border-radius: 20px;
+    }
+    .ant-table-body::-webkit-scrollbar-track {
+      background: @body-background;
+      border-radius: 40px;
+    }
+
+    .ant-table-body::-webkit-scrollbar-track-piece {
+      border-radius: 40px;
+    }
+    .ant-table-body::-webkit-scrollbar-corner {
+      border-radius: 40px;
+    }
+
+    .ant-table-scroll {
+      display: flex;
+      flex-direction: column;
+      // border: 1px solid #354553;
+    }
+    .ant-checkbox-indeterminate .ant-checkbox-inner:after {
+      height: 3px;
+      background-color: #fff;
+    }
+
+    .ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
+      background-color: transparent;
+      border: 1px solid rgba(88, 107, 122, 1);
+    }
+    // 上一页下一页箭头颜色
+    .ant-pagination-item-link {
+      color: @text-color-inverse;
+    }
+    .ant-pagination-prev:hover .ant-pagination-item-link {
+      border: 1px solid @primary-color;
+      color: @primary-color;
+    }
+    .ant-pagination-next:hover .ant-pagination-item-link {
+      border: 1px solid @primary-color;
+      color: @primary-color;
+    }
+    .ant-pagination-disabled,
+    .ant-pagination-disabled:hover {
+      .ant-pagination-item-link {
+        border: none;
+        color: @component-background;
+      }
+    }
+
+    //每页几条数据icon颜色
+
+    .ant-select-arrow {
+      color: @text-color-inverse;
+    }
+    .ant-select-selection:hover {
+      border: 1px solid @primary-color;
+      color: @primary-color;
+      .ant-select-arrow {
+        color: @primary-color;
+      }
+    }
+    //分页数字颜色
+    .ant-pagination-item-active a {
+      color: @primary-color !important;
+    }
+    .ant-pagination-item a {
+      color: @text-color-inverse;
+    }
+    .ant-pagination-item:focus a,
+    .ant-pagination-item:hover a {
+      color: @primary-color !important;
+    }
+
+    .ant-pagination-disabled:focus a {
+      color: @text-color-inverse;
+    }
+    .ant-pagination {
+      display: flex;
+      .ant-pagination-total-text {
+        flex: 1;
+      }
+    }
+  }
+
+  .tableAlert {
+    margin-bottom: 16px;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  .selectedNum {
+    margin-left: 20px;
+  }
+}

@@ -1,0 +1,56 @@
+.helpBox {
+  color: #22c2fe;
+  // width:940px;
+  .helpModal {
+    width: 100%;
+    flex-wrap: wrap;
+    .item {
+      width: 24%;
+      padding: 10px;
+      .img {
+        width: 80%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+      .name {
+        font-size: 14px;
+        color: rgba(51, 51, 51, 1);
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .buttonUpload {
+        margin-top: 10px;
+      }
+    }
+  }
+  :global {
+    .ant-modal-footer {
+      background: rgba(245, 248, 251, 1);
+      border-radius: 0;
+    }
+    .ant-modal-body {
+      max-height: 382px;
+      overflow-y: scroll;
+    }
+    .ant-modal-header {
+      // font-size: 12px;
+      // padding: 6px;
+      // color: #22c2fe;
+      // // background: #f0f3fa;
+      // border-bottom: 1px solid #e8e8e8;
+      border-radius: 0;
+      // height: 39px;
+      background: rgba(245, 248, 251, 1);
+    }
+  }
+}

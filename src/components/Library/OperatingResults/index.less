@@ -1,0 +1,124 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/themes/vars.less';
+
+.container {
+  :global {
+    .ant-modal-header {
+      border-bottom: 1px solid @border-color-base;
+    }
+    .ant-table-header {
+      padding-right: 0;
+    }
+
+    .ant-table-bordered .ant-table-tbody > tr > td,
+    .ant-table-bordered .ant-table-tbody > tr > td a {
+      color: @text-color-secondary;
+    }
+    .ant-table-thead > tr > th {
+      border-right: 1px solid @text-selection-bg;
+      border-bottom: 1px solid @text-selection-bg;
+      background-color: @body-background;
+    }
+    .ant-table-bordered .ant-table-tbody > tr:nth-child(even) > td {
+      border-right: 1px solid @text-selection-bg;
+      border-bottom: 1px solid @text-selection-bg;
+      background-color: @body-background;
+    }
+    .ant-table-thead > tr:first-child > th:first-child {
+      border-top-left-radius: 0;
+    }
+    .ant-table-bordered .ant-table-tbody > tr > td {
+      border-right: 1px solid @text-selection-bg;
+    }
+  }
+  .number {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    .fail {
+      font-size: 34px;
+      color: #ff5a5a;
+      font-weight: bold;
+      line-height: 32px;
+    }
+    .total {
+      font-size: 14px;
+      color: @text-color-inverse;
+      font-weight: bold;
+      margin-left: 3px;
+    }
+  }
+  .text {
+    margin-top: 5px;
+    font-size: 14px;
+    color: @text-color-secondary;
+    text-align: center;
+  }
+  .infoList {
+    width: 100%;
+    height: 588px;
+    margin: 24px 0;
+    overflow-y: scroll;
+    color: @text-color-secondary;
+    border-top: 2px solid @border-color-base;
+    // border-left: 2px solid @border-color-base;
+    .infoField {
+      border-bottom: 2px solid @border-color-base;
+      border-right: 2px solid @border-color-base;
+      display: flex;
+      .fieldName {
+        width: 15%;
+        padding: 0 10px;
+        // height: 40px;
+        line-height: 40px;
+        border-right: 2px solid @border-color-base;
+        border-left: 2px solid @border-color-base;
+      }
+      .fieldValue {
+        width: 85%;
+        padding: 0 20px;
+        // height: 40px;
+        line-height: 40px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        // white-space: nowrap;
+      }
+    }
+    :global {
+      .ant-col:first-child {
+        .antd-pro-components-library-operating-results-index-infoField {
+          div {
+            color: @text-color-inverse;
+          }
+        }
+      }
+      .ant-col:nth-child(odd) {
+        .antd-pro-components-library-operating-results-index-infoField {
+          div {
+            background: @body-background;
+          }
+        }
+      }
+      .ant-col:nth-child(even) {
+        .antd-pro-components-library-operating-results-index-infoField {
+          div {
+            background: @component-background;
+          }
+        }
+      }
+    }
+  }
+}
+
+.container2 {
+  .infoList {
+    width: 100%;
+    height: auto;
+    .infoField {
+      .fieldValue {
+        width: 100%;
+        border-left: 2px solid @border-color-base;
+      }
+    }
+  }
+}

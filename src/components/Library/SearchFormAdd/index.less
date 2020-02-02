@@ -1,0 +1,74 @@
+@import '~@/themes/vars.less';
+
+.searchFromHeader {
+  padding: @ld-spacing-s;
+  background: @component-background;
+  color: @text-color-secondary;
+  border-bottom: 1px solid @border-color-base;
+}
+.searchForm {
+  padding: @ld-spacing-s;
+  background: @component-background;
+}
+.formWrapper {
+  :global {
+    .ant-form-inline .ant-form-item {
+      margin-right: 0;
+      display: flex;
+      > .ant-form-item-label {
+        width: auto;
+        line-height: 33px;
+        padding-right: 8px;
+      }
+      .ant-form-col {
+        width: auto;
+        line-height: 33px;
+        padding-right: 8px;
+      }
+    }
+    .ant-form-item {
+      width: 100%;
+      margin-right: 0;
+      // margin: 10px 0;
+      display: flex;
+      > .ant-form-item-label {
+        width: auto;
+        line-height: 33px;
+        padding-right: 8px;
+      }
+      .ant-form-col {
+        width: auto;
+        line-height: 33px;
+        padding-right: 8px;
+      }
+      // .ant-form-item-control {
+      //   line-height: 33px;
+      // }
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1;
+    }
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  .btn {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: @ld-spacing-s;
+    > button {
+      margin-left: 10px;
+    }
+    > button:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.colorblack {
+  color: #333;
+}

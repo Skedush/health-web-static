@@ -1,0 +1,134 @@
+@import '~@/themes/vars.less';
+
+.house {
+  .tips {
+    width: 20%;
+    color: @text-color-secondary;
+    margin-right: @ld-spacing-m;
+    .iconTip {
+      margin-right: @ld-spacing-xs;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .floorRow {
+    .floor {
+      min-width: 80px;
+      border: 1px solid #c5cddc;
+      margin-right: @ld-spacing-s;
+      margin-top: @ld-spacing-xs;
+      margin-bottom: @ld-spacing-xs;
+    }
+    .floorHeader {
+      min-width: 80px;
+      background: #f7f8fa;
+      border: 1px solid #c5cddc;
+      margin-right: @ld-spacing-s;
+      margin-top: @ld-spacing-xs;
+      margin-bottom: @ld-spacing-xs;
+    }
+
+    .item {
+      margin-right: 1.25%;
+      width: 19%;
+      min-height: 120px;
+      margin-top: @ld-spacing-xs;
+      margin-bottom: @ld-spacing-xs;
+      color: @text-color-secondary;
+    }
+    .item:nth-child(5n) {
+      margin-right: 0;
+    }
+    .itemHeader {
+      padding: @ld-spacing-s;
+      border: 1px solid #c5cddc;
+      border-left: 3px solid @primary-color;
+      width: 19%;
+      background: #f7f8fa;
+      margin-right: 1.25%;
+      margin-top: @ld-spacing-xs;
+      margin-bottom: @ld-spacing-xs;
+      height: 80px;
+      .txt {
+        color: @text-color-inverse;
+      }
+      .count {
+        color: @text-color-secondary;
+        font-size: @ld-font-m;
+        font-weight: bold;
+      }
+    }
+    .itemHeader:nth-child(5n) {
+      margin-right: 0;
+    }
+    .itemNormal {
+      padding: @ld-spacing-s;
+      border: 1px solid #c5cddc;
+      .title {
+        padding-left: @ld-spacing-xs;
+        color: @text-color-secondary;
+        font-size: @ld-font-m;
+        font-weight: bold;
+      }
+      .text {
+        padding-left: @ld-spacing-xs;
+        color: @text-color-inverse;
+      }
+      .houseOwner {
+        margin: @ld-spacing-xs;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .houseHoldCount {
+        margin-left: @ld-spacing-xs;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .count {
+        color: @primary-color;
+        font-size: @ld-font-m;
+        font-weight: bold;
+      }
+      .icon {
+        width: 30px;
+        height: 30px;
+      }
+      .iconS {
+        width: 15px;
+        height: 15px;
+      }
+    }
+    .itemNormal:hover {
+      border: 2px solid @primary-color;
+    }
+
+    .addItem {
+      cursor: pointer;
+      border: 1px dashed #c5cddc;
+      .addText {
+        margin-top: 20px;
+        color: @text-color-inverse;
+      }
+      :global {
+        .anticon::before {
+          font-size: @ld-font-xl;
+          color: @btn-default-color;
+        }
+      }
+    }
+    .addItem:hover {
+      border: 2px dashed @item-hover-bg;
+      .addText {
+        color: @item-hover-bg;
+      }
+      :global {
+        .anticon::before {
+          font-size: @ld-font-xl;
+          color: @item-hover-bg;
+        }
+      }
+    }
+  }
+}

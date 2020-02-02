@@ -1,0 +1,70 @@
+variables:
+  COMPOSER_CACHE_DIR: '/cache/composer'
+  DOCKER_DRIVER: overlay2
+
+before_script:
+  # Install ssh-agent through openssh-client if not present
+  - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client -qqy )'
+  # Add the private key to this user
+  - eval $(ssh-agent -s) && ssh-add <(echo "$SSH_PRIVATE_KEY") && mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+stages:
+  - prepare
+  - test
+  - deploy
+
+install_deps:
+  stage: prepare
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+  script:
+    - yarn install
+
+#lint:
+  #stage: test
+  #cache:
+    #key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    #paths:
+      #- node_modules/
+    #policy: pull
+  #script:
+    #- yarn run lint
+  #except:
+    #- master
+
+dev:
+  stage: deploy
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - yarn build
+    - cp -r dist ci/app/
+    - cd ci/app/
+    - sudo sh registry_delete.sh
+    - sudo sh registry_add.sh
+    - rm -rf dist
+    - cd ../
+    - sudo kubectl delete -f deployment.yaml
+    - sudo kubectl create -f deployment.yaml
+  only:
+    - /^feature-.*$/
+
+test:
+  stage: deploy
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - yarn build:test
+    - ssh root@192.168.70.45 'rm -rf /home/property/static-web/*'
+    - scp -r dist/* root@192.168.70.45:/home/property/static-web/
+  only:
+    - test

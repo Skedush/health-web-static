@@ -1,0 +1,107 @@
+@import '~@/themes/vars';
+@import '~@/global.less';
+
+.loginPage {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background: linear-gradient(-45deg, @body-background, @text-selection-bg);
+  .title {
+    color: @text-color-secondary;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .titleIcon {
+      height: 56px;
+      width: 56px;
+      background-image: url('../../assets/images/login/loginLogo.png');
+      background-size: 100% 100%;
+      margin-right: 15px;
+    }
+    .titleName {
+      font-size: 22px;
+      white-space: nowrap;
+    }
+  }
+  .loginBody {
+    display: flex;
+    justify-content: space-around;
+    height: 85vh;
+    position: relative;
+    .bodyImage {
+      position: absolute;
+      height: 528px;
+      background-image: url('../../assets/images/login/loginImage.png');
+      background-size: 100% 100%;
+      width: 680px;
+      left: 215px;
+      margin-top: 8vh;
+    }
+
+    .content {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 2;
+      width: 580px;
+      padding: 60px;
+      margin-top: 5vh;
+      right: 189px;
+      background-color: @component-background;
+      box-shadow: 0 15px 35px 0 rgba(35, 24, 21, 0.1);
+      .contentTop {
+        margin-bottom: 10vh;
+        .contentTitle {
+          font-size: 40px;
+          color: @text-color-secondary;
+        }
+        .contentEn {
+          font-size: 24px;
+          color: @text-color-inverse;
+        }
+      }
+      .contentForm {
+        .formItem {
+          margin-bottom: 40px;
+        }
+        .input {
+          height: 6vh;
+          width: 100%;
+          padding: 20px;
+          padding: 0;
+          font-size: 18px;
+          .inputIcon {
+            color: @normal-color;
+          }
+          .inputIconFocus {
+            color: @primary-color;
+          }
+        }
+        .button {
+          height: 6vh;
+          width: 100%;
+          color: @text-selection-bg;
+          border-radius: 0;
+          font-size: 22px;
+        }
+        :global {
+          .ant-input {
+            padding-left: 40px;
+          }
+        }
+      }
+    }
+  }
+
+  .loginBottom {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.7;
+    color: @text-color-inverse;
+  }
+}

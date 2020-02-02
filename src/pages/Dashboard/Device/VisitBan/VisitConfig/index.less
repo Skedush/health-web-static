@@ -1,0 +1,31 @@
+@import '~@/themes/vars.less';
+
+.body {
+  height: 100%;
+  background: @component-background;
+  color: @text-color-secondary;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex: 1;
+  .header {
+    color: @text-color-secondary;
+    padding: @ld-spacing-s;
+    border-bottom: 1px solid @border-color-base;
+  }
+  .content {
+    width: 60%;
+    margin-top: 60px;
+  }
+  .button {
+    margin-left: 100px;
+  }
+}
+
+.tipColor {
+  color: @text-color-inverse;
+}
+
+.fontColor {
+  color: @text-color-secondary;
+}

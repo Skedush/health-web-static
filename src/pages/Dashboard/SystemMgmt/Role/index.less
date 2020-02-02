@@ -1,0 +1,105 @@
+@import '~@/themes/vars.less';
+
+.model {
+  // background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+
+  :global {
+    .ant-modal {
+      height: 80%;
+    }
+    .ant-form {
+      height: 80%;
+    }
+    .ant-modal-content {
+      border-radius: 0;
+      background: @component-background;
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      .ant-modal-body {
+        height: 100%;
+      }
+    }
+
+    .ant-modal-header {
+      border-radius: 0;
+      background: @component-background;
+    }
+
+    .ant-col-24 {
+      // height: 50px;
+    }
+
+    .ant-form-item-children {
+      textarea {
+        // resize: none;
+        background: @body-background;
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.content {
+  height: 100%;
+  :global {
+    .ant-spin-nested-loading {
+      height: 100%;
+      .ant-spin-container {
+        height: 100%;
+      }
+    }
+  }
+}
+.treeDiv {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-left: 30px;
+  color: @text-color-secondary;
+  font-size: @ld-font-l;
+  flex: 1;
+  .tree {
+    height: 100%;
+    overflow: auto;
+
+    :global {
+      .ant-tree {
+        color: @text-color-secondary;
+      }
+      .ant-tree-treenode-checkbox-checked .ant-tree-node-content-wrappe > span {
+        color: @text-color !important;
+      }
+      .ant-tree li .ant-tree-node-content-wrapper {
+        color: @text-color-secondary;
+      }
+    }
+  }
+  .tree::-webkit-scrollbar {
+    width: @ld-webkit-scrollbar;
+  }
+  .tree::-webkit-scrollbar-thumb {
+    background: @normal-color;
+    border-radius: 20px;
+  }
+  .tree::-webkit-scrollbar-track {
+    background: @component-background;
+    border-radius: 40px;
+  }
+
+  .tree::-webkit-scrollbar-track-piece {
+    border-radius: 40px;
+  }
+  .tree::-webkit-scrollbar-corner {
+    border-radius: 40px;
+  }
+}
+
+.bottomButton {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

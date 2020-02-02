@@ -1,0 +1,170 @@
+@import '~@/themes/vars.less';
+@import '~@/themes/default.less';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+.height100 {
+  height: 100%;
+}
+.flexAuto {
+  flex: auto;
+  overflow: auto;
+}
+
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+.flexColEnd {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+.flexAround {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+.flexWrap {
+  flex-wrap: wrap;
+}
+.flexBetween {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.flexColBetween {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.flexColCenter {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.flexStart {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.flexColStart {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  // width: 1656px;
+  // min-width: 1600px;
+  // overflow-x: hidden;
+}
+.flexColAround {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.itemCenter {
+  align-items: center;
+}
+.itemBaseline {
+  align-items: baseline;
+}
+.listTitle {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  background: rgba(240, 243, 250, 1);
+  border-bottom: 1px solid #fff;
+  color: rgba(51, 51, 51, 1);
+  padding: 0 20px;
+}
+
+.redBgColor {
+  background: @alert-error-icon-color;
+}
+
+.greenBgColor {
+  background: @alert-success-icon-color;
+}
+
+.yellowBgColor {
+  background: @alert-info-icon-color;
+}
+
+.garyBgColor {
+  background: @normal-color;
+}
+
+.blueBgColor {
+  background: @primary-color;
+}
+
+.garyColor {
+  color: @text-color-inverse;
+}
+
+.redColor {
+  color: @alert-error-icon-color;
+}
+
+.modal {
+  :global {
+    .ant-modal-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0;
+      background: @component-background;
+    }
+    .ant-modal-header {
+      border-radius: 0;
+      background: @component-background;
+    }
+    .ant-modal-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .flexAuto {
+      height: 600px;
+    }
+  }
+}
+
+:global {
+  .ant-radio-inner {
+    border-color: @text-color-inverse;
+  }
+}
+
+::-webkit-scrollbar {
+  width: @ld-webkit-scrollbar;
+}
+::-webkit-scrollbar-thumb {
+  background: @normal-color;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-track {
+  background: @body-background;
+  border-radius: 40px;
+}
+
+::-webkit-scrollbar-track-piece {
+  border-radius: 40px;
+}
+::-webkit-scrollbar-corner {
+  border-radius: 40px;
+}

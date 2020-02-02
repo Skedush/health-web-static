@@ -1,0 +1,28 @@
+.treeSelect {
+  display: inline-block;
+  width: 100%;
+  :global {
+    .ant-select-selection {
+      border-radius: 0;
+      background: @body-background;
+      color: @text-color-secondary;
+    }
+    .ant-select-selection__placeholder {
+      color: @text-color-inverse;
+    }
+  }
+}
+.dropDown {
+  background: @body-background;
+  :global {
+    input {
+      color: @text-color-secondary;
+    }
+    .ant-select-tree {
+      color: @text-color-secondary;
+      span {
+        color: @text-color-secondary;
+      }
+    }
+  }
+}

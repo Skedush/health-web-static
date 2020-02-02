@@ -1,0 +1,86 @@
+@import '~@/themes/vars.less';
+.back {
+  background: @body-background;
+  flex: 1;
+  box-shadow: 5px 10px 15px 2px rgba(0, 0, 0, 0.1);
+  padding-bottom: @ld-spacing-s;
+  overflow: hidden;
+  :global {
+    .ant-spin-nested-loading {
+      flex: 1 1;
+      width: 100%;
+      overflow: auto;
+      display: flex;
+      .ant-spin-container {
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex: 1 1;
+        overflow: auto;
+        display: flex;
+      }
+    }
+  }
+  .block {
+    // margin: @ld-spacing-m;
+    background: @component-background;
+    overflow: hidden;
+    flex: 1;
+    .header {
+      color: @text-color-secondary;
+      padding: @ld-spacing-s;
+      border-bottom: 1px solid @border-color-base;
+    }
+    .main {
+      background: @border-color-base;
+      overflow: hidden;
+      flex: 1;
+      padding-bottom: @ld-spacing-s;
+      .left {
+        background: @border-color-base;
+        overflow: hidden;
+        width: 80%;
+        :global {
+          .ant-tabs {
+            flex: 1;
+            display: flex;
+            .ant-tabs-top-content {
+              // flex: 1;
+              > .ant-tabs-tabpane {
+                display: flex;
+              }
+            }
+          }
+        }
+      }
+      .right {
+        background: @border-color-base;
+        width: 20%;
+        padding-top: @ld-spacing-m;
+        padding-left: @ld-spacing-m;
+        :global {
+          .ant-steps {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+          }
+          .ant-steps-item-active .ant-steps-item-content {
+            .ant-steps-item-description {
+              color: @text-color-inverse;
+            }
+            .ant-steps-item-title {
+              font-size: @ld-font-l;
+              color: @text-color;
+            }
+          }
+          .ant-steps-item-finish .ant-steps-item-content .ant-steps-item-description {
+            display: none;
+          }
+          .ant-steps-item-wait .ant-steps-item-content .ant-steps-item-description {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,156 @@
+@import '~@/themes/vars.less';
+
+.datePicker {
+  width: 100% !important;
+  min-width: unset !important;
+  :global {
+    .ant-input {
+      background: @body-background;
+      border-radius: 0;
+      color: @text-color-secondary;
+    }
+    .ant-input-disabled {
+      background: fadeout(@btn-disable-color, 65%) !important;
+      color: @text-color-inverse;
+      border-color: @btn-disable-color;
+    }
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: @text-color-inverse;
+      opacity: 1; /* Firefox */
+    }
+  }
+}
+.datePickerDropddwn {
+  :global {
+    .ant-calendar-ym-select {
+      color: @text-color-secondary;
+    }
+    .ant-calendar {
+      background: @body-background;
+      border-radius: 0;
+      color: @text-color-secondary;
+    }
+    .ant-calendar-input {
+      background: @body-background;
+      color: @text-color-secondary;
+    }
+    .ant-calendar-date {
+      color: @text-color-secondary;
+    }
+    .ant-calendar-date:hover {
+      background: @table-row-hover-bg;
+    }
+    .ant-calendar-selected-date .ant-calendar-date:hover {
+      background: @primary-color;
+    }
+    .ant-calendar-selected-day,
+    .ant-calendar-today {
+      .ant-calendar-date {
+        color: @text-color;
+      }
+    }
+    .ant-calendar-selected-date .ant-calendar-date {
+      color: @text-selection-bg;
+    }
+    .ant-calendar-last-month-cell .ant-calendar-date,
+    .ant-calendar-next-month-btn-day .ant-calendar-date {
+      color: @text-color-inverse;
+    }
+
+    //年月hover样式
+    .ant-calendar-header a:hover {
+      color: @text-color;
+    }
+
+    //年选择样式
+    .ant-calendar-year-panel-cell .ant-calendar-year-panel-year {
+      color: @text-color-secondary;
+    }
+    .ant-calendar-year-panel-year:hover {
+      background: @table-row-hover-bg;
+    }
+    .ant-calendar-year-panel-cell.ant-calendar-year-panel-selected-cell {
+      .ant-calendar-year-panel-year {
+        color: @text-selection-bg;
+      }
+    }
+
+    //月份选择样式
+    .ant-calendar-month-panel-cell .ant-calendar-month-panel-month {
+      color: @text-color-secondary;
+    }
+    .ant-calendar-month-panel-month:hover {
+      background: @table-row-hover-bg;
+    }
+    .ant-calendar-month-panel-cell.ant-calendar-month-panel-selected-cell {
+      .ant-calendar-month-panel-month {
+        color: @text-selection-bg;
+      }
+    }
+
+    .ant-calendar-footer-btn a {
+      color: @text-color;
+    }
+    .ant-calendar-footer-btn a.ant-calendar-ok-btn-disabled {
+      color: @text-color-inverse;
+    }
+    .ant-calendar-footer-btn .ant-calendar-ok-btn {
+      color: @text-selection-bg;
+    }
+    .ant-calendar-time-picker-select li:focus {
+      color: @text-color-secondary;
+    }
+    .ant-calendar-time-picker-panel {
+      background: @body-background;
+    }
+    .ant-calendar-time-picker-inner {
+      background: @body-background;
+    }
+
+    .ant-calendar-footer,
+    .ant-calendar-footer-show-ok {
+      border-top: 1px solid @border-color-base;
+    }
+    //头部样式
+    .ant-calendar-header {
+      border-bottom: 1px solid @border-color-base;
+    }
+    .ant-calendar-input-wrap {
+      border-bottom: 1px solid @border-color-base;
+    }
+    .ant-calendar-range-left .ant-calendar-time-picker-inner {
+      border-right: 2px solid @border-color-base;
+    }
+    .ant-calendar-time-picker-combobox .ant-calendar-time-picker-select {
+      border-right: 1px solid @border-color-base;
+    }
+    .ant-calendar-time-picker-combobox .ant-calendar-time-picker-select:last-child {
+      border-right: 0;
+    }
+
+    .ant-calendar-time-picker-select::-webkit-scrollbar {
+      width: @ld-webkit-scrollbar;
+    }
+    .ant-calendar-time-picker-select::-webkit-scrollbar-thumb {
+      background: @normal-color;
+      border-radius: 20px;
+    }
+    .ant-calendar-time-picker-select::-webkit-scrollbar-track {
+      background: @component-background;
+      border-radius: 40px;
+    }
+
+    .ant-calendar-time-picker-select::-webkit-scrollbar-track-piece {
+      border-radius: 40px;
+    }
+    .ant-calendar-time-picker-select::-webkit-scrollbar-corner {
+      border-radius: 40px;
+    }
+    .ant-calendar-disabled-cell .ant-calendar-date {
+      color: rgba(97, 97, 97, 0.25) !important;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+  }
+}

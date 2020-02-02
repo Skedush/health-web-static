@@ -1,0 +1,91 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/themes/vars.less';
+
+.container {
+  .content {
+    padding: 24px;
+    .imageList {
+      width: 100%;
+      display: flex;
+      .imageItem {
+        width: 50%;
+        margin-left: 25px;
+        .imageName {
+          color: @text-color-inverse;
+        }
+        img {
+          margin-top: 10px;
+          width: 120px;
+        }
+      }
+    }
+    .infoList {
+      width: 100%;
+      margin: 0 0 20px;
+      color: @text-color-secondary;
+      border-top: 2px solid @border-color-base;
+      border-left: 2px solid @border-color-base;
+      .infoField {
+        border-bottom: 2px solid @border-color-base;
+        border-right: 2px solid @border-color-base;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .fieldName {
+          padding: 0 20px;
+          height: 40px;
+          line-height: 40px;
+          color: @text-color-inverse;
+          background: @body-background;
+          border-bottom: 2px solid @border-color-base;
+        }
+        .fieldValue {
+          padding: 0 20px;
+          height: 40px;
+          line-height: 40px;
+          display: inline;
+        }
+      }
+    }
+    .tip {
+      padding: 10px 0;
+      background: rgba(242, 238, 230, 1);
+      border: 1px solid rgba(255, 194, 51, 1);
+      display: flex;
+      align-items: center;
+      color: @text-color-secondary;
+      font-size: 14px;
+    }
+  }
+  .footer {
+    border-top: 1px solid @border-color-base;
+    padding-right: 24px;
+  }
+  :global {
+    .ant-modal-body {
+      padding: 0;
+    }
+    .ant-modal-header {
+      border-bottom: 1px solid @border-color-base;
+    }
+    .ant-modal-footer {
+      border-top: none;
+    }
+    .antd-pro-components-library-img-index-defaultImgClass {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+.buttonCol {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  padding: 16px 0;
+}
+
+.customContent {
+  display: flex;
+}

@@ -1,0 +1,22 @@
+.radioGroup {
+  :global {
+    .ant-radio-wrapper {
+      .ant-radio {
+        .ant-radio-inner {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    .ant-radio-wrapper-checked {
+      .ant-radio-checked {
+        .ant-radio-inner {
+          border-width: 4.5px;
+          &:after {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+}

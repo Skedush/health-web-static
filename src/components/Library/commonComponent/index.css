@@ -1,0 +1,17 @@
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img {
+  width: 100%;
+}
+.operate {
+  white-space: nowrap;
+  cursor: pointer;
+}
+.dropdownOverlay {
+  background-color: aqua;
+}

@@ -1,0 +1,40 @@
+@import '~@/themes/vars.less';
+.content {
+  background: @component-background;
+  flex: 1;
+  overflow: hidden;
+  .header {
+    color: @text-color-secondary;
+    padding: @ld-spacing-s;
+    border-bottom: 1px solid @border-color-base;
+  }
+  .form {
+    padding: @ld-spacing-m;
+    flex: 1;
+    overflow: auto;
+    .buttonCol {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+  .form::-webkit-scrollbar {
+    width: @ld-webkit-scrollbar;
+  }
+  .form::-webkit-scrollbar-thumb {
+    background: @normal-color;
+    border-radius: 20px;
+  }
+  .form::-webkit-scrollbar-track {
+    background: @component-background;
+    border-radius: 40px;
+  }
+
+  .form::-webkit-scrollbar-track-piece {
+    border-radius: 40px;
+  }
+  .form::-webkit-scrollbar-corner {
+    border-radius: 40px;
+  }
+}

@@ -1,0 +1,135 @@
+@import '~@/themes/vars.less';
+
+.mgmt {
+  border: 1px solid @border-color-base;
+  padding: @ld-spacing-s;
+  .mgmtImage {
+    height: 70px;
+    width: 70px;
+  }
+  .mgmtInfo {
+    margin-left: @ld-spacing-s;
+    .mgmtName {
+      font-size: @ld-font-m;
+      font-weight: bold;
+    }
+    .position {
+      color: @text-color-inverse;
+    }
+    .phone {
+      color: @text-color-inverse;
+    }
+  }
+}
+
+.itemHeader {
+  padding: @ld-spacing-s;
+  border: 1px solid #c5cddc;
+  border-left: 3px solid @primary-color;
+  width: 24%;
+  background: #f7f8fa;
+  margin-right: 1.3%;
+  margin-bottom: @ld-spacing-s;
+  height: 80px;
+  .txt {
+    color: @text-color-inverse;
+  }
+  .count {
+    color: @text-color-secondary;
+    font-size: @ld-font-m;
+    font-weight: bold;
+  }
+}
+.itemHeader:nth-child(4n) {
+  margin-right: 0;
+}
+.unit {
+  .item {
+    margin-right: 1.3%;
+    margin-bottom: @ld-spacing-s;
+    padding: @ld-spacing-s;
+    width: 24%;
+  }
+  .item:nth-child(4n) {
+    margin-right: 0;
+  }
+  .itemRow {
+    padding: 4px @ld-spacing-xs 4px;
+  }
+
+  .itemNormal {
+    border: 1px solid #c5cddc;
+    .title {
+      padding-left: @ld-spacing-xs;
+      font-size: @ld-font-m;
+      color: @text-color-secondary;
+      font-weight: bold;
+    }
+    .subTitle {
+      color: @text-color-secondary;
+    }
+    .mgmtName {
+      font-size: @ld-font-m;
+      color: @text-color-secondary;
+      font-weight: bold;
+      margin-bottom: @ld-spacing-xs;
+    }
+    .photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      margin-bottom: @ld-spacing-xs;
+    }
+    .phone {
+      color: @text-color-inverse;
+    }
+    .text {
+      padding-left: @ld-spacing-xs;
+      color: @text-color-inverse;
+    }
+    .count {
+      color: @primary-color;
+      font-size: @ld-font-m;
+      font-weight: bold;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+    }
+    .iconS {
+      width: 15px;
+      height: 15px;
+    }
+  }
+  .itemNormal:hover {
+    border: 2px solid @primary-color;
+  }
+
+  .addItem {
+    cursor: pointer;
+    min-height: 300px;
+    border: 1px dashed #c5cddc;
+    .addText {
+      margin-top: 20px;
+      color: @text-color-inverse;
+    }
+    :global {
+      .anticon::before {
+        font-size: @ld-font-xl;
+        color: @btn-default-color;
+      }
+    }
+  }
+  .addItem:hover {
+    border: 2px dashed @item-hover-bg;
+    .addText {
+      color: @item-hover-bg;
+    }
+    :global {
+      .anticon::before {
+        font-size: @ld-font-xl;
+        color: @item-hover-bg;
+      }
+    }
+  }
+}

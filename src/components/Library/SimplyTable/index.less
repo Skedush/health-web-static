@@ -1,0 +1,76 @@
+.infoList {
+  width: 100%;
+  display: flex;
+  // margin-bottom: 20px;
+  overflow: auto;
+  flex-direction: column;
+  color: @text-color-secondary;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  align-content: flex-start;
+  border-left: 1px solid @border-color-base;
+  border-top: 1px solid @border-color-base;
+}
+.colTitle {
+  color: @text-color-inverse;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+}
+.small {
+  border-color: @body-background;
+  .infoRow {
+    // background: @component-background;
+    background: fadeout(@component-background, 40%) !important;
+    .fieldCol {
+      border-color: @body-background;
+      padding: 4px 7px;
+      font-size: 14px;
+    }
+  }
+}
+.smallBody {
+  .fieldCol {
+    padding: 4px 7px;
+    font-size: 16px;
+  }
+}
+.infoRow {
+  flex-basis: 1;
+  display: flex;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.infoRow:nth-child(odd) {
+  background: @body-background;
+}
+
+.infoRow:nth-child(even) {
+  background: @component-background;
+}
+
+.fieldCol {
+  padding: 8px 20px;
+  border-bottom: 1px solid @border-color-base;
+  border-right: 1px solid @border-color-base;
+}
+
+.scrollHeader {
+  position: sticky;
+  top: 0;
+}
+
+.noBorder {
+  border: none;
+  .infoRow {
+    .fieldCol {
+      border: none;
+    }
+  }
+}
+
+.headerSlot {
+  width: 100%;
+}

@@ -1,0 +1,369 @@
+.cardBox {
+  width: 100%;
+  margin-bottom: 24px;
+  height: 30%;
+  display: flex;
+  justify-content: space-between;
+  .leftBox {
+    width: 1096px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 24px;
+    :global {
+      .ant-card-head {
+        height: 40px;
+        min-height: 40px;
+        margin-bottom: -1px;
+        padding: 0 24px;
+        font-weight: 500;
+        font-size: 16px;
+        background: transparent;
+        border-bottom: 1px solid @border-color-base;
+        border-radius: 2px 2px 0 0;
+        zoom: 1;
+        .ant-card-head-wrapper {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .ant-card-head-title {
+            color: @text-color-secondary;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 0;
+          }
+        }
+      }
+      .ant-card-body {
+        display: flex;
+        flex: 1;
+        justify-content: flex-start;
+        padding: 0;
+        box-sizing: border-box;
+        .ant-card-grid {
+          flex: 1;
+          display: flex;
+          border-radius: 0;
+          box-sizing: border-box;
+          padding: 24px 24px 0;
+          border: 1px solid @border-color-base;
+          background: @component-background;
+          box-shadow: none;
+          max-width: 220px;
+        }
+        .ant-card-grid:nth-of-type(1) {
+          border-left: none;
+        }
+        .ant-card-grid:hover {
+          background: @border-color-base;
+          box-shadow: 0 10px 10px 0 rgba(24, 82, 104, 0.2);
+        }
+      }
+    }
+    .gridImage {
+      // width: 38%;
+      // height: 32%;
+      width: 80px;
+      height: 80px;
+    }
+    p {
+      margin-bottom: 10%;
+      font-size: 14px;
+      line-height: 14px;
+    }
+    p:nth-of-type(1) {
+      color: @text-color-secondary;
+    }
+    .leftText {
+      text-align: center;
+      justify-content: center;
+      height: 36px;
+      width: 100%;
+      color: @text-color-inverse;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-bottom: 0;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .gridBox {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 1;
+    }
+  }
+  .rightBox {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: @component-background;
+    :global {
+      .ant-card-head {
+        height: 40px;
+        min-height: 40px;
+        margin-bottom: -1px;
+        // padding: 0 24px;
+        font-weight: 500;
+        font-size: 16px;
+        background: transparent;
+        border-bottom: 1px solid @border-color-base;
+        border-radius: 2px 2px 0 0;
+        zoom: 1;
+        .ant-card-head-wrapper {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .ant-card-head-title {
+            color: @text-color-secondary;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 0;
+          }
+        }
+      }
+      .ant-card-body {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        padding: 0;
+        flex-direction: column;
+      }
+    }
+    .rightBoxTop {
+      height: 60%;
+      width: 100%;
+      border-bottom: 1px solid @border-color-base;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      .topImage {
+        overflow: hidden;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          margin-right: 16px;
+        }
+      }
+      .topLeft {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+          margin: 0;
+          font-size: 14px;
+          color: @text-color-secondary;
+          line-height: 14px;
+          margin-bottom: 10%;
+        }
+        h2 {
+          color: @text-color-secondary;
+          font-size: 24px;
+          line-height: 24px;
+          margin: 0;
+        }
+
+        :global {
+          .anticon-right {
+            font-size: 14px;
+            color: @text-color-inverse;
+            line-height: 14px;
+          }
+        }
+      }
+    }
+    .rightBottom {
+      height: 30%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      div {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .yuan {
+          width: 8px;
+          height: 8px;
+          display: block;
+          background: @primary-color;
+          border-radius: 50%;
+          margin-right: 18px;
+        }
+        p {
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          span:nth-of-type(1) {
+            font-size: 14px;
+            color: @text-color-inverse;
+            margin-bottom: 5px;
+          }
+          span:nth-of-type(2) {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 24px;
+            color: @text-color-secondary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tableBox {
+  background: @component-background;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-bottom: 1.5%;
+  flex: 1;
+
+  h2 {
+    font-size: 14px;
+    line-height: 16px;
+    color: @text-color-secondary;
+  }
+  :global {
+    .antd-pro-components-library-table-index-container {
+      border: none;
+    }
+    .antd-pro-components-library-button-index-icon {
+      font-size: 14px;
+    }
+    .ant-btn-sm {
+      width: 56px;
+      height: 26px;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+    }
+    .ant-card-body {
+      flex: 1;
+      // height: 80%;
+      overflow: hidden;
+      .antd-pro-components-library-table-index-container .ant-table-thead > tr > th {
+        background: @body-background;
+      }
+      .antd-pro-components-library-table-index-container .ant-table-header {
+        background: none;
+      }
+      .antd-pro-components-library-table-index-container .ant-table-tbody > tr > td {
+        background: none;
+      }
+      .antd-pro-components-library-table-index-container .ant-table-tbody > tr > td > div {
+        color: @text-color-secondary;
+      }
+      .antd-pro-components-library-table-index-container .ant-table-tbody > tr:nth-child(even) {
+        //基数行
+        background: @body-background;
+      }
+    }
+  }
+  .tableBtn {
+    background: @info-color;
+    color: @border-color-base;
+    border-radius: 13px;
+  }
+  .tableType {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    span:nth-of-type(1) {
+      width: 6px;
+      height: 6px;
+      margin-right: 5px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+  }
+  .type1 {
+    background: @alert-info-icon-color;
+  }
+  .type2 {
+    background: @alert-warning-icon-color;
+  }
+  .type3 {
+    background: @alert-error-icon-color;
+  }
+  .tableText {
+    color: @text-color-secondary;
+    overflow: hidden; //超出的文本隐藏
+    text-overflow: ellipsis; //溢出用省略号显示
+    white-space: nowrap; //溢出不换行
+    max-width: 200px;
+  }
+}
+.tableImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.permitItem {
+  height: 165px;
+  width: 31%;
+  margin-left: 1.8%;
+  margin-top: 20px;
+  border: 1px solid @btn-default-color;
+  float: left;
+  padding: 10px 16px;
+  .top {
+    height: 45px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    .icon {
+      height: 38px;
+      width: 38px;
+      margin-right: 10px;
+    }
+  }
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    color: @btn-default-color;
+    .row {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 14px;
+      height: 30px;
+      .icon {
+        font-size: 14px;
+      }
+      .rowContent {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 8px;
+        box-sizing: border-box;
+        color: @text-color-inverse;
+        border: 1px solid transparent;
+        padding: 3px 6px;
+        &:hover {
+          transition: all 200ms;
+          position: relative;
+          z-index: 5;
+          overflow: visible;
+          background: @component-background;
+          border: 1px solid @body-background;
+        }
+      }
+    }
+    .operate {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

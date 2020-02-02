@@ -1,0 +1,41 @@
+@import '~@/themes/vars.less';
+
+.bread {
+  height: 40px;
+  line-height: 40px;
+  // margin-bottom: 24px;
+
+  :global {
+    .ant-breadcrumb {
+      display: flex;
+      color: @text-color-inverse;
+      align-items: center;
+    }
+    // .ant-breadcrumb .ant-breadcrumb-link:hover {
+    //   color: @primary-color;
+    // }
+
+    // .ant-breadcrumb .ant-breadcrumb-link:hover:last-child {
+    //   color: @text-color-secondary;
+    // }
+
+    .ant-breadcrumb-separator {
+      color: @text-color-inverse;
+    }
+    .ant-breadcrumb > span:last-child {
+      color: @text-color-secondary;
+    }
+    .ant-breadcrumb > span:last-child:hover {
+      color: @text-color-secondary;
+    }
+    .ant-breadcrumb > span:hover {
+      color: @primary-color;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .bread {
+    padding: @ld-spacing-xs 0;
+  }
+}

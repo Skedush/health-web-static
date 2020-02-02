@@ -1,0 +1,32 @@
+.houseTree {
+  width: 200px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: unset;
+  :global {
+    .ant-tree {
+      .ant-tree-treenode-switcher-close {
+        .ant-tree-node-content-wrapper {
+          color: #333;
+        }
+      }
+    }
+  }
+}
+
+.tree {
+  color: @text-color-secondary;
+  :global {
+    li .ant-tree-node-content-wrapper {
+      width: calc(100% - 28px);
+    }
+    li .ant-tree-node-content-wrapper.ant-tree-node-selected {
+      color: #fff;
+      background-color: @primary-color;
+    }
+    li .ant-tree-node-content-wrapper:hover {
+      background-color: @primary-color;
+      color: #fff;
+    }
+  }
+}

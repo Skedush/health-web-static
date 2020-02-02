@@ -1,0 +1,148 @@
+@import '~@/themes/vars';
+@import '~@/global.less';
+
+.communityPage {
+  color: @text-color-secondary;
+  // height: calc(100vh - 100px);
+
+  display: flex;
+  font-size: 15px;
+  height: 100%;
+  .baseInfo {
+    flex: 1;
+    background: @component-background;
+
+    .body {
+      padding: 20px 25px;
+      background: @component-background;
+      height: calc(100% - 44px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      .block {
+        .blockTitle {
+          height: 14px;
+          display: flex;
+          align-items: center;
+          .line {
+            width: 2px;
+            height: 100%;
+            background: @primary-color;
+            margin-right: 10px;
+          }
+        }
+        .blockBody {
+          .inOutCount {
+            color: @text-color;
+            margin-top: @ld-spacing-xs;
+            cursor: pointer;
+          }
+          .image {
+            margin: 18px 0 24px 0;
+            width: 160px;
+            // height: 90px;
+            position: relative;
+            cursor: pointer;
+            .picture {
+              height: 100px;
+              width: 100%;
+              img {
+                object-fit: contain;
+              }
+            }
+            .imgMask {
+              position: absolute;
+              z-index: 2;
+              width: 100%;
+              height: 100%;
+              background: #333;
+              opacity: 0.6;
+            }
+          }
+          .infoList {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            color: @text-color-secondary;
+            justify-content: flex-end;
+            box-sizing: border-box;
+            align-content: flex-start;
+            border-top: 2px solid @border-color-base;
+            border-left: 2px solid @border-color-base;
+            .infoField {
+              flex-basis: calc(33.33%);
+              box-sizing: border-box;
+              border-bottom: 2px solid @border-color-base;
+              border-right: 2px solid @border-color-base;
+              .fieldName {
+                padding: 8px 20px;
+                color: @text-color-inverse;
+                background: @body-background;
+                border-bottom: 2px solid @border-color-base;
+              }
+              .fieldValue {
+                padding: 8px 20px;
+              }
+            }
+          }
+          .infoField:last-child {
+            flex: 1;
+          }
+        }
+      }
+    }
+  }
+  .modfiyRecord {
+    flex-basis: 256px;
+    margin-left: 24px;
+    background: @component-background;
+    .recordList {
+      width: 100%;
+      padding: 20px 30px;
+      height: calc(100% - 44px);
+      overflow: scroll;
+      overflow-x: hidden;
+      background: @component-background;
+      .record {
+        padding-bottom: 30px;
+        width: 100%;
+        border-left: 3px solid @primary-color;
+        padding-left: 24px;
+        position: relative;
+        .point {
+          height: 12px;
+          width: 12px;
+          position: absolute;
+          border-radius: 50%;
+          background: @primary-color;
+          left: -8px;
+          &::before {
+            content: ' ';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: @primary-color;
+            opacity: 0.2;
+            top: -7px;
+            left: -7px;
+          }
+        }
+        .recordName {
+          margin-bottom: 8px;
+        }
+        .recordTime {
+          font-size: 14px;
+          color: @text-color-inverse;
+        }
+      }
+    }
+  }
+  .title {
+    height: 44px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid @border-color-base;
+  }
+}

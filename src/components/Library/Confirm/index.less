@@ -1,0 +1,52 @@
+.modal {
+  z-index: 9999;
+  :global {
+    .ant-modal-content {
+      border-radius: 0;
+      background: @component-background;
+    }
+    .ant-modal-body {
+      padding: 0;
+    }
+    .ant-modal-header {
+      border-radius: 0;
+      background: @component-background;
+      border-bottom: 1px solid @border-color-base;
+    }
+  }
+}
+.title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  span {
+    margin-left: 10px;
+  }
+}
+.content {
+  padding: 24px;
+  color: @text-color-secondary;
+}
+.warning {
+  color: @alert-error-icon-color;
+}
+.question {
+  color: @alert-warning-icon-color;
+}
+.success {
+  color: @alert-success-icon-color;
+}
+.info {
+  color: @primary-color;
+}
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 15px 15px;
+  button {
+    margin-left: 10px;
+  }
+  button:first-child {
+    margin-left: 0;
+  }
+}

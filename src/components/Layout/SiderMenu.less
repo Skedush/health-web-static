@@ -1,0 +1,87 @@
+@import '~@/themes/vars.less';
+.menuTitle {
+  height: 60px;
+  position: relative;
+  transition: all 0.3s;
+  // background: #2c3944;
+  overflow: hidden;
+  margin-bottom: 0;
+  color: @text-color-inverse;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 @ld-spacing-m;
+}
+.trigger {
+  font-size: 16px;
+  z-index: 99999999999999999999999999;
+  color: @text-color-secondary;
+}
+.icontarget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.menu {
+  background: @component-background;
+  min-height: 100% !important;
+  :global {
+    .ant-menu-item-active {
+      border: none !important;
+      color: none;
+    }
+    .ant-menu {
+      background: @component-background;
+      color: @text-color-inverse;
+    }
+    .ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title {
+      color: @primary-color;
+    }
+    .ant-menu-submenu-open > .ant-menu-submenu-title {
+      color: @text-color-secondary;
+      background-color: @border-color-base;
+    }
+    .ant-menu-submenu-active,
+    .ant-menu-submenu-active > .ant-menu-submenu-title,
+    .ant-menu-item-selected > a,
+    .ant-menu-item:hover,
+    .ant-menu-item-selected > a:hover {
+      background: @table-row-hover-bg;
+    }
+    .ant-menu-item > a {
+      color: @text-color-secondary;
+    }
+    .ant-menu-item > a:hover {
+      color: @primary-color;
+    }
+    .ant-menu-item.ant-menu-item-selected > a {
+      color: #fff;
+    }
+
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .ant-menu-item:not(:last-child) {
+      margin-bottom: 0;
+    }
+
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background-color: @primary-color;
+      color: @text-selection-bg;
+    }
+    .ant-menu-item-selected {
+      background-color: @primary-color !important;
+      color: @text-selection-bg;
+    }
+    .ant-menu-submenu-arrow::after,
+    .ant-menu-submenu-arrow::before {
+      background: @normal-color !important;
+    }
+    .ant-menu-submenu .ant-menu-submenu-title {
+      color: @text-color-secondary;
+    }
+  }
+}

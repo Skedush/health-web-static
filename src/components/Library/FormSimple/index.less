@@ -1,0 +1,42 @@
+// @import '../../../themes/vars.less';
+@import '../../../global.less';
+
+:global {
+  .ant-col {
+    color: @text-color-secondary;
+  }
+  .ant-form-item-children {
+    textarea {
+      // resize: none;
+      background: @body-background;
+      border-radius: 0;
+      color: @text-color-secondary;
+    }
+  }
+  .ant-radio {
+    color: @text-color-secondary;
+  }
+  .ant-radio-wrapper {
+    color: @text-color-secondary;
+  }
+}
+
+.buttonCol {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  border-top: 1px solid @border-color-base;
+  padding: 16px 24px;
+}
+.title {
+  height: 44px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid @border-color-base;
+}
+.image {
+  height: auto;
+  width: 100px;
+}

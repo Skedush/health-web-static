@@ -1,0 +1,30 @@
+.input {
+  display: inline-block;
+  width: 100%;
+
+  :global {
+    .ant-input-number {
+      width: 100%;
+      border-radius: 0;
+      background-color: @body-background;
+      color: @text-color-secondary;
+    }
+
+    .ant-input-number-disabled {
+      background: fadeout(@btn-disable-color, 65%) !important;
+      color: @text-color-inverse;
+      border-color: @btn-disable-color;
+    }
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: @text-color-inverse;
+      opacity: 1; /* Firefox */
+    }
+  }
+}
+:global {
+  .has-error .ant-input-number,
+  .has-error .ant-input-number:hover {
+    background: #f3e1e1 !important;
+  }
+}

@@ -1,0 +1,31 @@
+.infoList {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  color: @text-color-secondary;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  align-content: flex-start;
+  border-left: 2px solid @border-color-base;
+  border-top: 2px solid @border-color-base;
+}
+.infoField {
+  flex-basis: calc(33.33%);
+  box-sizing: border-box;
+  border-bottom: 2px solid @border-color-base;
+  border-right: 2px solid @border-color-base;
+}
+.infoField:last-child {
+  flex: 1;
+}
+.fieldName {
+  padding: 8px 20px;
+  color: @text-color-inverse;
+  background: @body-background;
+  border-bottom: 2px solid @border-color-base;
+}
+.fieldValue {
+  padding: 8px 20px;
+  font-size: 16px;
+}
