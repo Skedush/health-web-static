@@ -23,23 +23,21 @@ export default {
   // eslint-disable-next-line no-undef
   apiPrefix: API_PREFIX,
   // eslint-disable-next-line no-undef
-  cardReaderHost: CARD_READER_HOST,
   // eslint-disable-next-line no-undef
-  cardReaderOpened: CARD_READER_OPENED,
   fixedHeader: true, // sticky primary layout header
 
   /* Layout configuration, specify which layout to use for route. */
   // login页不使用primary的layout
   layouts: [
     // { name: 'Inside', include: [/Inside/] },
+    // {
+    //   name: 'primary',
+    //   include: [/.*/],
+    //   exlude: [/login[/]?$/, /initialization[/]?$/],
+    // },
     {
-      name: 'primary',
+      name: 'public',
       include: [/.*/],
-      exlude: [/login[/]?$/, /initialization[/]?$/],
-    },
-    {
-      name: 'init',
-      include: [/initialization[/]?$/],
       exlude: [],
     },
   ],

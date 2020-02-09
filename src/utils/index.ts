@@ -263,7 +263,7 @@ export function queryLayout(layouts: LayoutConfig[], pathname: string): string {
       break;
     }
   }
-
+  console.log('result: ', result);
   return result;
 }
 

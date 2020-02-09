@@ -1,17 +1,17 @@
 import { router } from '@/utils';
 import { CommonModelType } from '@/common/model';
 import { Effect } from 'dva';
+import store from 'store';
+import axios from 'axios';
+
 import mdlExtend from '@/utils/model';
 import api from '@/services';
-import { AnyAction } from 'redux';
 
 const { login } = api;
 
 export interface LoginState {
   userName?: string;
   password?: string;
-  displayPwd: boolean;
-  currentlyfocus: 'userName' | 'password' | null;
 }
 
 export interface LoginModelType extends CommonModelType {
@@ -27,35 +27,16 @@ export interface LoginModelType extends CommonModelType {
 const LoginModel: LoginModelType = {
   namespace: 'login',
 
-  state: {
-    displayPwd: false,
-    currentlyfocus: null,
-  },
+  state: {},
 
   effects: {
     *login({ payload }, { call, put, all }) {
       const res = yield call(login, payload);
+      console.log('res: ', res);
       if (res.data) {
-        const { menuList } = res.data;
-        const routeList = menuList || [];
-        // console.log('routeList: ', routeList);
-        yield all([
-          put({
-            type: 'app/updateState',
-            payload: { routeList },
-          }),
-          put({ type: 'carGlobal/getDoorBanAuthSetting' }),
-          put({ type: 'carGlobal/getCarBanAuthSetting' }),
-          put({ type: 'parkingGlobal/getParkingSetting' }),
-          put({ type: 'app/getAdministrator', payload: {} }),
-        ]);
-        const data = yield yield put({ type: 'app/getInitSetting' });
-        if (data && data.endState === '0') {
-          router.push('/initialization');
-        } else {
-          router.push('/dashboard');
-        }
-
+        router.push('/dashboard');
+        axios.defaults.headers['Authorization'] = 'JWT ' + res.data.token;
+        store.set('Authorization', res.data.token);
         return res;
       } else {
         throw res;
@@ -63,18 +44,7 @@ const LoginModel: LoginModelType = {
     },
   },
 
-  reducers: {
-    showPassword(state: LoginState) {
-      return {
-        displayPwd: !state.displayPwd,
-      };
-    },
-    focusState(state: LoginState, { focusType }: AnyAction) {
-      return {
-        currentlyfocus: focusType,
-      };
-    },
-  },
+  reducers: {},
 
   subscriptions: {},
 };

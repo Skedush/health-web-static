@@ -2,14 +2,10 @@ import React, { PureComponent } from 'react';
 import { Layout } from 'antd';
 import styles from './Header.less';
 import { connect } from '@/utils/decorators';
-import Img from 'react-image';
 import AntdIcon from '@/components/Library/Icon';
 import { Menu, Dropdown } from '@/components/Library';
 import { GlobalState } from '@/common/type';
 import { router } from '@/utils';
-
-import UsageGuide from '../Library/UsageGuide';
-import HelpModal from '../globalComponents/HelpModal';
 
 const mapStateToProps = ({ app, helpGlobal }: GlobalState) => ({
   userInfo: app.userInfo,
@@ -37,20 +33,6 @@ class Header extends PureComponent<any, State> {
     };
   }
   componentDidMount() {}
-
-  renderUsageGuide() {
-    return <UsageGuide onCancel={this.cancelGuide} />;
-  }
-  renderUsageHelp() {
-    const { helpVisible } = this.state;
-    return (
-      <HelpModal
-        helpData={this.props.helpData}
-        helpVisible={helpVisible}
-        cancelHelp={this.cancelHelp}
-      />
-    );
-  }
 
   renderMenuList() {
     return (
@@ -81,14 +63,12 @@ class Header extends PureComponent<any, State> {
     const { userInfo, administrator } = this.props;
     return (
       <Layout.Header className={styles.header}>
-        {this.renderUsageGuide()}
-        {this.renderUsageHelp()}
         <div className={styles.logo}>
-          <Img src={require('../../assets/images/logo.png')} />
+          {/* <Img src={require('../../assets/images/logo.png')} /> */}
           <p>{administrator && administrator.name}物业助手</p>
         </div>
         <div className={styles.right}>
-          <Img src={require('@/assets/images/residents.png')} />
+          {/* <Img src={require('@/assets/images/residents.png')} /> */}
           <div className={styles.admin}>
             <div className={styles.name}>{userInfo && userInfo.name}</div>
             {/* <div className={styles.position}>{userInfo && userInfo.roleName}</div> */}

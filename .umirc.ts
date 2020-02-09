@@ -53,8 +53,6 @@ const config: IConfig = {
   theme: Themes.light,
   define: {
     API_PREFIX: 'http://192.168.70.10:20002', //集成测试服务器
-    CARD_READER_OPENED: false,
-    CARD_READER_HOST: 'http://localhost:24010',
   },
   alias: {
     '@': resolve(__dirname, './src/'),

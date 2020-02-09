@@ -33,7 +33,7 @@ const DATA_NOT_FIND_ERROR = 9005; // 数据未查询到
 const AUTH_ERROR = 9006; // 权限异常
 const DATA_EXIST_ERROR = 9007; // 数据未查询到
 const NOT_BUSINESS_DOCUMENT_ERROR = 9008; // 数据未查询到
-const NOT_LOGIN_ERROR = 9009; // 数据未查询到
+const NOT_LOGIN_ERROR = '000001'; // 数据未查询到
 /* eslint-enable */
 
 export interface ResponseData {
@@ -77,10 +77,11 @@ export default function request(options: RequestConfig): Promise<ResponseData | 
   });
 
   // session
-  options.withCredentials = true;
+  options.withCredentials = false;
   options.headers = {
     'X-Request-Type': 'ajax',
     'Content-Type': 'application/json;charset=UTF-8',
+    // Authorization: 'JWT' + store.get('Authorization'),
   };
 
   return axios(options)
@@ -92,7 +93,7 @@ export default function request(options: RequestConfig): Promise<ResponseData | 
         });
       }
 
-      const { success, code, msg, value } = response.data;
+      const { success, code, msg, data } = response.data;
       if (!success) {
         if (code === NOT_LOGIN_ERROR) {
           router.push('/login');
@@ -101,14 +102,14 @@ export default function request(options: RequestConfig): Promise<ResponseData | 
         throw new Error(msg);
       } else {
         if (autoMessage) {
-          messageWithCRUDUrl(newUrl, value);
+          messageWithCRUDUrl(newUrl, data);
         }
 
         return Promise.resolve({
           success: success,
           message: msg,
           statusCode: code,
-          data: value || {},
+          data: data || {},
         });
       }
     })

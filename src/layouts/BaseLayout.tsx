@@ -14,13 +14,11 @@ import 'moment/locale/zh-cn';
 
 import PublicLayout from './PublicLayout';
 import PrimaryLayout from './PrimaryLayout';
-import InitLayout from './InitLayout';
 import './BaseLayout.less';
 
 const LayoutMap = {
   primary: PrimaryLayout,
   public: PublicLayout,
-  init: InitLayout,
 };
 
 const mapStateToProps = ({ loading }: GlobalState) => ({

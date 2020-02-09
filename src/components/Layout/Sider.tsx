@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Layout } from 'antd';
-import ScrollBar from '../ScrollBar';
 import { RouteList } from '@/utils/config';
 import SiderMenu from './SiderMenu';
 import styles from './Sider.less';
@@ -24,18 +23,11 @@ class Sider extends PureComponent<SiderProps> {
         className={styles.sider}
       >
         <div className={styles.menuContainer}>
-          <ScrollBar
-            options={{
-              // Disabled horizontal scrolling, https://github.com/utatti/perfect-scrollbar#options
-              suppressScrollX: true,
-            }}
-          >
-            <SiderMenu
-              routeList={routeList}
-              collapsed={collapsed}
-              onCollapseChange={onCollapseChange}
-            />
-          </ScrollBar>
+          <SiderMenu
+            routeList={routeList}
+            collapsed={collapsed}
+            onCollapseChange={onCollapseChange}
+          />
         </div>
       </Layout.Sider>
     );
