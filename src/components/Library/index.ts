@@ -52,6 +52,7 @@ import Layout from './Layout';
 import Collapse from './Collapse';
 import FormEasy from './FormEasy';
 import Carousel from './Carousel';
+import List from './List';
 
 export {
   Carousel,
@@ -106,5 +107,6 @@ export {
   Result,
   Layout,
   FormEasy,
+  List,
 };
 // export default Button;

@@ -35,7 +35,6 @@ const HomeModel: HomeModelType = {
   effects: {
     *getEntryInfoList({ payload }, { call, put }) {
       const res = yield call(getEntryInfoList, payload);
-      console.log('res: ', res);
       if (res && res.data) {
         yield put({
           type: 'updateState',
@@ -48,7 +47,6 @@ const HomeModel: HomeModelType = {
     },
     *getUserEntryList({ payload }, { call, put }) {
       const res = yield call(getUserEntryList, payload);
-      console.log('res: ', res);
       if (res) {
         yield put({
           type: 'updateState',

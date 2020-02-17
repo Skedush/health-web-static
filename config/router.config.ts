@@ -17,7 +17,9 @@ const routes: IRoute[] = [
     routes: [
       { path: '/dashboard', redirect: '/dashboard/home' },
       { path: '/dashboard/home', component: './Dashboard/Home' },
-      // 基础信息
+      { path: '/dashboard/fillform/:id', component: './Dashboard/FillForm' },
+      { path: '/dashboard/result/:id', component: './Dashboard/Result' },
+      { path: '/dashboard/success', component: './Dashboard/Success' },
     ],
   },
   {

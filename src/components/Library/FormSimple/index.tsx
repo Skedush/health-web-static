@@ -100,7 +100,16 @@ export interface FormSimpleProps extends FormComponentProps {
 class FormSimple extends PureComponent<FormSimpleProps, FormSimpleState> {
   containerRef: React.RefObject<any>;
 
-  autoHeightList: string[] = ['img', 'upload', 'textArea', 'treeSelect'];
+  autoHeightList: string[] = [
+    'img',
+    'upload',
+    'textArea',
+    'treeSelect',
+    'input',
+    'select',
+    'radio',
+    'checkBoxGroup',
+  ];
 
   constructor(props: Readonly<FormSimpleProps>) {
     super(props);
@@ -395,7 +404,7 @@ class FormSimple extends PureComponent<FormSimpleProps, FormSimpleState> {
           padding: '0 8px',
         }}
       >
-        <FormItem label={label || placeholder} {...formItemLayout}>
+        <FormItem label={label} {...formItemLayout}>
           {getFieldDecorator(field as string, {
             initialValue,
             validateTrigger: validateTrigger || 'onChange',

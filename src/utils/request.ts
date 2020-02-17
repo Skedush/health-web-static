@@ -127,6 +127,9 @@ export default function request(options: RequestConfig): Promise<ResponseData | 
 
       if (response && response instanceof Object) {
         const { data, statusText } = response;
+        if (data.code === NOT_LOGIN_ERROR) {
+          router.push('/login');
+        }
         statusCode = response.status;
         msg = data.message || statusText;
       } else {

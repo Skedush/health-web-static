@@ -19,6 +19,7 @@ import { RadioGroupProps } from './RadioGroup';
 import { ResultProps } from './Result';
 import { LayoutProps } from './Layout';
 import { CollapseProps } from './Collapse';
+import { ListProps } from './List';
 
 export {
   ResultProps,
@@ -50,4 +51,5 @@ export {
   UploadFile,
   UploadChangeParam,
   LayoutProps,
+  ListProps,
 };

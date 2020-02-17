@@ -53,7 +53,7 @@ module.exports = {
   '@alert-error-bg-color': '#f6e2e4',
 
   // 重点文字: 选中文字,重点标记文字(如:图标上标数字)
-  '@text-color': '#22c2fe',
+  '@text-color': '#000',
   // 普通文字: 次要按钮，未选中icon
   '@text-color-secondary': '#333',
   // 弱化文字: 提示、说明类文字
