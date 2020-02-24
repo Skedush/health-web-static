@@ -17,7 +17,7 @@ const routes: IRoute[] = [
     routes: [
       { path: '/dashboard', redirect: '/dashboard/home' },
       { path: '/dashboard/home', component: './Dashboard/Home' },
-      { path: '/dashboard/fillform/:id', component: './Dashboard/FillForm' },
+      { path: '/dashboard/f/:id', component: './Dashboard/FillForm' },
       { path: '/dashboard/result/:id', component: './Dashboard/Result' },
       { path: '/dashboard/success', component: './Dashboard/Success' },
     ],

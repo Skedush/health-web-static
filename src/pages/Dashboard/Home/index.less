@@ -1,8 +1,14 @@
 @import '~@/themes/vars.less';
-
-.link {
-  margin-bottom: @ld-spacing-m;
-}
-.list {
-  width: 1440px;
+.container {
+  overflow-y: auto;
+  padding-bottom: 100px;
+  .link {
+    margin-bottom: @ld-spacing-m;
+    padding: 200px 0 100px 0;
+  }
+  .list {
+    width: 1440px;
+    flex: 1;
+    overflow-y: auto;
+  }
 }

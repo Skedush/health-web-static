@@ -71,6 +71,7 @@ const ResultModel: ResultModelType = {
             }
           });
         });
+        entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
         console.log('entryGroups: ', entryGroups);
         yield put({
           type: 'updateState',

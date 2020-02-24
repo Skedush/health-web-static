@@ -57,7 +57,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
   render() {
     return (
       <div className={classNames('height100', 'flexColStart', 'itemCenter', styles.container)}>
-        <div className={styles.title}>健康状况自检表</div>
+        <div className={styles.title}>健康症状自检表</div>
         <FormSimple {...this.getHealthFormProps()} />
       </div>
     );

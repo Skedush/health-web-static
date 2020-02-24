@@ -15,15 +15,13 @@ export interface RouteList {
 }
 
 export default {
-  siteName: '物业助手v1.0.5',
+  siteName: '健康管理1.0.0',
   copyright: 'LD Umi  © 2019',
   logoPath: '/logo.svg',
   defaultTheme: 'light',
 
   // eslint-disable-next-line no-undef
   apiPrefix: API_PREFIX,
-  // eslint-disable-next-line no-undef
-  // eslint-disable-next-line no-undef
   fixedHeader: true, // sticky primary layout header
 
   /* Layout configuration, specify which layout to use for route. */
