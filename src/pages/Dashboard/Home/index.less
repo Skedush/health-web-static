@@ -6,9 +6,25 @@
     margin-bottom: @ld-spacing-m;
     padding: 200px 0 100px 0;
   }
-  .list {
-    width: 1440px;
-    flex: 1;
-    overflow-y: auto;
+  .loadingTips {
+    text-align: center;
+    padding: @ld-spacing-m;
+    color: @text-color-inverse;
+  }
+
+  :global {
+    .scrollbar-container {
+      border: 1px solid #fff;
+      border-radius: 10px;
+      flex: 1;
+      display: flex;
+      overflow-y: auto;
+      width: 80%;
+      padding: @ld-spacing-m;
+      .ant-list {
+        width: 100%;
+        border: 0;
+      }
+    }
   }
 }

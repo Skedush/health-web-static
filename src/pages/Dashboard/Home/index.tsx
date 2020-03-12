@@ -6,6 +6,7 @@ import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { router } from '@/utils';
+import Scrollbar from 'react-perfect-scrollbar';
 import {
   FormComponentProps,
   WrappedFormUtils,
@@ -17,13 +18,15 @@ import { SearchForm, Button, Confirm, Message, List } from '@/components/Library
 // import light from '@/themes/templates/light';
 import { GlobalState, UmiComponentProps } from '@/common/type';
 import styles from './index.less';
+import { isEmpty } from 'lodash';
 
 // import { add, minus } from '@/actions/app';
 
-const mapStateToProps = ({ home }: GlobalState) => {
+const mapStateToProps = ({ home, loading: { effects } }: GlobalState) => {
   return {
     userEntryList: home.userEntryList,
     entryInfoList: home.entryInfoList,
+    getUserEntryListLoading: effects['home/getUserEntryList'],
   };
 };
 
@@ -32,6 +35,7 @@ type HomeProps = HomeStateProps & UmiComponentProps & FormComponentProps;
 
 interface HomeState {
   entryInfo: number;
+  searchFileds: any;
 }
 
 @connect(
@@ -46,11 +50,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
     super(props);
     this.state = {
       entryInfo: 0,
+      searchFileds: { page: 1 },
     };
   }
 
   async componentDidMount() {
     const { dispatch } = this.props;
+    const { searchFileds } = this.state;
     const data = await dispatch({ type: 'home/getEntryInfoList', payload: {} });
     if (data) {
       this.setState(
@@ -58,7 +64,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
           entryInfo: data[0].id,
         },
         () => {
-          this.getUserEntryList({});
+          this.getUserEntryList(searchFileds);
         },
       );
     }
@@ -82,32 +88,41 @@ class Home extends PureComponent<HomeProps, HomeState> {
   }
 
   renderList() {
-    const { userEntryList } = this.props;
+    const { userEntryList, getUserEntryListLoading } = this.props;
+    if (isEmpty(userEntryList)) return null;
     return (
-      <List
-        header={<div>填表人员列表</div>}
-        footer={null}
-        bordered
-        className={classNames(styles.list)}
-        dataSource={userEntryList}
-        renderItem={item => (
-          <List.Item
-            className={classNames('flexBetween')}
-            actions={[
-              <Button
-                customtype={'icon'}
-                key="list-detail"
-                onClick={() => this.navDetail(item.id)}
-                icon={'container'}
-                title={'查看'}
-              />,
-            ]}
-          >
-            <div>{item.name}</div>
-            <div>{item.phone}</div>
-          </List.Item>
-        )}
-      />
+      <Scrollbar onYReachEnd={this.loadList}>
+        <List
+          header={<div>填表人员列表</div>}
+          footer={null}
+          bordered
+          className={classNames(styles.list)}
+          dataSource={userEntryList.content}
+          loading={getUserEntryListLoading}
+          renderItem={(item, index) => (
+            <>
+              <List.Item
+                className={classNames('flexBetween')}
+                actions={[
+                  <Button
+                    customtype={'icon'}
+                    key="list-detail"
+                    onClick={() => this.navDetail(item.id)}
+                    icon={'container'}
+                    title={'查看'}
+                  />,
+                ]}
+              >
+                <div>{item.name}</div>
+                <div>{item.phone}</div>
+              </List.Item>
+              {!userEntryList.next && index === userEntryList.content.length - 1 && (
+                <div className={styles.loadingTips}>无更多内容</div>
+              )}
+            </>
+          )}
+        />
+      </Scrollbar>
     );
   }
 
@@ -119,9 +134,10 @@ class Home extends PureComponent<HomeProps, HomeState> {
           {entryInfoList.length > 0 &&
             entryInfoList.map(item => (
               <div key={item.id} className={classNames('flexCenter', 'itemCenter')}>
-                <div>{'http://' + window.location.host + '/#/dashboard/f/' + item.id}</div>
+                <div>{'http://f.cjsq.net:99/?id=' + item.id}</div>
                 <CopyToClipboard
-                  text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
+                  text={'http://f.cjsq.net:99/?id=' + item.id}
+                  // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                   onCopy={this.copySuccess}
                 >
                   <Button customtype={'master'}>复制链接</Button>
@@ -135,10 +151,15 @@ class Home extends PureComponent<HomeProps, HomeState> {
     );
   }
 
+  loadList = container => {
+    const { searchFileds } = this.state;
+    const { getUserEntryListLoading, userEntryList } = this.props;
+    if (getUserEntryListLoading || !userEntryList.next) return;
+    searchFileds.page++;
+    this.getUserEntryList(searchFileds);
+  };
+
   copySuccess = () => {
-    // if (this.confirmRef.current) {
-    //   this.confirmRef.current.open(() => {}, '成功', '复制成功', 'success');
-    // }
     Message.success('复制成功');
   };
 
@@ -147,7 +168,6 @@ class Home extends PureComponent<HomeProps, HomeState> {
   };
 
   navDetail = id => {
-    console.log('id: ', id);
     router.push(`/dashboard/result/${id}`);
   };
 
@@ -163,12 +183,15 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   searchFormReset = () => {
     this.searchForm.resetFields();
-    this.getUserEntryList({});
+    this.getUserEntryList({ page: 1 });
   };
 
   getUserEntryList = Fileds => {
     const { dispatch } = this.props;
     Fileds.entry_info = this.state.entryInfo;
+    this.setState({
+      searchFileds: Fileds,
+    });
     dispatch({ type: 'home/getUserEntryList', payload: { ...Fileds } });
   };
 }

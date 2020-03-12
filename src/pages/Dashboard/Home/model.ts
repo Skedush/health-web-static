@@ -28,12 +28,12 @@ const HomeModel: HomeModelType = {
   namespace: 'home',
 
   state: {
-    userEntryList: [],
+    userEntryList: { content: [] },
     entryInfoList: [],
   },
 
   effects: {
-    *getEntryInfoList({ payload }, { call, put }) {
+    *getEntryInfoList({ payload }, { select, call, put }) {
       const res = yield call(getEntryInfoList, payload);
       if (res && res.data) {
         yield put({
@@ -45,15 +45,31 @@ const HomeModel: HomeModelType = {
         return res.data;
       }
     },
-    *getUserEntryList({ payload }, { call, put }) {
+    *getUserEntryList({ payload }, { select, call, put }) {
       const res = yield call(getUserEntryList, payload);
       if (res) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            userEntryList: res.data,
-          },
-        });
+        const { data } = res;
+        if (data.next === 2) {
+          yield put({
+            type: 'updateState',
+            payload: {
+              userEntryList: res.data,
+            },
+          });
+        } else {
+          const userEntryList = yield select(state => state.home.userEntryList);
+          console.log('userEntryList: ', userEntryList);
+          userEntryList.count = data.count;
+          userEntryList.next = data.next;
+          userEntryList.previous = data.previous;
+          userEntryList.content = userEntryList.content.concat(data.content);
+          yield put({
+            type: 'updateState',
+            payload: {
+              userEntryList: userEntryList,
+            },
+          });
+        }
       }
     },
   },

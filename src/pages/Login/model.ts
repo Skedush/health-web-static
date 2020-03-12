@@ -32,7 +32,6 @@ const LoginModel: LoginModelType = {
   effects: {
     *login({ payload }, { call, put, all }) {
       const res = yield call(login, payload);
-      console.log('res: ', res);
       if (res.data) {
         router.push('/dashboard');
         axios.defaults.headers['Authorization'] = 'JWT ' + res.data.token;

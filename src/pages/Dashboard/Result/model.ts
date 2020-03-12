@@ -71,8 +71,11 @@ const ResultModel: ResultModelType = {
             }
           });
         });
-        entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
-        console.log('entryGroups: ', entryGroups);
+        if (entryGroups && entryGroups.length > 2) {
+          entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
+        } else {
+          entryGroups[1] = entryGroups.splice(0, 1, entryGroups[1])[0];
+        }
         yield put({
           type: 'updateState',
           payload: {
