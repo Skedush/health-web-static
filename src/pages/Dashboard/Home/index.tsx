@@ -134,9 +134,9 @@ class Home extends PureComponent<HomeProps, HomeState> {
           {entryInfoList.length > 0 &&
             entryInfoList.map(item => (
               <div key={item.id} className={classNames('flexCenter', 'itemCenter')}>
-                <div>{'http://f.cjsq.net:99/?id=' + item.id}</div>
+                <div>{'http://cjsq.net:99/?id=' + item.id}</div>
                 <CopyToClipboard
-                  text={'http://f.cjsq.net:99/?id=' + item.id}
+                  text={'http://cjsq.net:99/?id=' + item.id}
                   // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                   onCopy={this.copySuccess}
                 >
@@ -177,6 +177,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
     this.searchForm.validateFields((err, fieldsValue) => {
       if (err) return;
+      fieldsValue.page = 1;
       this.getUserEntryList(fieldsValue);
     });
   };
