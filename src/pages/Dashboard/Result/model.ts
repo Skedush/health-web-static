@@ -73,7 +73,7 @@ const ResultModel: ResultModelType = {
         });
         if (entryGroups && entryGroups.length > 2) {
           entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
-        } else {
+        } else if (entryGroups && entryGroups.length > 1) {
           entryGroups[1] = entryGroups.splice(0, 1, entryGroups[1])[0];
         }
         yield put({
