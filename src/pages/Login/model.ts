@@ -2,7 +2,7 @@ import { router } from '@/utils';
 import { CommonModelType } from '@/common/model';
 import { Effect } from 'dva';
 import store from 'store';
-import axios from 'axios';
+// import axios from 'axios';
 
 import mdlExtend from '@/utils/model';
 import api from '@/services';
@@ -33,9 +33,10 @@ const LoginModel: LoginModelType = {
     *login({ payload }, { call, put, all }) {
       const res = yield call(login, payload);
       if (res.data) {
-        router.push('/dashboard');
-        axios.defaults.headers['Authorization'] = 'JWT ' + res.data.token;
+        // axios.defaults.headers['Authorization'] = 'JWT ' + res.data.token;
         store.set('Authorization', res.data.token);
+        store.set('userInfo', res.data);
+        router.push('/dashboard');
         return res;
       } else {
         throw res;

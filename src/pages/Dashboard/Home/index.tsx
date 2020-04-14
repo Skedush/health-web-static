@@ -6,6 +6,7 @@ import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { router } from '@/utils';
+import store from 'store';
 import Scrollbar from 'react-perfect-scrollbar';
 import {
   FormComponentProps,
@@ -58,7 +59,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     const { dispatch } = this.props;
     const { searchFileds } = this.state;
     const data = await dispatch({ type: 'home/getEntryInfoList', payload: {} });
-    if (data) {
+    if (!isEmpty(data)) {
       this.setState(
         {
           entryInfo: data[0].id,
@@ -90,6 +91,11 @@ class Home extends PureComponent<HomeProps, HomeState> {
   renderList() {
     const { userEntryList, getUserEntryListLoading } = this.props;
     if (isEmpty(userEntryList)) return null;
+    const userInfo = store.get('userInfo');
+    let isStaff = false;
+    if (userInfo) {
+      isStaff = userInfo.isStaff;
+    }
     return (
       <Scrollbar onYReachEnd={this.loadList}>
         <List
@@ -113,8 +119,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
                   />,
                 ]}
               >
-                <div>{item.name}</div>
-                <div>{item.phone}</div>
+                {isStaff && (
+                  <>
+                    <div>{item.name}</div>
+                    <div>{item.phone}</div>
+                  </>
+                )}
+                {!isStaff && <div>{item.created}</div>}
               </List.Item>
               {!userEntryList.next && index === userEntryList.content.length - 1 && (
                 <div className={styles.loadingTips}>无更多内容</div>
@@ -126,45 +137,74 @@ class Home extends PureComponent<HomeProps, HomeState> {
     );
   }
 
-  render() {
+  renderShareLink() {
     const { entryInfoList } = this.props;
     return (
+      <div className={classNames(styles.link, 'flexColCenter')}>
+        <div>精简版</div>
+        {entryInfoList.length > 0 &&
+          entryInfoList.map(item => (
+            <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
+              <div>{'https://cjsq.net/fillFormOld.html?id=' + item.id}</div>
+              <CopyToClipboard
+                text={'https://cjsq.net/fillFormOld.html?id=' + item.id}
+                // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
+                onCopy={this.copySuccess}
+              >
+                <Button customtype={'master'}>复制链接</Button>
+              </CopyToClipboard>
+            </div>
+          ))}
+        <div>优化版</div>
+        {entryInfoList.length > 0 &&
+          entryInfoList.map(item => (
+            <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
+              <div>{'https://cjsq.net/?id=' + item.id}</div>
+              <CopyToClipboard
+                text={'https://cjsq.net/?id=' + item.id}
+                // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
+                onCopy={this.copySuccess}
+              >
+                <Button customtype={'master'}>复制链接</Button>
+              </CopyToClipboard>
+            </div>
+          ))}
+      </div>
+    );
+  }
+
+  renderLinkButton() {
+    return (
+      <div className={classNames(styles.link, 'flexColCenter')}>
+        <Button customtype={'master'} onClick={this.navForm}>
+          健康自检
+        </Button>
+      </div>
+    );
+  }
+
+  render() {
+    const userInfo = store.get('userInfo');
+    let isStaff = false;
+    if (userInfo) {
+      isStaff = userInfo.isStaff;
+    }
+    return (
       <div className={classNames('height100', 'flexColCenter', 'itemCenter', styles.container)}>
-        <div className={classNames(styles.link, 'flexColCenter')}>
-          <div>精简版</div>
-          {entryInfoList.length > 0 &&
-            entryInfoList.map(item => (
-              <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
-                <div>{'https://cjsq.net/fillFormOld.html?id=' + item.id}</div>
-                <CopyToClipboard
-                  text={'https://cjsq.net/fillFormOld.html?id=' + item.id}
-                  // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
-                  onCopy={this.copySuccess}
-                >
-                  <Button customtype={'master'}>复制链接</Button>
-                </CopyToClipboard>
-              </div>
-            ))}
-          <div>优化版</div>
-          {entryInfoList.length > 0 &&
-            entryInfoList.map(item => (
-              <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
-                <div>{'https://cjsq.net/?id=' + item.id}</div>
-                <CopyToClipboard
-                  text={'https://cjsq.net/?id=' + item.id}
-                  // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
-                  onCopy={this.copySuccess}
-                >
-                  <Button customtype={'master'}>复制链接</Button>
-                </CopyToClipboard>
-              </div>
-            ))}
-        </div>
+        {isStaff && this.renderShareLink()}
+        {!isStaff && this.renderLinkButton()}
         {this.renderSearchForm()}
         {this.renderList()}
       </div>
     );
   }
+
+  navForm = () => {
+    const { entryInfoList } = this.props;
+    if (entryInfoList.length > 0) {
+      router.push(`/dashboard/f/${entryInfoList[0].id}`);
+    }
+  };
 
   loadList = container => {
     const { searchFileds } = this.state;

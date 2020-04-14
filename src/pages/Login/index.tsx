@@ -6,9 +6,7 @@ import classNames from 'classnames';
 import { FormComponentProps } from '@/components/Library/type';
 import { Button, Input, Icon, Form } from '@/components/Library';
 
-const mapStateToProps = ({ loading }: GlobalState) => ({
-  loading,
-});
+const mapStateToProps = (state: GlobalState) => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 interface LoginProps extends StateProps, UmiComponentProps, FormComponentProps {}
@@ -21,7 +19,6 @@ class Login extends PureComponent<LoginProps> {
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
-
     return (
       <div className={classNames('flexCenter', 'height100', 'itemCenter')}>
         <div className={classNames()}>
@@ -32,7 +29,7 @@ class Login extends PureComponent<LoginProps> {
               })(
                 <Input
                   className={styles.input}
-                  prefix={<Icon type="pm-user" />}
+                  prefix={<Icon type={'pm-user'} />}
                   placeholder={'请输入用户名'}
                 />,
               )}
@@ -43,7 +40,7 @@ class Login extends PureComponent<LoginProps> {
               })(
                 <Input
                   className={styles.input}
-                  prefix={<Icon type="pm-lock" />}
+                  prefix={<Icon type={'pm-lock'} />}
                   type={'password'}
                   placeholder={'请输入密码'}
                 />,
@@ -69,7 +66,7 @@ class Login extends PureComponent<LoginProps> {
       if (errors) {
         return;
       }
-      dispatch({ type: 'login/login', payload: values }).then(res => {});
+      dispatch({ type: 'login/login', payload: values });
     });
   };
 }

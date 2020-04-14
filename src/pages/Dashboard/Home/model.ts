@@ -49,7 +49,7 @@ const HomeModel: HomeModelType = {
       const res = yield call(getUserEntryList, payload);
       if (res) {
         const { data } = res;
-        if (data.next === 2) {
+        if (data.next === 2 || !data.next) {
           yield put({
             type: 'updateState',
             payload: {
@@ -58,7 +58,6 @@ const HomeModel: HomeModelType = {
           });
         } else {
           const userEntryList = yield select(state => state.home.userEntryList);
-          console.log('userEntryList: ', userEntryList);
           userEntryList.count = data.count;
           userEntryList.next = data.next;
           userEntryList.previous = data.previous;

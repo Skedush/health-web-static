@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { cloneDeep, isEmpty } from 'lodash';
+import store from 'store';
 import pathToRegexp from 'path-to-regexp';
 import { Message } from '@/components/Library';
 import {
@@ -57,6 +58,9 @@ export interface RequestConfig extends AxiosRequestConfig {
  */
 export default function request(options: RequestConfig): Promise<ResponseData | undefined> {
   const { data, url, method = 'get', autoMessage = true } = options;
+  // django设置了token认证，不需要token认证的接口也会抛认证不通过，需要将Authorization置为空
+  // if (store.get('Authorization'))
+  axios.defaults.headers['Authorization'] = 'JWT ' + store.get('Authorization');
   if (!url) {
     throw new Error('request url none');
   }

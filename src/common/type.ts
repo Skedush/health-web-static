@@ -23,6 +23,7 @@ export interface GlobalState {
   home: HomeState;
   fillForm: FillFormState;
   result: ResultState;
+  loading: LoadingState;
 }
 
 export interface UmiComponentProps {

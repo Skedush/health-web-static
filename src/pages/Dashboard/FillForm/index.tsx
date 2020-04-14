@@ -4,9 +4,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
-import { FormComponentProps } from '@/components/Library/type';
-import { GlobalState, UmiComponentProps, WrappedFormUtils } from '@/common/type';
+import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
+import { GlobalState, UmiComponentProps } from '@/common/type';
 import { FormSimple, Message } from '@/components/Library';
+import store from 'store';
 import styles from './index.less';
 import { router } from '@/utils';
 
@@ -39,6 +40,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    // const userInfo = store.get('userInfo');
     if (this.props.match.params) {
       this.setState(
         {
@@ -67,56 +69,56 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
   getHealthFormProps = () => {
     const { entryInfoDetail } = this.props;
     const items: any = [
-      {
-        type: 'input',
-        field: 'name',
-        span: 24,
-        // showSearch: true,
-        // optionFilterProp: 'children',
-        maxLength: 10,
-        placeholder: '姓名',
-        label: '',
-        rules: [{ required: true, message: '姓名不能为空' }],
-      },
-      {
-        type: 'input',
-        field: 'phone',
-        span: 24,
-        // showSearch: true,
-        // optionFilterProp: 'children',
-        maxLength: 11,
-        placeholder: '手机',
-        label: '',
-        rules: [{ required: true, message: '手机号不能为空' }],
-      },
-      {
-        type: 'textArea',
-        field: 'address',
-        span: 24,
-        maxLength: 255,
-        placeholder: '地址',
-        label: '',
-      },
-      {
-        type: 'radio',
-        field: 'gender',
-        span: 12,
-        // showSearch: true,
-        // optionFilterProp: 'children',
-        children: [{ key: '0', value: '女' }, { key: '1', value: '男' }],
-        placeholder: '性别',
-        label: '',
-        rules: [{ required: true, message: '请选择性别' }],
-        // onChange: this.onSearchSelectChange,
-      },
-      {
-        type: 'input',
-        field: 'age',
-        span: 12,
-        maxLength: 20,
-        placeholder: '年龄',
-        label: '',
-      },
+      // {
+      //   type: 'input',
+      //   field: 'name',
+      //   span: 24,
+      //   // showSearch: true,
+      //   // optionFilterProp: 'children',
+      //   maxLength: 10,
+      //   placeholder: '姓名',
+      //   label: '',
+      //   rules: [{ required: true, message: '姓名不能为空' }],
+      // },
+      // {
+      //   type: 'input',
+      //   field: 'phone',
+      //   span: 24,
+      //   // showSearch: true,
+      //   // optionFilterProp: 'children',
+      //   maxLength: 11,
+      //   placeholder: '手机',
+      //   label: '',
+      //   rules: [{ required: true, message: '手机号不能为空' }],
+      // },
+      // {
+      //   type: 'textArea',
+      //   field: 'address',
+      //   span: 24,
+      //   maxLength: 255,
+      //   placeholder: '地址',
+      //   label: '',
+      // },
+      // {
+      //   type: 'radio',
+      //   field: 'gender',
+      //   span: 12,
+      //   // showSearch: true,
+      //   // optionFilterProp: 'children',
+      //   children: [{ key: '0', value: '女' }, { key: '1', value: '男' }],
+      //   placeholder: '性别',
+      //   label: '',
+      //   rules: [{ required: true, message: '请选择性别' }],
+      //   // onChange: this.onSearchSelectChange,
+      // },
+      // {
+      //   type: 'input',
+      //   field: 'age',
+      //   span: 12,
+      //   maxLength: 20,
+      //   placeholder: '年龄',
+      //   label: '',
+      // },
       {
         type: 'input',
         field: 'height',
@@ -208,7 +210,10 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
     }
     this.form.validateFields(async (err, fieldsValue) => {
       if (err) return;
-      console.log('fieldsValue: ', fieldsValue);
+      const userInfo = store.get('userInfo') || {};
+      fieldsValue.phone = userInfo.phone;
+      fieldsValue.name = userInfo.name;
+      fieldsValue.gender = userInfo.gender;
       fieldsValue.entry_info = this.state.id;
       const res = await this.props.dispatch({
         type: 'fillForm/addUserEntry',
