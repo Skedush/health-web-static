@@ -145,9 +145,9 @@ class Home extends PureComponent<HomeProps, HomeState> {
         {entryInfoList.length > 0 &&
           entryInfoList.map(item => (
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
-              <div>{'https://cjsq.net/fillFormOld.html?id=' + item.id}</div>
+              <div>{'https://cjsq.net/f.html?id=' + item.id}</div>
               <CopyToClipboard
-                text={'https://cjsq.net/fillFormOld.html?id=' + item.id}
+                text={'https://cjsq.net/f.html?id=' + item.id}
                 // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                 onCopy={this.copySuccess}
               >
