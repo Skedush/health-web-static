@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
-import { FormComponentProps } from '@/components/Library/type';
-import { GlobalState, UmiComponentProps, WrappedFormUtils } from '@/common/type';
+import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
+import { GlobalState, UmiComponentProps } from '@/common/type';
 import { Card, Button, Img, Modal } from '@/components/Library';
 import styles from './index.less';
 import domtoimage from 'dom-to-image';
+import store from 'store';
 import { isEmpty } from 'lodash';
 
 const mapStateToProps = ({ result }: GlobalState) => {
@@ -47,6 +48,16 @@ class Result extends PureComponent<ResultProps, ResultState> {
     }
   }
 
+  renderTitle(title) {
+    return (
+      <div className={classNames('flexStart', 'itemBaseline')}>
+        {title}
+        {title === '调理方向' && <span className={styles.titleTip}>仅供参考，不具医学效力</span>}
+      </div>
+    );
+  }
+
+  // eslint-disable-next-line max-lines-per-function
   render() {
     const { resultData, entryGroups } = this.props;
     const len = entryGroups.length || 0;
@@ -95,9 +106,13 @@ class Result extends PureComponent<ResultProps, ResultState> {
         </div>
         {!isEmpty(entryGroups) && len > 1 && (
           <div id={'card'} style={{ width: '100%' }}>
-            <Card className={styles.card} title={entryGroups[0].category}>
+            <Card className={styles.card} title={this.renderTitle(entryGroups[0].category)}>
               {entryGroups[0].entrys.map(entry => (
-                <Card.Grid style={{ width: '50%', textAlign: 'center' }} key={entry.id}>
+                <Card.Grid
+                  onClick={() => this.nav(entry)}
+                  style={{ width: '50%', textAlign: 'center' }}
+                  key={entry.id}
+                >
                   <div className={classNames('flexCenter', 'itemCenter')}>
                     <div className={styles.entry}>{entry.title}&nbsp;</div>
                     <div className={styles.number}>{entry.number}</div>
@@ -108,7 +123,11 @@ class Result extends PureComponent<ResultProps, ResultState> {
             {len > 2 && (
               <Card className={styles.card} title={entryGroups[1].category}>
                 {entryGroups[1].entrys.map(entry => (
-                  <Card.Grid style={{ width: '50%', textAlign: 'center' }} key={entry.id}>
+                  <Card.Grid
+                    onClick={() => this.nav(entry)}
+                    style={{ width: '50%', textAlign: 'center' }}
+                    key={entry.id}
+                  >
                     <div className={classNames('flexCenter', 'itemCenter')}>
                       <div className={styles.entry}>{entry.title}&nbsp;</div>
                       <div className={styles.number}>{entry.number}</div>
@@ -122,7 +141,11 @@ class Result extends PureComponent<ResultProps, ResultState> {
         {len > 0 && (
           <Card className={styles.card} title={entryGroups[len - 1].category}>
             {entryGroups[len - 1].entrys.map(entry => (
-              <Card.Grid style={{ width: '50%', textAlign: 'center' }} key={entry.id}>
+              <Card.Grid
+                onClick={() => this.nav(entry)}
+                style={{ width: '50%', textAlign: 'center' }}
+                key={entry.id}
+              >
                 <div className={classNames('flexCenter', 'itemCenter')}>
                   <div className={styles.entry}>{entry.title}&nbsp;</div>
                   <div className={styles.number}>{entry.number}</div>
@@ -142,6 +165,12 @@ class Result extends PureComponent<ResultProps, ResultState> {
       </div>
     );
   }
+  nav = entry => {
+    const userInfo = store.get('userInfo');
+    const { fxId } = userInfo;
+    window.open(`http://${fxId}.cjsq.net/xx/ShowArticle.asp?ArticleID=${entry.remark}`);
+  };
+
   cancelModal = () => {
     this.setState({
       modalVisible: false,
