@@ -17,8 +17,7 @@ export interface ResultModelType extends CommonModelType {
   namespace: 'result';
   state: ResultState;
   effects: {
-    getEntryInfoDetail: Effect;
-    addUserEntry: Effect;
+    getResult: Effect;
   };
   reducers: {};
   subscriptions?: { setup: Subscription };
@@ -39,9 +38,9 @@ const ResultModel: ResultModelType = {
         const {
           data: { entryship },
         } = res;
-        let entryGroups = [];
+        const entryGroups: any = [];
         entryship.forEach(item => {
-          let entryGroupItem = entryGroups.find(groupItem => {
+          const entryGroupItem = entryGroups.find((groupItem: any) => {
             return groupItem.category === item.category.name;
           });
 
@@ -52,14 +51,14 @@ const ResultModel: ResultModelType = {
           }
 
           item.entrys.forEach(element => {
-            let entryGroupItem = entryGroups.find(groupItem => {
+            const entryGroupItem = entryGroups.find(groupItem => {
               return groupItem.category === element.category.name;
             });
             if (!entryGroupItem) {
               element.number = 1;
               entryGroups.push({ category: element.category.name, entrys: [element] });
             } else {
-              let entry = entryGroupItem.entrys.find(entry => {
+              const entry = entryGroupItem.entrys.find(entry => {
                 return entry.id === element.id;
               });
               if (!entry) {

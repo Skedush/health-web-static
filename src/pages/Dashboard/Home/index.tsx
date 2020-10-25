@@ -1,25 +1,22 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-dupe-class-members */
-import React, { PureComponent, createRef, RefObject } from 'react';
-import { connect } from '@/utils/decorators';
-import classNames from 'classnames';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { router } from '@/utils';
-import store from 'store';
-import Scrollbar from 'react-perfect-scrollbar';
-import {
-  FormComponentProps,
-  WrappedFormUtils,
-
-  // PaginationConfig,
-} from '@/components/Library/type';
-import { SearchForm, Button, Confirm, Message, List } from '@/components/Library';
 // import dark from '@/themes/templates/dark';
 // import light from '@/themes/templates/light';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import styles from './index.less';
+import { Button, Confirm, List, Message, SearchForm, Tabs } from '@/components/Library';
+import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
+import { router } from '@/utils';
+import { connect } from '@/utils/decorators';
+import classNames from 'classnames';
 import { isEmpty } from 'lodash';
+import React, { createRef, PureComponent, RefObject } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Scrollbar from 'react-perfect-scrollbar';
+import store from 'store';
+import styles from './index.less';
+
+const { TabPane } = Tabs;
 
 // import { add, minus } from '@/actions/app';
 
@@ -73,7 +70,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   renderSearchForm() {
     const SearchFormProps = {
-      items: [{ type: 'input', field: 'search', placeholder: '姓名或电话' }],
+      items: [{ type: 'input', field: 'search', placeholder: '姓名或电话或ID' }],
       actions: [
         { customtype: 'select', title: '查询', htmlType: 'submit' as 'submit' },
         { customtype: 'reset', title: '重置', onClick: this.searchFormReset },
@@ -89,7 +86,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
   }
 
   renderList() {
-    const { userEntryList, getUserEntryListLoading } = this.props;
+    const { userEntryList, entryInfoList, getUserEntryListLoading } = this.props;
     if (isEmpty(userEntryList)) return null;
     const userInfo = store.get('userInfo');
     let isStaff = false;
@@ -98,41 +95,52 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
     return (
       <Scrollbar onYReachEnd={this.loadList}>
-        <List
-          header={<div>填表人员列表</div>}
-          footer={null}
-          bordered
-          className={classNames(styles.list)}
-          dataSource={userEntryList.content}
-          loading={getUserEntryListLoading}
-          renderItem={(item, index) => (
-            <>
-              <List.Item
-                className={classNames('flexBetween')}
-                actions={[
-                  <Button
-                    customtype={'icon'}
-                    key="list-detail"
-                    onClick={() => this.navDetail(item.id)}
-                    icon={'container'}
-                    title={'查看'}
-                  />,
-                ]}
-              >
-                {isStaff && (
-                  <>
-                    <div>{item.name}</div>
-                    <div>{item.phone}</div>
-                  </>
-                )}
-                {!isStaff && <div>{item.created}</div>}
-              </List.Item>
-              {!userEntryList.next && index === userEntryList.content.length - 1 && (
-                <div className={styles.loadingTips}>无更多内容</div>
-              )}
-            </>
-          )}
-        />
+        <Tabs onChange={this.onTabsChange} type={'card'}>
+          {entryInfoList &&
+            entryInfoList.length > 0 &&
+            entryInfoList.map(item => (
+              <TabPane tab={item.category === 3 ? '精简版' : '详细版'} key={item.id}>
+                <List
+                  header={<div>填表人员列表</div>}
+                  footer={null}
+                  bordered
+                  className={classNames(styles.list)}
+                  dataSource={userEntryList.content}
+                  loading={getUserEntryListLoading}
+                  renderItem={(item: any, index) => (
+                    <>
+                      <List.Item
+                        className={classNames('flexBetween')}
+                        actions={[
+                          <Button
+                            customtype={'icon'}
+                            key={'list-detail'}
+                            onClick={() => this.navDetail(item.id)}
+                            icon={'container'}
+                            title={'查看'}
+                          />,
+                        ]}
+                      >
+                        {isStaff && (
+                          <div className={classNames('flexColStart', 'flexAuto')}>
+                            <div className={classNames('flexBetween')}>
+                              <div style={{ width: '50%' }}>{item.name}</div>
+                              <div style={{ width: '50%' }}>{item.phone}</div>
+                            </div>
+                            <div className={styles.created}>{item.created}</div>
+                          </div>
+                        )}
+                        {!isStaff && <div>{item.created}</div>}
+                      </List.Item>
+                      {!userEntryList.next && index === userEntryList.content.length - 1 && (
+                        <div className={styles.loadingTips}>无更多内容</div>
+                      )}
+                    </>
+                  )}
+                />
+              </TabPane>
+            ))}
+        </Tabs>
       </Scrollbar>
     );
   }
@@ -141,7 +149,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     const { entryInfoList } = this.props;
     return (
       <div className={classNames(styles.link, 'flexColCenter')}>
-        <div>精简版</div>
+        {/* <div>ID版</div>
         {entryInfoList.length > 0 &&
           entryInfoList.map(item => (
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
@@ -155,11 +163,14 @@ class Home extends PureComponent<HomeProps, HomeState> {
               </CopyToClipboard>
             </div>
           ))}
-        <div>优化版</div>
+        <div>原版</div> */}
         {entryInfoList.length > 0 &&
           entryInfoList.map(item => (
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
-              <div>{'https://cjsq.net/?id=' + item.id}</div>
+              <div>
+                {item.category === 3 ? '精简：' : '详细：'}
+                {'https://cjsq.net/?id=' + item.id}
+              </div>
               <CopyToClipboard
                 text={'https://cjsq.net/?id=' + item.id}
                 // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
@@ -199,6 +210,12 @@ class Home extends PureComponent<HomeProps, HomeState> {
     );
   }
 
+  onTabsChange = key => {
+    const { searchFileds } = this.state;
+    searchFileds.page = 1;
+    this.setState({ entryInfo: key }, () => this.getUserEntryList(searchFileds));
+  };
+
   navForm = () => {
     const { entryInfoList } = this.props;
     if (entryInfoList.length > 0) {
@@ -206,7 +223,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
   };
 
-  loadList = container => {
+  loadList = _container => {
     const { searchFileds } = this.state;
     const { getUserEntryListLoading, userEntryList } = this.props;
     if (getUserEntryListLoading || !userEntryList.next) return;

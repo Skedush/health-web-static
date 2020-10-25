@@ -12,6 +12,11 @@
     color: @text-color-inverse;
   }
 
+  .created {
+    font-size: 60px;
+    color: @text-color-inverse;
+  }
+
   :global {
     .scrollbar-container {
       border: 1px solid #fff;
@@ -20,7 +25,11 @@
       display: flex;
       overflow-y: auto;
       width: 80%;
-      padding: @ld-spacing-m;
+      // padding: @ld-spacing-m;
+      .ant-tabs {
+        width: 100%;
+        overflow: visible;
+      }
       .ant-list {
         width: 100%;
         border: 0;

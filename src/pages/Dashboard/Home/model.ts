@@ -49,7 +49,7 @@ const HomeModel: HomeModelType = {
       const res = yield call(getUserEntryList, payload);
       if (res) {
         const { data } = res;
-        if (data.next === 2 || !data.next) {
+        if (payload.page === 1) {
           yield put({
             type: 'updateState',
             payload: {

@@ -1,8 +1,8 @@
 @import '~@/themes/vars.less';
 
 .container {
-  overflow-y: auto;
   padding-bottom: 100px;
+  background-color: #fff;
   .title {
     padding: 100px 0 50px 0;
     font-size: 130px;
@@ -20,13 +20,18 @@
   .card {
     width: 100%;
     font-size: 80px;
+    background-color: #f0f3fa;
     .number {
       color: red;
     }
     .titleTip {
-      font-size: 14px;
       color: @text-color-inverse;
       font-weight: 200;
+      margin-left: 20px;
+    }
+    .entryCount {
+      font-size: 60px;
+      color: @text-color-inverse;
       margin-left: 20px;
     }
   }

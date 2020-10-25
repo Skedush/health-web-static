@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
+import { GlobalState, UmiComponentProps } from '@/common/type';
+import { Button, Card, Img, Modal } from '@/components/Library';
+import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
 import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
-import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
-import { GlobalState, UmiComponentProps } from '@/common/type';
-import { Card, Button, Img, Modal } from '@/components/Library';
-import styles from './index.less';
 import domtoimage from 'dom-to-image';
-import store from 'store';
 import { isEmpty } from 'lodash';
+import React, { PureComponent } from 'react';
+import store from 'store';
+import styles from './index.less';
 
 const mapStateToProps = ({ result }: GlobalState) => {
   return {
@@ -52,7 +52,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
     return (
       <div className={classNames('flexStart', 'itemBaseline')}>
         {title}
-        {title === '调理方向' && <span className={styles.titleTip}>仅供参考，不具医学效力</span>}
+        {title === '病因' && <span className={styles.titleTip}>(仅供参考，不具医学效力)</span>}
       </div>
     );
   }
@@ -69,15 +69,16 @@ class Result extends PureComponent<ResultProps, ResultState> {
       destroyOnClose: true,
       centered: true,
       footer: null,
-      maskClosable: false,
+      maskClosable: true,
       bodyStyle: {},
       width: '80%',
-      height: '50%',
+      height: '80%',
       wrapClassName: 'modal',
     };
     return (
-      <div className={classNames('height100', 'flexColStart', 'itemCenter', styles.container)}>
+      <div id={'result'} className={classNames('flexColStart', 'itemCenter', styles.container)}>
         <div className={styles.title}>健康症状自检结果</div>
+
         <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
           <div className={styles.info}>
             姓名：<b>{resultData.name}</b>
@@ -104,6 +105,23 @@ class Result extends PureComponent<ResultProps, ResultState> {
         <div className={classNames(styles.row)}>
           <div>备注或其他症状：{resultData.remark}</div>
         </div>
+        {len > 0 && (
+          <Card className={styles.card} title={this.renderEntrysTitle(entryGroups[len - 1])}>
+            {entryGroups[len - 1].entrys.map(entry => (
+              <Card.Grid
+                onClick={() => this.nav(entry)}
+                style={{ width: '50%', textAlign: 'center' }}
+                key={entry.id}
+              >
+                <div className={classNames('flexCenter', 'itemCenter')}>
+                  <div className={styles.entry}>{entry.title}&nbsp;</div>
+                  <div className={styles.number}>{entry.number}</div>
+                </div>
+              </Card.Grid>
+            ))}
+          </Card>
+        )}
+
         {!isEmpty(entryGroups) && len > 1 && (
           <div id={'card'} style={{ width: '100%' }}>
             <Card className={styles.card} title={this.renderTitle(entryGroups[0].category)}>
@@ -138,30 +156,23 @@ class Result extends PureComponent<ResultProps, ResultState> {
             )}
           </div>
         )}
-        {len > 0 && (
-          <Card className={styles.card} title={entryGroups[len - 1].category}>
-            {entryGroups[len - 1].entrys.map(entry => (
-              <Card.Grid
-                onClick={() => this.nav(entry)}
-                style={{ width: '50%', textAlign: 'center' }}
-                key={entry.id}
-              >
-                <div className={classNames('flexCenter', 'itemCenter')}>
-                  <div className={styles.entry}>{entry.title}&nbsp;</div>
-                  <div className={styles.number}>{entry.number}</div>
-                </div>
-              </Card.Grid>
-            ))}
-          </Card>
-        )}
         <div className={classNames(styles.row, 'flexCenter')}>
-          <Button customtype="select" onClick={this.domToImage}>
+          <Button customtype={'select'} onClick={this.domToImage}>
             分享
           </Button>
         </div>
         <Modal {...modalProps}>
           <Img image={picture} className={styles.image} previewImg={true} />
         </Modal>
+      </div>
+    );
+  }
+
+  renderEntrysTitle(entryGroup) {
+    return (
+      <div>
+        <span>{entryGroup.category}</span>
+        <span className={styles.entryCount}>共{entryGroup.entrys.length}个症状</span>
       </div>
     );
   }
@@ -178,15 +189,15 @@ class Result extends PureComponent<ResultProps, ResultState> {
   };
   domToImage = async () => {
     const that = this;
-    let realCard = document.getElementById('card');
-    // let lastCard = realCard.removeChild(realCard.lastChild);
-    await domtoimage.toJpeg(realCard, { quality: 0.95 }).then(function(dataUrl) {
+    let realCard: any = document.getElementById('result');
+    const lastCard = realCard!.removeChild(realCard.lastChild);
+    await domtoimage.toJpeg(realCard, { quality: 1 }).then(function(dataUrl) {
       that.setState({
         picture: dataUrl,
         modalVisible: true,
       });
     });
-    // realCard = realCard.appendChild(lastCard);
+    realCard = realCard!.appendChild(lastCard);
   };
 }
 
