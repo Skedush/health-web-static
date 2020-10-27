@@ -11438,6 +11438,11 @@ pkg-up@3.1.0:
   dependencies:
     find-up "^3.0.0"
 
+platform@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.npm.taobao.org/platform/download/platform-1.3.6.tgz?cache=0&sync_timestamp=1593861114216&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fplatform%2Fdownload%2Fplatform-1.3.6.tgz#48b4ce983164b209c2d45a107adb31f473a6e7a7"
+  integrity sha1-SLTOmDFksgnC1FoQetsx9HOm56c=
+
 please-upgrade-node@^3.0.2, please-upgrade-node@^3.1.1:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/please-upgrade-node/download/please-upgrade-node-3.2.0.tgz?cache=0&sync_timestamp=1565266069139&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fplease-upgrade-node%2Fdownload%2Fplease-upgrade-node-3.2.0.tgz#aeddd3f994c933e4ad98b99d9a556efa0e2fe942"

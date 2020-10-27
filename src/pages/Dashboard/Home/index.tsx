@@ -169,7 +169,9 @@ class Home extends PureComponent<HomeProps, HomeState> {
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
               <div>
                 {item.category === 3 ? '精简：' : '详细：'}
-                {'https://cjsq.net/?id=' + item.id}
+                <a target={'_blank'} href={'https://cjsq.net/?id=' + item.id}>
+                  {'https://cjsq.net/?id=' + item.id}
+                </a>
               </div>
               <CopyToClipboard
                 text={'https://cjsq.net/?id=' + item.id}

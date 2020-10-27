@@ -5,6 +5,7 @@ import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
 import domtoimage from 'dom-to-image';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { PureComponent } from 'react';
 import store from 'store';
 import styles from './index.less';
@@ -78,6 +79,9 @@ class Result extends PureComponent<ResultProps, ResultState> {
     return (
       <div id={'result'} className={classNames('flexColStart', 'itemCenter', styles.container)}>
         <div className={styles.title}>健康症状自检结果</div>
+        <div className={styles.createdTime}>
+          提交时间：{moment(resultData.created).format('YYYY-MM-DD HH:mm:ss')}
+        </div>
 
         <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
           <div className={styles.info}>

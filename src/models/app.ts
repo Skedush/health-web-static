@@ -1,11 +1,8 @@
 // import { stringify } from 'qs';
-import api from '@/services/index';
-import mdlExtend from '@/utils/model';
 import { CommonModelType } from '@/common/model';
-import { Effect, Subscription } from 'dva';
 import { pathMatchRegexp } from '@/utils';
-
-const { logout } = api;
+import mdlExtend from '@/utils/model';
+import { Effect, Subscription } from 'dva';
 
 export interface AppState {}
 
@@ -31,10 +28,6 @@ const AppModel: AppModelType = {
         return;
       }
       yield all([]);
-    },
-    *logout({ payload }, { call }) {
-      const res = yield call(logout, payload);
-      return res;
     },
   },
 

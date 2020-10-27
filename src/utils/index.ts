@@ -1,8 +1,25 @@
 /* eslint-disable valid-jsdoc */
 import { cloneDeep } from 'lodash';
-import umiRouter from 'umi/router';
 import pathToRegexp from 'path-to-regexp';
+import platform from 'platform';
+import umiRouter from 'umi/router';
 import { LayoutConfig, RouteList } from './config';
+
+export function getPlatform() {
+  const { name, version, os } = platform;
+  console.log('name, version, os: ', name, version, os);
+  const browerName = name || '';
+  const browerVersion = version ? parseInt(version) : 0;
+
+  const architecture = os.architecture || 32;
+  return {
+    brower: {
+      name: browerName,
+      version: browerVersion,
+    },
+    architecture,
+  };
+}
 
 /**
  * Query objects that specify keys and values in an array where all values are objects.

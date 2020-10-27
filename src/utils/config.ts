@@ -15,8 +15,8 @@ export interface RouteList {
 }
 
 export default {
-  siteName: '健康管理1.0.0',
-  copyright: 'LD Umi  © 2019',
+  siteName: '健康管理5.2.0',
+  copyright: 'SKEDUSH Umi  © 2020',
   logoPath: '/logo.svg',
   defaultTheme: 'light',
 

@@ -1,12 +1,10 @@
 /* tslint:disable */
 import { resolve } from 'path';
-import { IConfig } from 'umi-types';
-import pageRoutes from './config/router.config';
-// import Config from './src/utils/config';
-import webpackPlugin from './config/plugin.config';
-import Themes from './src/themes/templates';
 import pxToViewPort from 'postcss-px-to-viewport';
 import slash from 'slash2';
+import { IConfig } from 'umi-types';
+import pageRoutes from './config/router.config';
+import Themes from './src/themes/templates';
 
 // TODO: fix compile error
 // const defaultTheme = Config.defaultTheme || 'light';
@@ -25,7 +23,7 @@ const config: IConfig = {
         antd: true,
         dva: true,
         dynamicImport: { webpackChunkName: true },
-        title: 'property-management-static-web',
+        title: 'heslth-management',
         dll: false,
 
         routes: {
