@@ -128,7 +128,31 @@ class Result extends PureComponent<ResultProps, ResultState> {
 
         {!isEmpty(entryGroups) && len > 1 && (
           <div id={'card'} style={{ width: '100%' }}>
-            <Card className={styles.card} title={this.renderTitle(entryGroups[0].category)}>
+            {entryGroups.map((item, index) => {
+              if (index === len - 1) {
+                return null;
+              } else {
+                return (
+                  <Card className={styles.card} title={this.renderTitle(item.category)}>
+                    {item.entrys.map(entry => (
+                      <Card.Grid
+                        onClick={() => this.nav(entry)}
+                        style={{ width: '50%', textAlign: 'center' }}
+                        key={entry.id}
+                      >
+                        <div className={classNames('flexCenter', 'itemCenter')}>
+                          <div className={styles.entry}>{entry.title}&nbsp;</div>
+                          <div className={styles.number}>
+                            {entry.number > 2 ? entry.number + this.random() : entry.number}
+                          </div>
+                        </div>
+                      </Card.Grid>
+                    ))}
+                  </Card>
+                );
+              }
+            })}
+            {/* <Card className={styles.card} title={this.renderTitle(entryGroups[0].category)}>
               {entryGroups[0].entrys.map(entry => (
                 <Card.Grid
                   onClick={() => this.nav(entry)}
@@ -157,7 +181,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
                   </Card.Grid>
                 ))}
               </Card>
-            )}
+            )} */}
           </div>
         )}
         <div className={classNames(styles.row, 'flexCenter')}>
@@ -184,6 +208,10 @@ class Result extends PureComponent<ResultProps, ResultState> {
     const userInfo = store.get('userInfo');
     const { fxId } = userInfo;
     window.open(`http://${fxId}.cjsq.net/xx/ShowArticle.asp?ArticleID=${entry.remark}`);
+  };
+
+  random = () => {
+    return Math.round(Math.random());
   };
 
   cancelModal = () => {

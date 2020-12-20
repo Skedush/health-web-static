@@ -99,7 +99,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
           {entryInfoList &&
             entryInfoList.length > 0 &&
             entryInfoList.map(item => (
-              <TabPane tab={item.category === 3 ? '精简版' : '详细版'} key={item.id}>
+              <TabPane tab={item.category === 3 ? '272症狀' : '320病因'} key={item.id}>
                 <List
                   header={<div>填表人员列表</div>}
                   footer={null}
@@ -168,7 +168,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
           entryInfoList.map(item => (
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
               <div>
-                {item.category === 3 ? '精简：' : '详细：'}
+                {item.category === 3 ? '272症狀：' : '320病因：'}
                 <a target={'_blank'} href={'https://cjsq.net/?id=' + item.id}>
                   {'https://cjsq.net/?id=' + item.id}
                 </a>
