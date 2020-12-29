@@ -168,7 +168,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
           entryInfoList.map(item => (
             <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
               <div>
-                {item.category.name}
+                {item.category.name}：
                 <a target={'_blank'} href={'https://cjsq.net/?id=' + item.id}>
                   {'https://cjsq.net/?id=' + item.id}
                 </a>
