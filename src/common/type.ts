@@ -1,9 +1,10 @@
-import { Action, AnyAction } from 'redux';
-import { History } from 'history';
 import { AppState } from '@/models/app';
-import { HomeState } from '@/pages/Dashboard/Home/model';
 import { FillFormState } from '@/pages/Dashboard/FillForm/model';
+import { HomeState } from '@/pages/Dashboard/Home/model';
 import { ResultState } from '@/pages/Dashboard/Result/model';
+import { TitleState } from '@/pages/Dashboard/Title/model';
+import { History } from 'history';
+import { Action, AnyAction } from 'redux';
 
 export interface Dispatch<A extends Action = AnyAction> {
   <T extends A>(action: T): any;
@@ -24,6 +25,7 @@ export interface GlobalState {
   fillForm: FillFormState;
   result: ResultState;
   loading: LoadingState;
+  title: TitleState;
 }
 
 export interface UmiComponentProps {

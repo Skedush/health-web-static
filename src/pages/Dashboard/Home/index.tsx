@@ -4,7 +4,7 @@
 // import dark from '@/themes/templates/dark';
 // import light from '@/themes/templates/light';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import { Button, Confirm, List, Message, SearchForm, Tabs } from '@/components/Library';
+import { Button, Confirm, List, Message, ModalForm, SearchForm, Tabs } from '@/components/Library';
 import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
 import { router } from '@/utils';
 import { connect } from '@/utils/decorators';
@@ -25,6 +25,10 @@ const mapStateToProps = ({ home, loading: { effects } }: GlobalState) => {
     userEntryList: home.userEntryList,
     entryInfoList: home.entryInfoList,
     getUserEntryListLoading: effects['home/getUserEntryList'],
+    updatePassWordLoading: effects['home/updatePasswordAndUsername'],
+    titleDetail: home.titleDetail,
+    updateTitleLoading: effects['home/updateTitle'],
+    getTitleDetailLoading: effects['home/getTitleDetail'],
   };
 };
 
@@ -34,6 +38,8 @@ type HomeProps = HomeStateProps & UmiComponentProps & FormComponentProps;
 interface HomeState {
   entryInfo: number;
   searchFileds: any;
+  passWordModifyModalVisible: boolean;
+  titleEditModalVisible: boolean;
 }
 
 @connect(
@@ -41,12 +47,16 @@ interface HomeState {
   null,
 )
 class Home extends PureComponent<HomeProps, HomeState> {
+  titleModelForm: WrappedFormUtils;
+  passWordModelForm: WrappedFormUtils;
   searchForm: WrappedFormUtils;
   confirmRef: RefObject<Confirm> = createRef();
 
   constructor(props: Readonly<HomeProps>) {
     super(props);
     this.state = {
+      titleEditModalVisible: false,
+      passWordModifyModalVisible: false,
       entryInfo: 0,
       searchFileds: { page: 1 },
     };
@@ -99,7 +109,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
           {entryInfoList &&
             entryInfoList.length > 0 &&
             entryInfoList.map(item => (
-              <TabPane tab={item.category.name} key={item.id}>
+              <TabPane tab={item.title.title_name} key={item.id}>
                 <List
                   header={<div>填表人员列表</div>}
                   footer={null}
@@ -147,6 +157,8 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   renderShareLink() {
     const { entryInfoList } = this.props;
+    const userInfo = store.get('userInfo');
+    const { isTitle } = userInfo;
     return (
       <div className={classNames(styles.link, 'flexColCenter')}>
         {/* <div>ID版</div>
@@ -166,20 +178,30 @@ class Home extends PureComponent<HomeProps, HomeState> {
         <div>原版</div> */}
         {entryInfoList.length > 0 &&
           entryInfoList.map(item => (
-            <div key={item.id} className={classNames('flexStart', 'itemCenter')}>
-              <div>
-                {item.category.name}：
+            <div key={item.id} className={classNames('flexBetween', 'itemCenter')}>
+              <div className={classNames('flexStart', 'itemCenter')}>
+                <div className={styles.title}>{item.title.title_name}</div>：
                 <a target={'_blank'} href={'https://cjsq.net/?id=' + item.id}>
                   {'https://cjsq.net/?id=' + item.id}
                 </a>
               </div>
-              <CopyToClipboard
-                text={'https://cjsq.net/?id=' + item.id}
-                // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
-                onCopy={this.copySuccess}
-              >
-                <Button customtype={'master'}>复制链接</Button>
-              </CopyToClipboard>
+              <div className={classNames('flexEnd', 'itemCenter')}>
+                <CopyToClipboard
+                  text={'https://cjsq.net/?id=' + item.id}
+                  // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
+                  onCopy={this.copySuccess}
+                >
+                  <Button customtype={'icon'} title="复制链接" icon="copy" />
+                </CopyToClipboard>
+                {isTitle && (
+                  <Button
+                    customtype={'icon'}
+                    title="复制链接"
+                    icon="edit"
+                    onClick={() => this.openEditTitleModal(item.title.id)}
+                  />
+                )}
+              </div>
             </div>
           ))}
       </div>
@@ -196,6 +218,104 @@ class Home extends PureComponent<HomeProps, HomeState> {
     );
   }
 
+  renderPassWordModalForm() {
+    const { passWordModifyModalVisible } = this.state;
+    const { updatePassWordLoading } = this.props;
+    const userInfo = store.get('userInfo');
+    const props = {
+      items: [
+        {
+          type: 'input',
+          field: 'username',
+          disabled: true,
+          autoComplete: 'new-password',
+          placeholder: '用户名',
+          initialValue: userInfo ? userInfo.username : '',
+          rules: [{ required: true, message: '请输入用户名!' }],
+          fill: true,
+        },
+        {
+          type: 'password',
+          field: 'password',
+          autoComplete: 'new-password',
+          placeholder: '新密码',
+          rules: [{ required: true, message: '请输入新密码!' }],
+          fill: true,
+        },
+        {
+          type: 'password',
+          field: 'reNewPassword',
+          autoComplete: 'new-password',
+          placeholder: '再次输入新密码',
+          fill: true,
+          rules: [
+            { required: true, message: '请再次输入新密码!' },
+            { validator: this.secondPwdValidator },
+          ],
+        },
+      ],
+      actions: [
+        {
+          customtype: 'select',
+          title: '确定',
+          htmlType: 'submit' as 'submit',
+          loading: updatePassWordLoading,
+        },
+        { customtype: 'second', title: '暂不修改', onClick: this.onCancelModel },
+      ],
+      onSubmit: this.onPassWordModelSubmit,
+      title: '修改账号及密码',
+      onCancel: this.onCancelModel,
+      destroyOnClose: true,
+      width: '80%',
+      maskClosable: true,
+      bodyStyle: {},
+      modify: passWordModifyModalVisible,
+      onGetFormRef: (modelForm: WrappedFormUtils) => {
+        this.passWordModelForm = modelForm;
+      },
+    };
+    return <ModalForm {...props} />;
+  }
+
+  renderTitleForm() {
+    const { titleEditModalVisible } = this.state;
+    const { titleDetail, updateTitleLoading } = this.props;
+    const props = {
+      items: [
+        {
+          type: 'input',
+          field: 'title_name',
+          placeholder: '副标题名称',
+          initialValue: titleDetail ? titleDetail.title_name : '',
+          rules: [{ required: true, message: '请输入副标题名称！' }],
+          fill: true,
+        },
+      ],
+      actions: [
+        {
+          customtype: 'select',
+          title: '确定',
+          htmlType: 'submit' as 'submit',
+          loading: updateTitleLoading,
+        },
+        { customtype: 'second', title: '暂不修改', onClick: this.onCancelModel },
+      ],
+      onSubmit: this.onTitleModelSubmit,
+      title: '修改副标题',
+      onCancel: this.onCancelModel,
+      destroyOnClose: true,
+      width: '80%',
+      maskClosable: true,
+      bodyStyle: {},
+      modify: titleEditModalVisible,
+      onGetFormRef: (modelForm: WrappedFormUtils) => {
+        this.titleModelForm = modelForm;
+      },
+    };
+    return <ModalForm {...props} />;
+  }
+
   render() {
     const userInfo = store.get('userInfo');
     let isStaff = false;
@@ -204,13 +324,93 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
     return (
       <div className={classNames('height100', 'flexColCenter', 'itemCenter', styles.container)}>
+        <div className={classNames('flexEnd', styles.passwordBtn)}>
+          <div />
+          <Button customtype={'master'} onClick={this.openEditPassWordModal}>
+            修改账户密码
+          </Button>
+        </div>
         {isStaff && this.renderShareLink()}
         {!isStaff && this.renderLinkButton()}
         {this.renderSearchForm()}
         {this.renderList()}
+        {this.renderPassWordModalForm()}
+        {this.renderTitleForm()}
       </div>
     );
   }
+
+  onTitleModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    this.titleModelForm.validateFields(async (err, fieldsValue) => {
+      if (!err) {
+        const { titleDetail } = this.props;
+        fieldsValue.id = titleDetail.id;
+        const { success } = await dispatch({
+          type: 'home/updateTitle',
+          payload: fieldsValue,
+        });
+        if (success) {
+          Message.success('修改成功');
+          this.onCancelModel();
+        }
+      }
+    });
+  };
+
+  onPassWordModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    this.passWordModelForm.validateFields(async (err, fieldsValue) => {
+      if (!err) {
+        delete fieldsValue.reNewPassword;
+        const userInfo = store.get('userInfo');
+        fieldsValue.id = userInfo.id;
+        const { success } = await dispatch({
+          type: 'home/updatePasswordAndUsername',
+          payload: fieldsValue,
+        });
+        if (success) {
+          Message.success('修改成功');
+          this.onCancelModel();
+        }
+      }
+    });
+  };
+
+  secondPwdValidator = (rule, value, callback) => {
+    const newPwd = this.passWordModelForm.getFieldValue('password');
+    if (newPwd && newPwd !== value) {
+      callback(new Error('新密码不一致！'));
+    } else {
+      callback();
+    }
+  };
+
+  onCancelModel = () => {
+    this.setState({
+      passWordModifyModalVisible: false,
+      titleEditModalVisible: false,
+    });
+  };
+
+  openEditPassWordModal = () => {
+    this.setState({
+      passWordModifyModalVisible: true,
+    });
+  };
+
+  openEditTitleModal = async id => {
+    const data = await this.props.dispatch({
+      type: 'home/getTitleDetail',
+      payload: { id },
+    });
+    if (data)
+      this.setState({
+        titleEditModalVisible: true,
+      });
+  };
 
   onTabsChange = key => {
     const { searchFileds } = this.state;

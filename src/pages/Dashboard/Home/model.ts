@@ -1,16 +1,23 @@
 // import { stringify } from 'qs';
 // import store from 'store';
+import { CommonModelType } from '@/common/model';
 import api from '@/services/index';
 // import config from '@/utils/config';
 import mdlExtend from '@/utils/model';
-import { CommonModelType } from '@/common/model';
 import { Effect, Subscription } from 'dva';
 
-const { getEntryInfoList, getUserEntryList } = api;
+const {
+  getEntryInfoList,
+  getUserEntryList,
+  updatePasswordAndUsername,
+  getTitleDetail,
+  updateTitle,
+} = api;
 
 export interface HomeState {
   userEntryList: any;
   entryInfoList: any;
+  titleDetail: any;
 }
 
 export interface HomeModelType extends CommonModelType {
@@ -19,6 +26,9 @@ export interface HomeModelType extends CommonModelType {
   effects: {
     getEntryInfoList: Effect;
     getUserEntryList: Effect;
+    updatePasswordAndUsername: Effect;
+    getTitleDetail: Effect;
+    updateTitle: Effect;
   };
   reducers: {};
   subscriptions?: { setup: Subscription };
@@ -30,6 +40,7 @@ const HomeModel: HomeModelType = {
   state: {
     userEntryList: { content: [] },
     entryInfoList: [],
+    titleDetail: {},
   },
 
   effects: {
@@ -45,6 +56,11 @@ const HomeModel: HomeModelType = {
         return res.data;
       }
     },
+
+    *updatePasswordAndUsername({ payload }, { select, call, put }) {
+      return yield call(updatePasswordAndUsername, payload);
+    },
+
     *getUserEntryList({ payload }, { select, call, put }) {
       const res = yield call(getUserEntryList, payload);
       if (res) {
@@ -69,6 +85,28 @@ const HomeModel: HomeModelType = {
             },
           });
         }
+      }
+    },
+
+    *getTitleDetail({ payload }, { call, put }) {
+      const res = yield call(getTitleDetail, payload);
+      if (res && res.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            titleDetail: res.data,
+          },
+        });
+        return res.data;
+      }
+    },
+
+    *updateTitle({ payload }, { call, put }) {
+      const res = yield call(updateTitle, payload);
+      if (res) {
+        yield put({ type: 'getEntryInfoList' });
+
+        return res;
       }
     },
   },

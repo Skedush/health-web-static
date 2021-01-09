@@ -84,11 +84,9 @@ class ModalForm extends PureComponent<ModalFormProps, ModalFormState> {
       width,
       bodyStyle,
       add,
-      personModel,
-      personAdd,
       modify,
-      companyDetails,
       onGetFormRef,
+      ...options
     } = this.props;
     const formProps = { items, actions, onSubmit, modify, onGetFormRef };
     // const cols = this.getCol(items, actions);
@@ -103,11 +101,11 @@ class ModalForm extends PureComponent<ModalFormProps, ModalFormState> {
         bodyStyle={bodyStyle}
         destroyOnClose={destroyOnClose}
         onCancel={onCancel}
-        visible={companyDetails || add || modify || personModel || personAdd || this.state.visible}
+        visible={add || modify || this.state.visible}
         footer={null}
-        maskClosable={false}
         title={title}
         wrapClassName={styles.model}
+        {...options}
       >
         <FormSimple {...formProps} />
         {/* <Form

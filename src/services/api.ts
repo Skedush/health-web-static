@@ -9,4 +9,10 @@ export default {
   addUserEntry: 'POST /userEntry/',
 
   getResult: 'GET /result/:id/',
+
+  getTitleDetail: 'GET /title/:id/',
+
+  updateTitle: 'PATCH /title/:id/',
+
+  updatePasswordAndUsername: 'PATCH /user/:id/',
 };

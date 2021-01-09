@@ -2,9 +2,21 @@
 .container {
   overflow-y: auto;
   padding-bottom: 100px;
+  .passwordBtn {
+    width: 100%;
+    padding: 50px 50px 0 0;
+  }
+
   .link {
     margin-bottom: @ld-spacing-m;
     padding: 200px 0 100px 0;
+    width: 90%;
+    .title {
+      max-width: 500px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .loadingTips {
     text-align: center;
