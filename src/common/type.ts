@@ -2,7 +2,7 @@ import { AppState } from '@/models/app';
 import { FillFormState } from '@/pages/Dashboard/FillForm/model';
 import { HomeState } from '@/pages/Dashboard/Home/model';
 import { ResultState } from '@/pages/Dashboard/Result/model';
-import { TitleState } from '@/pages/Dashboard/Title/model';
+import { UserState } from '@/pages/Dashboard/User/model';
 import { History } from 'history';
 import { Action, AnyAction } from 'redux';
 
@@ -25,7 +25,7 @@ export interface GlobalState {
   fillForm: FillFormState;
   result: ResultState;
   loading: LoadingState;
-  title: TitleState;
+  user: UserState;
 }
 
 export interface UmiComponentProps {

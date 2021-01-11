@@ -9,7 +9,7 @@ import { Effect, Subscription } from 'dva';
 const {
   getEntryInfoList,
   getUserEntryList,
-  updatePasswordAndUsername,
+  // updatePasswordAndUsername,
   getTitleDetail,
   updateTitle,
 } = api;
@@ -26,7 +26,7 @@ export interface HomeModelType extends CommonModelType {
   effects: {
     getEntryInfoList: Effect;
     getUserEntryList: Effect;
-    updatePasswordAndUsername: Effect;
+    // updatePasswordAndUsername: Effect;
     getTitleDetail: Effect;
     updateTitle: Effect;
   };
@@ -57,9 +57,9 @@ const HomeModel: HomeModelType = {
       }
     },
 
-    *updatePasswordAndUsername({ payload }, { select, call, put }) {
-      return yield call(updatePasswordAndUsername, payload);
-    },
+    // *updatePasswordAndUsername({ payload }, { select, call, put }) {
+    //   return yield call(updatePasswordAndUsername, payload);
+    // },
 
     *getUserEntryList({ payload }, { select, call, put }) {
       const res = yield call(getUserEntryList, payload);

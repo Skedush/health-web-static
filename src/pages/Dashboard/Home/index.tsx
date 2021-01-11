@@ -25,7 +25,7 @@ const mapStateToProps = ({ home, loading: { effects } }: GlobalState) => {
     userEntryList: home.userEntryList,
     entryInfoList: home.entryInfoList,
     getUserEntryListLoading: effects['home/getUserEntryList'],
-    updatePassWordLoading: effects['home/updatePasswordAndUsername'],
+    // updatePassWordLoading: effects['home/updatePasswordAndUsername'],
     titleDetail: home.titleDetail,
     updateTitleLoading: effects['home/updateTitle'],
     getTitleDetailLoading: effects['home/getTitleDetail'],
@@ -48,7 +48,7 @@ interface HomeState {
 )
 class Home extends PureComponent<HomeProps, HomeState> {
   titleModelForm: WrappedFormUtils;
-  passWordModelForm: WrappedFormUtils;
+  // passWordModelForm: WrappedFormUtils;
   searchForm: WrappedFormUtils;
   confirmRef: RefObject<Confirm> = createRef();
 
@@ -218,65 +218,65 @@ class Home extends PureComponent<HomeProps, HomeState> {
     );
   }
 
-  renderPassWordModalForm() {
-    const { passWordModifyModalVisible } = this.state;
-    const { updatePassWordLoading } = this.props;
-    const userInfo = store.get('userInfo');
-    const props = {
-      items: [
-        {
-          type: 'input',
-          field: 'username',
-          disabled: true,
-          autoComplete: 'new-password',
-          placeholder: '用户名',
-          initialValue: userInfo ? userInfo.username : '',
-          rules: [{ required: true, message: '请输入用户名!' }],
-          fill: true,
-        },
-        {
-          type: 'password',
-          field: 'password',
-          autoComplete: 'new-password',
-          placeholder: '新密码',
-          rules: [{ required: true, message: '请输入新密码!' }],
-          fill: true,
-        },
-        {
-          type: 'password',
-          field: 'reNewPassword',
-          autoComplete: 'new-password',
-          placeholder: '再次输入新密码',
-          fill: true,
-          rules: [
-            { required: true, message: '请再次输入新密码!' },
-            { validator: this.secondPwdValidator },
-          ],
-        },
-      ],
-      actions: [
-        {
-          customtype: 'select',
-          title: '确定',
-          htmlType: 'submit' as 'submit',
-          loading: updatePassWordLoading,
-        },
-        { customtype: 'second', title: '暂不修改', onClick: this.onCancelModel },
-      ],
-      onSubmit: this.onPassWordModelSubmit,
-      title: '修改账号及密码',
-      onCancel: this.onCancelModel,
-      destroyOnClose: true,
-      width: '80%',
-      maskClosable: true,
-      bodyStyle: {},
-      modify: passWordModifyModalVisible,
-      onGetFormRef: (modelForm: WrappedFormUtils) => {
-        this.passWordModelForm = modelForm;
-      },
-    };
-    return <ModalForm {...props} />;
-  }
+  // renderPassWordModalForm() {
+  //   const { passWordModifyModalVisible } = this.state;
+  //   const { updatePassWordLoading } = this.props;
+  //   const userInfo = store.get('userInfo');
+  //   const props = {
+  //     items: [
+  //       {
+  //         type: 'input',
+  //         field: 'username',
+  //         disabled: true,
+  //         autoComplete: 'new-password',
+  //         placeholder: '用户名',
+  //         initialValue: userInfo ? userInfo.username : '',
+  //         rules: [{ required: true, message: '请输入用户名!' }],
+  //         fill: true,
+  //       },
+  //       {
+  //         type: 'password',
+  //         field: 'password',
+  //         autoComplete: 'new-password',
+  //         placeholder: '新密码',
+  //         rules: [{ required: true, message: '请输入新密码!' }],
+  //         fill: true,
+  //       },
+  //       {
+  //         type: 'password',
+  //         field: 'reNewPassword',
+  //         autoComplete: 'new-password',
+  //         placeholder: '再次输入新密码',
+  //         fill: true,
+  //         rules: [
+  //           { required: true, message: '请再次输入新密码!' },
+  //           { validator: this.secondPwdValidator },
+  //         ],
+  //       },
+  //     ],
+  //     actions: [
+  //       {
+  //         customtype: 'select',
+  //         title: '确定',
+  //         htmlType: 'submit' as 'submit',
+  //         loading: updatePassWordLoading,
+  //       },
+  //       { customtype: 'second', title: '暂不修改', onClick: this.onCancelModel },
+  //     ],
+  //     onSubmit: this.onPassWordModelSubmit,
+  //     title: '修改账号及密码',
+  //     onCancel: this.onCancelModel,
+  //     destroyOnClose: true,
+  //     width: '80%',
+  //     maskClosable: true,
+  //     bodyStyle: {},
+  //     modify: passWordModifyModalVisible,
+  //     onGetFormRef: (modelForm: WrappedFormUtils) => {
+  //       this.passWordModelForm = modelForm;
+  //     },
+  //   };
+  //   return <ModalForm {...props} />;
+  // }
 
   renderTitleForm() {
     const { titleEditModalVisible } = this.state;
@@ -324,17 +324,17 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
     return (
       <div className={classNames('height100', 'flexColCenter', 'itemCenter', styles.container)}>
-        <div className={classNames('flexEnd', styles.passwordBtn)}>
+        {/* <div className={classNames('flexEnd', styles.passwordBtn)}>
           <div />
           <Button customtype={'master'} onClick={this.openEditPassWordModal}>
             修改账户密码
           </Button>
-        </div>
+        </div> */}
         {isStaff && this.renderShareLink()}
         {!isStaff && this.renderLinkButton()}
         {this.renderSearchForm()}
         {this.renderList()}
-        {this.renderPassWordModalForm()}
+        {/* {this.renderPassWordModalForm()} */}
         {this.renderTitleForm()}
       </div>
     );
@@ -359,34 +359,34 @@ class Home extends PureComponent<HomeProps, HomeState> {
     });
   };
 
-  onPassWordModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { dispatch } = this.props;
-    this.passWordModelForm.validateFields(async (err, fieldsValue) => {
-      if (!err) {
-        delete fieldsValue.reNewPassword;
-        const userInfo = store.get('userInfo');
-        fieldsValue.id = userInfo.id;
-        const { success } = await dispatch({
-          type: 'home/updatePasswordAndUsername',
-          payload: fieldsValue,
-        });
-        if (success) {
-          Message.success('修改成功');
-          this.onCancelModel();
-        }
-      }
-    });
-  };
+  // onPassWordModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const { dispatch } = this.props;
+  //   this.passWordModelForm.validateFields(async (err, fieldsValue) => {
+  //     if (!err) {
+  //       delete fieldsValue.reNewPassword;
+  //       const userInfo = store.get('userInfo');
+  //       fieldsValue.id = userInfo.id;
+  //       const { success } = await dispatch({
+  //         type: 'home/updatePasswordAndUsername',
+  //         payload: fieldsValue,
+  //       });
+  //       if (success) {
+  //         Message.success('修改成功');
+  //         this.onCancelModel();
+  //       }
+  //     }
+  //   });
+  // };
 
-  secondPwdValidator = (rule, value, callback) => {
-    const newPwd = this.passWordModelForm.getFieldValue('password');
-    if (newPwd && newPwd !== value) {
-      callback(new Error('新密码不一致！'));
-    } else {
-      callback();
-    }
-  };
+  // secondPwdValidator = (rule, value, callback) => {
+  //   const newPwd = this.passWordModelForm.getFieldValue('password');
+  //   if (newPwd && newPwd !== value) {
+  //     callback(new Error('新密码不一致！'));
+  //   } else {
+  //     callback();
+  //   }
+  // };
 
   onCancelModel = () => {
     this.setState({
@@ -395,11 +395,11 @@ class Home extends PureComponent<HomeProps, HomeState> {
     });
   };
 
-  openEditPassWordModal = () => {
-    this.setState({
-      passWordModifyModalVisible: true,
-    });
-  };
+  // openEditPassWordModal = () => {
+  //   this.setState({
+  //     passWordModifyModalVisible: true,
+  //   });
+  // };
 
   openEditTitleModal = async id => {
     const data = await this.props.dispatch({
