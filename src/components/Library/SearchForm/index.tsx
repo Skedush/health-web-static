@@ -11,7 +11,6 @@ import Row from '../Row';
 import ExpandBtn from '../ExpandBtn';
 import moment from 'moment';
 import { chunk } from 'lodash';
-import AntdIcon from '../Icon';
 
 const FormItem = Form.Item;
 const DEFAULT_COLUMN_NUM_OF_ROW = 4;
@@ -200,7 +199,6 @@ class SearchForm extends PureComponent<SearchFormProps, SearchState> {
       placeholder,
       children,
       onChange,
-      suffix,
       maxLength,
       disabled,
       ...option
@@ -208,12 +206,7 @@ class SearchForm extends PureComponent<SearchFormProps, SearchState> {
     switch (type) {
       case 'input':
         cpt = (
-          <Input
-            placeholder={placeholder as string}
-            maxLength={maxLength}
-            suffix={suffix || <AntdIcon className={styles.suffixIcon} type={'search'} />}
-            disabled={disabled}
-          />
+          <Input placeholder={placeholder as string} maxLength={maxLength} disabled={disabled} />
         );
         break;
 
@@ -262,7 +255,7 @@ class SearchForm extends PureComponent<SearchFormProps, SearchState> {
     }
 
     return (
-      <Col key={`element${index}`} md={Math.floor((24 - 5) / this.columnNumOfRow)} sm={24}>
+      <Col key={`element${index}`} md={14} sm={24}>
         <FormItem>
           {getFieldDecorator(field, {
             initialValue,
