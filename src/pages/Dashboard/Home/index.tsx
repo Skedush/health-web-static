@@ -80,7 +80,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   renderSearchForm() {
     const SearchFormProps = {
-      items: [{ type: 'input', field: 'search', placeholder: '姓名或电话或ID' }],
+      items: [{ type: 'input', field: 'search', placeholder: '姓名或电话或ID或备注' }],
       actions: [
         { customtype: 'select', title: '查询', htmlType: 'submit' as 'submit' },
         { customtype: 'reset', title: '重置', onClick: this.searchFormReset },

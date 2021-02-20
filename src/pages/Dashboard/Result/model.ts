@@ -1,9 +1,9 @@
 // import { stringify } from 'qs';
 // import store from 'store';
+import { CommonModelType } from '@/common/model';
 import api from '@/services/index';
 // import config from '@/utils/config';
 import mdlExtend from '@/utils/model';
-import { CommonModelType } from '@/common/model';
 import { Effect, Subscription } from 'dva';
 
 const { getResult } = api;
@@ -70,11 +70,11 @@ const ResultModel: ResultModelType = {
             }
           });
         });
-        if (entryGroups && entryGroups.length > 2) {
-          entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
-        } else if (entryGroups && entryGroups.length > 1) {
-          entryGroups[1] = entryGroups.splice(0, 1, entryGroups[1])[0];
-        }
+        // if (entryGroups && entryGroups.length > 2) {
+        //   entryGroups[2] = entryGroups.splice(0, 1, entryGroups[2])[0];
+        // } else if (entryGroups && entryGroups.length > 1) {
+        //   entryGroups[1] = entryGroups.splice(0, 1, entryGroups[1])[0];
+        // }
         yield put({
           type: 'updateState',
           payload: {

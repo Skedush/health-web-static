@@ -109,9 +109,9 @@ class Result extends PureComponent<ResultProps, ResultState> {
         <div className={classNames(styles.row)}>
           <div>备注或其他症状：{resultData.remark}</div>
         </div>
-        {len > 0 && (
-          <Card className={styles.card} title={this.renderEntrysTitle(entryGroups[len - 1])}>
-            {entryGroups[len - 1].entrys.map(entry => (
+        {/* {len > 0 && (
+          <Card className={styles.card} title={this.renderEntrysTitle(entryGroups[0])}>
+            {entryGroups[0].entrys.map(entry => (
               <Card.Grid
                 onClick={() => this.nav(entry)}
                 style={{ width: '50%', textAlign: 'center' }}
@@ -124,33 +124,33 @@ class Result extends PureComponent<ResultProps, ResultState> {
               </Card.Grid>
             ))}
           </Card>
-        )}
+        )} */}
 
         {!isEmpty(entryGroups) && len > 1 && (
           <div id={'card'} style={{ width: '100%' }}>
             {entryGroups.map((item, index) => {
-              if (index === len - 1) {
-                return null;
-              } else {
-                return (
-                  <Card className={styles.card} title={this.renderTitle(item.category)}>
-                    {item.entrys.map(entry => (
-                      <Card.Grid
-                        onClick={() => this.nav(entry)}
-                        style={{ width: '50%', textAlign: 'center' }}
-                        key={entry.id}
-                      >
-                        <div className={classNames('flexCenter', 'itemCenter')}>
-                          <div className={styles.entry}>{entry.title}&nbsp;</div>
-                          <div className={styles.number}>
-                            {entry.number > 2 ? entry.number + this.random() : entry.number}
-                          </div>
+              // if (index === 0) {
+              //   return null;
+              // } else {
+              return (
+                <Card className={styles.card} title={this.renderTitle(item.category)} key={index}>
+                  {item.entrys.map(entry => (
+                    <Card.Grid
+                      onClick={() => this.nav(entry)}
+                      style={{ width: '50%', textAlign: 'center' }}
+                      key={entry.id}
+                    >
+                      <div className={classNames('flexCenter', 'itemCenter')}>
+                        <div className={styles.entry}>{entry.title}&nbsp;</div>
+                        <div className={styles.number}>
+                          {entry.number > 2 ? entry.number + this.random() : entry.number}
                         </div>
-                      </Card.Grid>
-                    ))}
-                  </Card>
-                );
-              }
+                      </div>
+                    </Card.Grid>
+                  ))}
+                </Card>
+              );
+              // }
             })}
             {/* <Card className={styles.card} title={this.renderTitle(entryGroups[0].category)}>
               {entryGroups[0].entrys.map(entry => (
