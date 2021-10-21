@@ -24,7 +24,6 @@ const AppModel: AppModelType = {
   effects: {
     *setUp({ payload }, { select, call, put, all }) {
       if (pathMatchRegexp(['#/', '#/login'], window.location.hash)) {
-        console.log('return: ');
         return;
       }
       yield all([]);

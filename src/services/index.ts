@@ -1,5 +1,5 @@
-import request, { RequestConfig } from '@/utils/request';
 import Config from '@/utils/config';
+import request, { RequestConfig } from '@/utils/request';
 import api from './api';
 
 const { apiPrefix } = Config;

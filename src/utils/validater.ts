@@ -14,7 +14,7 @@ const IP_REGEXP =
 const PORT_REGEXP = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])$/;
 
 const CARNUMBER_REGEXP: RegExp = /^(((([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/;
-
+const PASSWORD_REGEXP = /^(?:\d|[a-zA-Z]|[!@#$%^&*]){4,18}$/;
 export interface IdCardInfo {
   addrCode: number; // 地址码信息
   addr: string; // 地址信息, 只在实例化时传入了GB2260时返回
@@ -22,6 +22,22 @@ export interface IdCardInfo {
   sex: number; // 性别，0为女，1为男
   checkBit: string; // 校验位，仅当18位时存在
   length: number; // 身份证类型，15位或18位
+}
+
+export function validationPassword(val: string): boolean {
+  if (!val || val.length <= 0) {
+    return false;
+  }
+  const arr = val.match(PASSWORD_REGEXP);
+  return !arr;
+}
+
+export function isPassword(rule, value, callback) {
+  if (value) {
+    !validationPassword(value) ? callback() : callback(new Error('请输入4-18位密码'));
+  } else {
+    callback();
+  }
 }
 
 export function validationPhone(phone: string): boolean {

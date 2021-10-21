@@ -2,6 +2,8 @@ export default {
   logout: 'GET /logout',
   login: 'POST /login',
 
+  createUser: 'POST /user/',
+
   getEntryInfoList: 'GET /entryInfo/',
   getUserEntryList: 'GET /userEntry/',
 

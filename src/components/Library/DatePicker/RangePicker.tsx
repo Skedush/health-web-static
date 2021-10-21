@@ -74,7 +74,6 @@ class RangePicker extends PureComponent<RangePickerProps, RangePickerState> {
     );
   }
   onCalendarChange = (dates, dateStrings) => {
-    console.log('dates: ', dates);
     this.setState({
       earlyTime: dates[0],
     });

@@ -1,22 +1,22 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { cloneDeep, isEmpty } from 'lodash';
-import store from 'store';
-import pathToRegexp from 'path-to-regexp';
 import { Message } from '@/components/Library';
-import {
-  SUCCESS_ADD,
-  SUCCESS_UPDATE,
-  SUCCESS_DELETE,
-  SUCCESS_IMPOWER,
-  SUCCESS_LOGOUT,
-} from '@/utils/message';
+import { router } from '@/utils';
 import {
   CANCEL_REQUEST_MESSAGE,
   ERROR_REQUEST_MESSAGE,
   MESSAGE_CONFIG_MAX_COUNT,
 } from '@/utils/constant';
+import {
+  SUCCESS_ADD,
+  SUCCESS_DELETE,
+  SUCCESS_IMPOWER,
+  SUCCESS_LOGOUT,
+  SUCCESS_UPDATE,
+} from '@/utils/message';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { cloneDeep, isEmpty } from 'lodash';
+import pathToRegexp from 'path-to-regexp';
 import qs from 'qs';
-import { router } from '@/utils';
+import store from 'store';
 
 const { CancelToken } = axios;
 window.cancelRequest = new Map();
@@ -56,11 +56,15 @@ export interface RequestConfig extends AxiosRequestConfig {
  * @param {object} options 请求选项
  * @returns {Promise} 请求结果
  */
+// eslint-disable-next-line max-lines-per-function
 export default function request(options: RequestConfig): Promise<ResponseData | undefined> {
   const { data, url, method = 'get', autoMessage = true } = options;
   // django设置了token认证，不需要token认证的接口也会抛认证不通过，需要将Authorization置为空
-  // if (store.get('Authorization'))
-  axios.defaults.headers['Authorization'] = 'JWT ' + store.get('Authorization');
+  if (store.get('Authorization')) {
+    axios.defaults.headers['Authorization'] = 'JWT ' + store.get('Authorization');
+  } else {
+    delete axios.defaults.headers['Authorization'];
+  }
   if (!url) {
     throw new Error('request url none');
   }
@@ -140,16 +144,19 @@ export default function request(options: RequestConfig): Promise<ResponseData | 
         statusCode = 600;
         msg = error.message;
       }
-
+      let errorData;
+      if (response) {
+        errorData = response.data.data;
+      }
       if (!msg || msg.length <= 0) {
         msg = ERROR_REQUEST_MESSAGE;
       }
-
       Message.error(msg);
       return {
         success: false,
         statusCode,
         message: msg,
+        data: errorData,
       };
     });
 }

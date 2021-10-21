@@ -9,6 +9,8 @@ import moment from 'moment';
 import React, { PureComponent } from 'react';
 import store from 'store';
 import styles from './index.less';
+import Config from '@/utils/config';
+const { domain } = Config;
 
 const mapStateToProps = ({ result }: GlobalState) => {
   return {
@@ -110,7 +112,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
           <div>备注或其他症状：{resultData.remark}</div>
         </div>
 
-        {!isEmpty(entryGroups) && len > 1 && (
+        {!isEmpty(entryGroups) && len > 0 && (
           <div id={'card'} style={{ width: '100%' }}>
             {entryGroups.map((item, index) => {
               return (
@@ -127,9 +129,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
                       >
                         <div className={classNames('flexCenter', 'itemCenter')}>
                           <div className={styles.entry}>{entry.title}&nbsp;</div>
-                          <div className={styles.number}>
-                            {entry.number > 2 ? entry.number + this.random() : entry.number}
-                          </div>
+                          <div className={styles.number}>{entry.number}</div>
                         </div>
                       </Card.Grid>
                     );
@@ -163,7 +163,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
   nav = entry => {
     const userInfo = store.get('userInfo');
     const { fxId } = userInfo;
-    window.open(`http://${fxId}.cjsq.net/xx/ShowArticle.asp?ArticleID=${entry.remark}`);
+    window.open(`http://${fxId}.${domain}/xx/ShowArticle.asp?ArticleID=${entry.remark}`);
   };
 
   random = () => {

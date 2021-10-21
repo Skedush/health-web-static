@@ -15,6 +15,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Scrollbar from 'react-perfect-scrollbar';
 import store from 'store';
 import styles from './index.less';
+import Link from 'umi/link';
+import Config from '@/utils/config';
+const { domain, preDomain } = Config;
 
 const { TabPane } = Tabs;
 
@@ -134,7 +137,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
                         {isStaff && (
                           <div className={classNames('flexColStart', 'flexAuto')}>
                             <div className={classNames('flexBetween')}>
-                              <div style={{ width: '50%' }}>{item.name}</div>
+                              <Link
+                                to={`/dashboard/result/${item.id}`}
+                                target="_blank"
+                                style={{ width: '50%' }}
+                              >
+                                <div>{item.name}</div>
+                              </Link>
                               <div style={{ width: '50%' }}>{item.phone}</div>
                             </div>
                             <div className={styles.created}>{item.created}</div>
@@ -181,13 +190,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
             <div key={item.id} className={classNames('flexBetween', 'itemCenter')}>
               <div className={classNames('flexStart', 'itemCenter')}>
                 <div className={styles.title}>{item.title.title_name}</div>：
-                <a target={'_blank'} href={'https://cjsq.net/?id=' + item.id}>
-                  {'https://cjsq.net/?id=' + item.id}
+                <a target={'_blank'} href={`https://${preDomain}.${domain}/?id=` + item.id}>
+                  {`https://${preDomain}.${domain}/?id=` + item.id}
                 </a>
               </div>
               <div className={classNames('flexEnd', 'itemCenter')}>
                 <CopyToClipboard
-                  text={'https://cjsq.net/?id=' + item.id}
+                  text={`https://${preDomain}.${domain}/?id=` + item.id}
                   // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                   onCopy={this.copySuccess}
                 >
@@ -332,7 +341,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
         </div> */}
         {isStaff && this.renderShareLink()}
         {!isStaff && this.renderLinkButton()}
-        {this.renderSearchForm()}
+        {isStaff && this.renderSearchForm()}
         {this.renderList()}
         {/* {this.renderPassWordModalForm()} */}
         {this.renderTitleForm()}

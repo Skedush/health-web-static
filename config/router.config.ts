@@ -10,6 +10,11 @@ const routes: IRoute[] = [
     component: '../layouts',
     routes: [{ path: '/login', component: './Login' }],
   },
+  {
+    path: '/register',
+    component: '../layouts',
+    routes: [{ path: '/register', component: './Register' }],
+  },
 
   {
     path: '/dashboard',

@@ -5,6 +5,7 @@
     "build:test": "cross-env UMI_ENV=test umi build",
     "build:demo": "cross-env UMI_ENV=demo umi build",
     "build:prod": "cross-env UMI_ENV=prod umi build",
+    "build:xinjiang": "cross-env UMI_ENV=xinjiang umi build",
     "lint": "eslint --ext '.js,.jsx,.ts,.tsx' src",
     "tsc": "tsc -p ./ --noEmit",
     "start": "cross-env UMI_ENV=dev umi dev",

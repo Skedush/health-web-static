@@ -1,45 +1,44 @@
 import { CommonModelType } from '@/common/model';
-// import axios from 'axios';
 import { Message } from '@/components/Library';
 import api from '@/services';
 import { router } from '@/utils';
+// import axios from 'axios';
 import mdlExtend from '@/utils/model';
 import { Effect } from 'dva';
 import store from 'store';
 
-const { login } = api;
+const { createUser } = api;
 
-export interface LoginState {
+export interface UserState {
   userName?: string;
   password?: string;
 }
 
 export interface LoginModelType extends CommonModelType {
-  namespace: 'login';
-  state: LoginState;
+  namespace: 'user';
+  state: UserState;
   effects: {
-    login: Effect;
+    createUser: Effect;
   };
   reducers: {};
   subscriptions: {};
 }
 
 const LoginModel: LoginModelType = {
-  namespace: 'login',
+  namespace: 'user',
 
   state: {},
 
   effects: {
-    *login({ payload }, { call, put, all }) {
-      const res = yield call(login, payload);
-      if (res && res.data) {
-        // axios.defaults.headers['Authorization'] = 'JWT ' + res.data.token;
-        store.set('Authorization', res.data.token);
-        store.set('userInfo', res.data);
-        router.push('/dashboard');
+    *createUser({ payload }, { call, put, all }) {
+      store.remove('Authorization');
+      const res = yield call(createUser, payload);
+      if (res && res.success) {
+        Message.success('注册成功');
+        router.push('/login');
         return res;
       } else {
-        Message.error('账号密码错误或账号未激活');
+        Message.error(res.data.username);
         throw res;
       }
     },

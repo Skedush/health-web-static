@@ -6,8 +6,9 @@ declare module '*.less' {
 }
 
 declare var API_PREFIX: string;
-declare var CARD_READER_HOST: string;
-declare var CARD_READER_OPENED: boolean;
+declare var PRE_DOMAIN: string;
+declare var DETAIL_DOMAIN: string;
+declare var DOMAIN: string;
 declare interface Window {
   cancelRequest: any;
   less: any;

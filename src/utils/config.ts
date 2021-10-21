@@ -22,6 +22,12 @@ export default {
 
   // eslint-disable-next-line no-undef
   apiPrefix: API_PREFIX,
+  // eslint-disable-next-line no-undef
+  domain: DOMAIN,
+  // eslint-disable-next-line no-undef
+  preDomain: PRE_DOMAIN,
+  // eslint-disable-next-line no-undef
+  detailDomain: DETAIL_DOMAIN,
   fixedHeader: true, // sticky primary layout header
 
   /* Layout configuration, specify which layout to use for route. */

@@ -5,6 +5,7 @@ import styles from './index.less';
 import classNames from 'classnames';
 import { FormComponentProps } from '@/components/Library/type';
 import { Button, Input, Icon, Form } from '@/components/Library';
+import Link from 'umi/link';
 
 const mapStateToProps = (state: GlobalState) => ({});
 
@@ -46,9 +47,12 @@ class Login extends PureComponent<LoginProps> {
                 />,
               )}
             </Form.Item>
-            <Button customtype={'master'} htmlType={'submit'}>
-              登录
-            </Button>
+            <div className={'flexBetween itemCenter'}>
+              <Button customtype={'master'} htmlType={'submit'}>
+                登录
+              </Button>
+              <Link to={'/register'}>注册</Link>
+            </div>
           </Form>
         </div>
         {/* <div className={styles.loginBottom}>LIDIG Science and technology information co. LTD</div> */}
