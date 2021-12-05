@@ -11,9 +11,10 @@ import store from 'store';
 import styles from './index.less';
 import { router } from '@/utils';
 
-const mapStateToProps = ({ fillForm }: GlobalState) => {
+const mapStateToProps = ({ fillForm, loading: { effects } }: GlobalState) => {
   return {
     entryInfoDetail: fillForm.entryInfoDetail,
+    addUserEntryLoading: effects['fillForm/addUserEntry'],
   };
 };
 
@@ -72,7 +73,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
 
   // eslint-disable-next-line max-lines-per-function
   getHealthFormProps = () => {
-    const { entryInfoDetail } = this.props;
+    const { entryInfoDetail, addUserEntryLoading } = this.props;
     const items: any = [
       // {
       //   type: 'input',
@@ -199,6 +200,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
         {
           customtype: 'select',
           title: '提交',
+          loading: !!addUserEntryLoading,
           htmlType: 'submit' as 'submit',
         },
       ],
@@ -226,7 +228,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
       });
       if (res && res.success) {
         Message.success('提交成功');
-        router.replace('/dashboard/success');
+        router.replace(res.data.id ? '/dashboard/result/' + res.data.id : '/dashboard/home/');
       }
     });
   };

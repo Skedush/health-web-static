@@ -6,9 +6,11 @@ export default {
 
   getEntryInfoList: 'GET /entryInfo/',
   getUserEntryList: 'GET /userEntry/',
+  deleteUserEntry: 'DELETE /userEntry/:id/',
 
   getEntryInfoDetail: 'GET /entryInfo/:id/',
   addUserEntry: 'POST /userEntry/',
+  updateUserEntry: 'PATCH /userEntry/:id/',
 
   getResult: 'GET /result/:id/',
 

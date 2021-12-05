@@ -9,7 +9,7 @@ import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type'
 import { router } from '@/utils';
 import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import React, { createRef, PureComponent, RefObject } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Scrollbar from 'react-perfect-scrollbar';
@@ -39,7 +39,7 @@ type HomeStateProps = ReturnType<typeof mapStateToProps>;
 type HomeProps = HomeStateProps & UmiComponentProps & FormComponentProps;
 
 interface HomeState {
-  entryInfo: number;
+  entryInfo: string;
   searchFileds: any;
   passWordModifyModalVisible: boolean;
   titleEditModalVisible: boolean;
@@ -60,7 +60,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     this.state = {
       titleEditModalVisible: false,
       passWordModifyModalVisible: false,
-      entryInfo: 0,
+      entryInfo: '',
       searchFileds: { page: 1 },
     };
   }
@@ -72,7 +72,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     if (!isEmpty(data)) {
       this.setState(
         {
-          entryInfo: data[0].id,
+          entryInfo: data[0].id.toString(),
         },
         () => {
           this.getUserEntryList(searchFileds);
@@ -80,6 +80,25 @@ class Home extends PureComponent<HomeProps, HomeState> {
       );
     }
   }
+
+  onDeleteUser = async id => {
+    const { dispatch } = this.props;
+    const res = await dispatch({ type: 'home/deleteUserEntry', payload: { id } });
+    if (res && res.success) {
+      Message.success('删除成功');
+      const { searchFileds } = this.state;
+      searchFileds.page = 1;
+      this.getUserEntryList(searchFileds);
+    } else {
+      Message.error('删除失败');
+    }
+  };
+
+  deleteUserEntry = id => {
+    if (this.confirmRef.current) {
+      this.confirmRef.current.open(() => this.onDeleteUser(id), '删除', '是否确认删除？');
+    }
+  };
 
   renderSearchForm() {
     const SearchFormProps = {
@@ -100,18 +119,26 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   renderList() {
     const { userEntryList, entryInfoList, getUserEntryListLoading } = this.props;
+    const { entryInfo } = this.state;
     if (isEmpty(userEntryList)) return null;
     const userInfo = store.get('userInfo');
     let isStaff = false;
+    let isSuperUser = false;
     if (userInfo) {
       isStaff = userInfo.isStaff;
+      isSuperUser = userInfo.isSuperuser;
     }
+    let newEntryInfoList = cloneDeep(entryInfoList);
+    if (isSuperUser) {
+      newEntryInfoList.push({ id: '', title: { title_name: '全部' } });
+    }
+
     return (
       <Scrollbar onYReachEnd={this.loadList}>
-        <Tabs onChange={this.onTabsChange} type={'card'}>
-          {entryInfoList &&
-            entryInfoList.length > 0 &&
-            entryInfoList.map(item => (
+        <Tabs activeKey={entryInfo} onChange={this.onTabsChange} type={'card'}>
+          {newEntryInfoList &&
+            newEntryInfoList.length > 0 &&
+            newEntryInfoList.map(item => (
               <TabPane tab={item.title.title_name} key={item.id}>
                 <List
                   header={<div>填表人员列表</div>}
@@ -132,7 +159,19 @@ class Home extends PureComponent<HomeProps, HomeState> {
                             icon={'container'}
                             title={'查看'}
                           />,
-                        ]}
+                        ].concat(
+                          isSuperUser || !isStaff ? (
+                            <Button
+                              customtype={'icon'}
+                              key={'list-detail'}
+                              onClick={() => this.deleteUserEntry(item.id)}
+                              icon={'delete'}
+                              title={'删除'}
+                            />
+                          ) : (
+                            []
+                          ),
+                        )}
                       >
                         {isStaff && (
                           <div className={classNames('flexColStart', 'flexAuto')}>
@@ -345,6 +384,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
         {this.renderList()}
         {/* {this.renderPassWordModalForm()} */}
         {this.renderTitleForm()}
+        {this.renderConfirm()}
       </div>
     );
   }

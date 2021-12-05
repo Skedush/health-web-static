@@ -31,6 +31,7 @@ export interface GlobalState {
 export interface UmiComponentProps {
   history: History;
   dispatch: Dispatch;
+  match: any;
 }
 
 export enum DictionaryEnum {}

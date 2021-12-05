@@ -9,6 +9,7 @@ import { Effect, Subscription } from 'dva';
 const {
   getEntryInfoList,
   getUserEntryList,
+  deleteUserEntry,
   // updatePasswordAndUsername,
   getTitleDetail,
   updateTitle,
@@ -28,6 +29,7 @@ export interface HomeModelType extends CommonModelType {
     getUserEntryList: Effect;
     // updatePasswordAndUsername: Effect;
     getTitleDetail: Effect;
+    deleteUserEntry: Effect;
     updateTitle: Effect;
   };
   reducers: {};
@@ -62,6 +64,7 @@ const HomeModel: HomeModelType = {
     // },
 
     *getUserEntryList({ payload }, { select, call, put }) {
+      console.log('payload: ', payload);
       const res = yield call(getUserEntryList, payload);
       if (res) {
         const { data } = res;
@@ -86,6 +89,10 @@ const HomeModel: HomeModelType = {
           });
         }
       }
+    },
+
+    *deleteUserEntry({ payload }, { call, put }) {
+      return yield call(deleteUserEntry, payload);
     },
 
     *getTitleDetail({ payload }, { call, put }) {

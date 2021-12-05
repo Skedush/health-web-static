@@ -8,11 +8,11 @@ import { Effect, Subscription } from 'dva';
 
 const { updatePasswordAndUsername } = api;
 
-export interface TitleState {}
+export interface UserState {}
 
 export interface TitleModelType extends CommonModelType {
   namespace: 'user';
-  state: TitleState;
+  state: UserState;
   effects: {
     updatePasswordAndUsername: Effect;
   };

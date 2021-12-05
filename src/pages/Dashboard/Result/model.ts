@@ -6,7 +6,7 @@ import api from '@/services/index';
 import mdlExtend from '@/utils/model';
 import { Effect, Subscription } from 'dva';
 
-const { getResult } = api;
+const { getResult, updateUserEntry } = api;
 
 export interface ResultState {
   resultData: any;
@@ -18,6 +18,7 @@ export interface ResultModelType extends CommonModelType {
   state: ResultState;
   effects: {
     getResult: Effect;
+    updateUserEntry: Effect;
   };
   reducers: {};
   subscriptions?: { setup: Subscription };
@@ -83,6 +84,13 @@ const ResultModel: ResultModelType = {
           },
         });
         return res.data;
+      }
+    },
+
+    *updateUserEntry({ payload }, { call, put }) {
+      const res = yield call(updateUserEntry, payload);
+      if (res && res.success) {
+        return res;
       }
     },
   },
