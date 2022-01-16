@@ -5,6 +5,7 @@ import api from '@/services/index';
 // import config from '@/utils/config';
 import mdlExtend from '@/utils/model';
 import { Effect, Subscription } from 'dva';
+import { isEqual } from 'lodash';
 
 const { getResult, updateUserEntry } = api;
 
@@ -42,22 +43,22 @@ const ResultModel: ResultModelType = {
         const entryGroups: any = [];
         entryship.forEach(item => {
           const entryGroupItem = entryGroups.find((groupItem: any) => {
-            return groupItem.category === item.category.name;
+            return isEqual(groupItem.category, item.category);
           });
 
           if (!entryGroupItem) {
-            entryGroups.push({ category: item.category.name, entrys: [item] });
+            entryGroups.push({ category: item.category, entrys: [item] });
           } else {
             entryGroupItem.entrys.push(item);
           }
 
           item.entrys.forEach(element => {
             const entryGroupItem = entryGroups.find(groupItem => {
-              return groupItem.category === element.category.name;
+              return isEqual(groupItem.category, element.category);
             });
             if (!entryGroupItem) {
               element.number = 1;
-              entryGroups.push({ category: element.category.name, entrys: [element] });
+              entryGroups.push({ category: element.category, entrys: [element] });
             } else {
               const entry = entryGroupItem.entrys.find(entry => {
                 return entry.id === element.id;

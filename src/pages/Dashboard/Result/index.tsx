@@ -9,9 +9,7 @@ import moment from 'moment';
 import React, { PureComponent } from 'react';
 import store from 'store';
 import styles from './index.less';
-import Config from '@/utils/config';
 import urlencode from 'urlencode';
-const { domain } = Config;
 
 const mapStateToProps = ({ result, loading: { effects } }: GlobalState) => {
   return {
@@ -66,10 +64,9 @@ class Result extends PureComponent<ResultProps, ResultState> {
         field: 'suggestion',
         span: 24,
         autoSize: { minRows: 3, maxRows: 8 },
-        showCount: true,
         maxLength: 1024,
         rules: [{ required: true, message: '请填写参考意见！' }],
-        placeholder: '参考意见，累加在现有意见之前',
+        placeholder: '调理方案及备注（可多次提交升级补充方案）',
         label: '',
       },
     ];
@@ -120,11 +117,15 @@ class Result extends PureComponent<ResultProps, ResultState> {
     });
   };
 
-  renderTitle(title) {
+  renderTitle(category) {
     return (
       <div className={classNames('flexStart', 'itemBaseline')}>
-        {title}
-        {title === '病因' && <span className={styles.titleTip}>(仅供参考，不具医学效力)</span>}
+        <div className={styles.title} onClick={() => this.navCategory(category)}>
+          {category.name}
+        </div>
+        {category.name === '病因' && (
+          <span className={styles.titleTip}>(仅供参考，不具医学效力)</span>
+        )}
       </div>
     );
   }
@@ -207,7 +208,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
                 return (
                   <Card className={styles.card} title={this.renderTitle(item.category)} key={index}>
                     {item.entrys.map(entry => {
-                      if (entry.number <= 3) {
+                      if (entry.number <= item.category.show_count) {
                         return null;
                       }
                       return (
@@ -250,18 +251,29 @@ class Result extends PureComponent<ResultProps, ResultState> {
       </div>
     );
   }
+  navCategory = category => {
+    const userInfo = store.get('userInfo');
+    const { protocol, link } = category;
+    const { fxId } = userInfo;
+    if (category.has_user_rule) {
+      window.open(`${protocol}${fxId}${link}`);
+    } else {
+      window.open(`${protocol}${link}`);
+    }
+  };
+
   nav = entry => {
     const userInfo = store.get('userInfo');
+    const { remark, title, category } = entry;
     const { fxId } = userInfo;
-    if (entry.remark) {
-      window.open(`http://${fxId}.${domain}/${entry.remark}`);
+    if (remark) {
+      window.open(`${remark}`);
     } else {
-      window.open(
-        `http://${fxId}.${domain}/xx/search.asp?ClassID=263&Content=${urlencode(
-          entry.title,
-          'gbk',
-        )}`,
-      );
+      if (category.has_user_rule) {
+        window.open(`${category.protocol}${fxId}${category.child_link}${urlencode(title, 'gbk')}`);
+      } else {
+        window.open(`${category.protocol}${category.child_link}${urlencode(title, 'gbk')}`);
+      }
     }
   };
 

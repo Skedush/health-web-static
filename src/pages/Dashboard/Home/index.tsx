@@ -229,13 +229,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
             <div key={item.id} className={classNames('flexBetween', 'itemCenter')}>
               <div className={classNames('flexStart', 'itemCenter')}>
                 <div className={styles.title}>{item.title.title_name}</div>：
-                <a target={'_blank'} href={`https://${preDomain}.${domain}/?id=` + item.id}>
-                  {`https://${preDomain}.${domain}/?id=` + item.id}
+                <a target={'_blank'} href={`https://${preDomain}${domain}/?id=` + item.id}>
+                  {`https://${preDomain}${domain}/?id=` + item.id}
                 </a>
               </div>
               <div className={classNames('flexEnd', 'itemCenter')}>
                 <CopyToClipboard
-                  text={`https://${preDomain}.${domain}/?id=` + item.id}
+                  text={`https://${preDomain}${domain}/?id=` + item.id}
                   // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                   onCopy={this.copySuccess}
                 >
