@@ -74,7 +74,7 @@
     "react-perfect-scrollbar": "^1.5.3",
     "slash2": "^2.0.0",
     "store": "^2.0.12",
-    "url-parse": "^1.4.7",
+    "url-parse": "^1.5.8",
     "urlencode": "^1.1.0"
   },
   "devDependencies": {
