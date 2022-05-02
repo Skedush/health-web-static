@@ -1,4 +1,5 @@
 /* tslint:disable */
+import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import { resolve } from 'path';
 import pxToViewPort from 'postcss-px-to-viewport';
 import slash from 'slash2';
@@ -125,6 +126,21 @@ const config: IConfig = {
     ],
   ],
   // chainWebpack: webpackPlugin,
+
+  chainWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      // 生产模式开启
+      config.plugin('compression-webpack-plugin').use(
+        new CompressionWebpackPlugin({
+          // filename: 文件名称，这里我们不设置，让它保持和未压缩的文件同一个名称
+          algorithm: 'gzip', // 指定生成gzip格式
+          test: /\.js$|\.html$|\.css$/, //匹配文件名
+          threshold: 10240, //对超过10k的数据进行压缩
+          minRatio: 0.6, // 压缩比例，值为0 ~ 1
+        }),
+      );
+    }
+  },
 };
 
 export default config;

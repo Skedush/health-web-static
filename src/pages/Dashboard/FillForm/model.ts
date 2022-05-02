@@ -1,22 +1,19 @@
 // import { stringify } from 'qs';
 // import store from 'store';
+import { CommonModelType } from '@/common/model';
 import api from '@/services/index';
 // import config from '@/utils/config';
 import mdlExtend from '@/utils/model';
-import { CommonModelType } from '@/common/model';
 import { Effect, Subscription } from 'dva';
 
-const { getEntryInfoDetail, addUserEntry } = api;
+const { addUserEntry } = api;
 
-export interface FillFormState {
-  entryInfoDetail: any;
-}
+export interface FillFormState {}
 
 export interface FillFormModelType extends CommonModelType {
   namespace: 'fillForm';
   state: FillFormState;
   effects: {
-    getEntryInfoDetail: Effect;
     addUserEntry: Effect;
   };
   reducers: {};
@@ -26,27 +23,9 @@ export interface FillFormModelType extends CommonModelType {
 const FillFormModel: FillFormModelType = {
   namespace: 'fillForm',
 
-  state: {
-    entryInfoDetail: { entrys: [] },
-  },
+  state: {},
 
   effects: {
-    *getEntryInfoDetail({ payload }, { call, put }) {
-      const res = yield call(getEntryInfoDetail, payload);
-      if (res && res.data) {
-        res.data.entrys.forEach(item => {
-          item.value = item.id;
-          item.label = item.title;
-        });
-        yield put({
-          type: 'updateState',
-          payload: {
-            entryInfoDetail: res.data,
-          },
-        });
-        return res.data;
-      }
-    },
     *addUserEntry({ payload }, { call, put }) {
       const res = yield call(addUserEntry, payload);
       if (res) {

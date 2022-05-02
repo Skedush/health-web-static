@@ -4,9 +4,21 @@
 // import dark from '@/themes/templates/dark';
 // import light from '@/themes/templates/light';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import { Button, Confirm, List, Message, ModalForm, SearchForm, Tabs } from '@/components/Library';
+import {
+  Affix,
+  Button,
+  Checkbox,
+  Confirm,
+  List,
+  Message,
+  Modal,
+  ModalForm,
+  SearchForm,
+  Tabs,
+} from '@/components/Library';
 import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
 import { router } from '@/utils';
+import Config from '@/utils/config';
 import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
 import { cloneDeep, isEmpty } from 'lodash';
@@ -14,10 +26,9 @@ import React, { createRef, PureComponent, RefObject } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Scrollbar from 'react-perfect-scrollbar';
 import store from 'store';
-import styles from './index.less';
 import Link from 'umi/link';
-import Config from '@/utils/config';
-const { domain, preDomain } = Config;
+import styles from './index.less';
+const { domain } = Config;
 
 const { TabPane } = Tabs;
 
@@ -43,6 +54,9 @@ interface HomeState {
   searchFileds: any;
   passWordModifyModalVisible: boolean;
   titleEditModalVisible: boolean;
+  modalVisible: boolean;
+  checkedList: string[];
+  isCompare: boolean;
 }
 
 @connect(
@@ -60,8 +74,11 @@ class Home extends PureComponent<HomeProps, HomeState> {
     this.state = {
       titleEditModalVisible: false,
       passWordModifyModalVisible: false,
+      modalVisible: false,
       entryInfo: '',
       searchFileds: { page: 1 },
+      checkedList: [],
+      isCompare: false,
     };
   }
 
@@ -119,7 +136,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
   renderList() {
     const { userEntryList, entryInfoList, getUserEntryListLoading } = this.props;
-    const { entryInfo } = this.state;
+    const { entryInfo, checkedList, isCompare } = this.state;
     if (isEmpty(userEntryList)) return null;
     const userInfo = store.get('userInfo');
     let isStaff = false;
@@ -141,7 +158,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
             newEntryInfoList.map(item => (
               <TabPane tab={item.title.title_name} key={item.id}>
                 <List
-                  header={<div>填表人员列表</div>}
+                  header={'填表填写列表'}
                   footer={null}
                   bordered
                   className={classNames(styles.list)}
@@ -162,6 +179,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                         ].concat(
                           isSuperUser || !isStaff ? (
                             <Button
+                              className={styles.deleteBtn}
                               customtype={'icon'}
                               key={'list-detail'}
                               onClick={() => this.deleteUserEntry(item.id)}
@@ -173,6 +191,12 @@ class Home extends PureComponent<HomeProps, HomeState> {
                           ),
                         )}
                       >
+                        {isCompare && (
+                          <Checkbox
+                            onChange={e => this.onCheckboxChange(e, item.id)}
+                            disabled={checkedList.length >= 2 && !checkedList.includes(item.id)}
+                          />
+                        )}
                         {isStaff && (
                           <div className={classNames('flexColStart', 'flexAuto')}>
                             <div className={classNames('flexBetween')}>
@@ -229,13 +253,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
             <div key={item.id} className={classNames('flexBetween', 'itemCenter')}>
               <div className={classNames('flexStart', 'itemCenter')}>
                 <div className={styles.title}>{item.title.title_name}</div>：
-                <a target={'_blank'} href={`https://${preDomain}${domain}/?id=` + item.id}>
-                  {`https://${preDomain}${domain}/?id=` + item.id}
+                <a target={'_blank'} href={`https://${domain}/?id=` + item.id}>
+                  {`https://${domain}/?id=` + item.id}
                 </a>
               </div>
               <div className={classNames('flexEnd', 'itemCenter')}>
                 <CopyToClipboard
-                  text={`https://${preDomain}${domain}/?id=` + item.id}
+                  text={`https://${domain}/?id=` + item.id}
                   // text={'http://' + window.location.host + '/#/dashboard/f/' + item.id}
                   onCopy={this.copySuccess}
                 >
@@ -260,7 +284,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     return (
       <div className={classNames(styles.link, 'flexColCenter')}>
         <Button customtype={'master'} onClick={this.navForm}>
-          健康自检
+          点此填表
         </Button>
       </div>
     );
@@ -363,9 +387,61 @@ class Home extends PureComponent<HomeProps, HomeState> {
     };
     return <ModalForm {...props} />;
   }
+  cancelModal = () => {
+    this.setState({
+      modalVisible: false,
+    });
+  };
+
+  renderModal() {
+    const { modalVisible } = this.state;
+    const { entryInfoList } = this.props;
+    const modalProps = {
+      onCancel: this.cancelModal,
+      visible: modalVisible,
+      title: '选择自检表',
+      destroyOnClose: true,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      bodyStyle: {},
+      width: '80%',
+      wrapClassName: classNames('modal', styles.modal),
+    };
+    return (
+      <Modal {...modalProps}>
+        {entryInfoList.length > 1 &&
+          entryInfoList.map(item => (
+            <Button
+              key={item.id}
+              className={classNames(styles.marginTop20)}
+              customtype={'master'}
+              href={`#/dashboard/f/${item.id}`}
+            >
+              {item.title.title_name}
+            </Button>
+          ))}
+      </Modal>
+    );
+  }
+  renderCompare() {
+    return (
+      <Affix className={styles.compareAffix}>
+        <Button
+          className={styles.compare}
+          customtype={'icon'}
+          icon={'history'}
+          onClick={this.onCompare}
+        >
+          对比
+        </Button>
+      </Affix>
+    );
+  }
 
   render() {
     const userInfo = store.get('userInfo');
+    const { entryInfo } = this.state;
     let isStaff = false;
     if (userInfo) {
       isStaff = userInfo.isStaff;
@@ -381,13 +457,45 @@ class Home extends PureComponent<HomeProps, HomeState> {
         {isStaff && this.renderShareLink()}
         {!isStaff && this.renderLinkButton()}
         {isStaff && this.renderSearchForm()}
+
         {this.renderList()}
         {/* {this.renderPassWordModalForm()} */}
         {this.renderTitleForm()}
         {this.renderConfirm()}
+        {this.renderModal()}
+        {entryInfo !== '' && this.renderCompare()}
       </div>
     );
   }
+
+  onCompare = () => {
+    const { isCompare } = this.state;
+    this.setState({
+      isCompare: !isCompare,
+    });
+  };
+
+  onCheckboxChange = (e: any, id: string) => {
+    const { checked } = e.target;
+    const { checkedList, entryInfo } = this.state;
+    if (checked) {
+      this.setState(
+        {
+          checkedList: [...checkedList, id],
+        },
+        () => {
+          const { checkedList } = this.state;
+          if (checkedList.length === 2) {
+            router.push(`/dashboard/compare/${entryInfo}/${checkedList[0]}/${checkedList[1]}`);
+          }
+        },
+      );
+    } else {
+      this.setState({
+        checkedList: checkedList.filter(item => item !== id),
+      });
+    }
+  };
 
   onTitleModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -464,13 +572,20 @@ class Home extends PureComponent<HomeProps, HomeState> {
   onTabsChange = key => {
     const { searchFileds } = this.state;
     searchFileds.page = 1;
-    this.setState({ entryInfo: key }, () => this.getUserEntryList(searchFileds));
+    this.setState({ entryInfo: key, checkedList: [], isCompare: false }, () =>
+      this.getUserEntryList(searchFileds),
+    );
   };
 
   navForm = () => {
     const { entryInfoList } = this.props;
-    if (entryInfoList.length > 0) {
-      router.push(`/dashboard/f/${entryInfoList[0].id}`);
+    const { entryInfo } = this.state;
+    if (entryInfoList.length === 1) {
+      router.push(`/dashboard/f/${entryInfo}`);
+    } else {
+      this.setState({
+        modalVisible: true,
+      });
     }
   };
 

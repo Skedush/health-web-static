@@ -26,8 +26,14 @@
           padding: 20px;
         }
         .ant-checkbox-inner {
+          border: 1px solid @text-color-inverse;
           width: 100px;
           height: 100px;
+        }
+        .ant-checkbox-checked {
+          .ant-checkbox-inner {
+            border: 1px solid @primary-color;
+          }
         }
       }
     }

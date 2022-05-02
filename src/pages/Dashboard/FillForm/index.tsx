@@ -6,15 +6,16 @@ import { connect } from '@/utils/decorators';
 import classNames from 'classnames';
 import { FormComponentProps, WrappedFormUtils } from '@/components/Library/type';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import { FormSimple, Message } from '@/components/Library';
+import { FormSimple, Message, Spin } from '@/components/Library';
 import store from 'store';
 import styles from './index.less';
 import { router } from '@/utils';
 
-const mapStateToProps = ({ fillForm, loading: { effects } }: GlobalState) => {
+const mapStateToProps = ({ common, loading: { effects } }: GlobalState) => {
   return {
-    entryInfoDetail: fillForm.entryInfoDetail,
+    entryInfoDetail: common.entryInfoDetail,
     addUserEntryLoading: effects['fillForm/addUserEntry'],
+    getEntryInfoDetailLoading: effects['common/getEntryInfoDetail'],
   };
 };
 
@@ -49,7 +50,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
         },
         () => {
           dispatch({
-            type: 'fillForm/getEntryInfoDetail',
+            type: 'common/getEntryInfoDetail',
             payload: { id: this.props.match.params.id },
           });
         },
@@ -58,7 +59,7 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
   }
 
   render() {
-    const { entryInfoDetail } = this.props;
+    const { entryInfoDetail, getEntryInfoDetailLoading } = this.props;
     return (
       <div className={classNames('height100', 'flexColStart', 'itemCenter', styles.container)}>
         <div className={styles.title}>
@@ -66,7 +67,9 @@ class FillForm extends PureComponent<FillFormProps, FillFormState> {
             ? entryInfoDetail.title.title_name
             : '健康症状自检表'}
         </div>
-        <FormSimple {...this.getHealthFormProps()} />
+        <Spin tip="请求数据中，稍等3-10秒..." spinning={!!getEntryInfoDetailLoading}>
+          <FormSimple {...this.getHealthFormProps()} />
+        </Spin>
       </div>
     );
   }

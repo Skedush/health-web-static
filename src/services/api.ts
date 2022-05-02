@@ -7,6 +7,7 @@ export default {
   getEntryInfoList: 'GET /entryInfo/',
   getUserEntryList: 'GET /userEntry/',
   deleteUserEntry: 'DELETE /userEntry/:id/',
+  getUserEntry: 'GET /userEntry/:id/',
 
   getEntryInfoDetail: 'GET /entryInfo/:id/',
   addUserEntry: 'POST /userEntry/',

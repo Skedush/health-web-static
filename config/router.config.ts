@@ -23,6 +23,7 @@ const routes: IRoute[] = [
       { path: '/dashboard', redirect: '/dashboard/home' },
       { path: '/dashboard/home', component: './Dashboard/Home' },
       { path: '/dashboard/f/:id', component: './Dashboard/FillForm' },
+      { path: '/dashboard/compare/:id/:oneId/:twoId', component: './Dashboard/Compare' },
       { path: '/dashboard/result/:id', component: './Dashboard/Result' },
       { path: '/dashboard/user', component: './Dashboard/User' },
       { path: '/dashboard/success', component: './Dashboard/Success' },

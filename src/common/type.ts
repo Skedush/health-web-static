@@ -1,4 +1,5 @@
-import { AppState } from '@/models/app';
+import { CommonState } from '@/models/common';
+import { CompareState } from '@/pages/Dashboard/Compare/model';
 import { FillFormState } from '@/pages/Dashboard/FillForm/model';
 import { HomeState } from '@/pages/Dashboard/Home/model';
 import { ResultState } from '@/pages/Dashboard/Result/model';
@@ -20,12 +21,14 @@ export interface LoadingState {
 }
 
 export interface GlobalState {
-  app: AppState;
+  common: CommonState;
+  global: GlobalState;
   home: HomeState;
   fillForm: FillFormState;
   result: ResultState;
   loading: LoadingState;
   user: UserState;
+  compare: CompareState;
 }
 
 export interface UmiComponentProps {

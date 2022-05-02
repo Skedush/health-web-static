@@ -25,8 +25,6 @@ export default {
   // eslint-disable-next-line no-undef
   domain: DOMAIN,
   // eslint-disable-next-line no-undef
-  preDomain: PRE_DOMAIN,
-  // eslint-disable-next-line no-undef
   detailDomain: DETAIL_DOMAIN,
   fixedHeader: true, // sticky primary layout header
 

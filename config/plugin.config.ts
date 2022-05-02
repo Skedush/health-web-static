@@ -1,10 +1,11 @@
 // Change theme plugin
 // eslint-disable-next-line eslint-comments/abdeils - enable - pair;
 /* eslint-disable import/no-extraneous-dependencies */
-import MergeLessPlugin from 'antd-pro-merge-less';
-import AntDesignThemePlugin from 'antd-theme-webpack-plugin';
 // import ThemeColorReplacer from 'webpack-theme-color-replacer';
 import Themes from '@/themes/templates';
+import MergeLessPlugin from 'antd-pro-merge-less';
+import AntDesignThemePlugin from 'antd-theme-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
 import path from 'path';
 
 function getModulePackageName(module: { context: string }) {
@@ -51,6 +52,17 @@ export default (config: any) => {
   //     // isJsUgly: true,
   //   },
   // ]);
+
+  if (process.env.NODE_ENV === 'production') {
+    // Gzip压缩
+    config.plugin('compression-webpack-plugin').use(CompressionPlugin, [
+      {
+        test: /\.(js|css|html)$/i, // 匹配
+        threshold: 10240, // 超过10k的文件压缩
+        deleteOriginalAssets: false, // 不删除源文件
+      },
+    ]);
+  }
 
   // 将所有 less 合并为一个供 themePlugin使用
   const outFile = path.join(__dirname, '../.temp/ant-design-pro.less');

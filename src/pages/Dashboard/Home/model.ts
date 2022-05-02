@@ -64,7 +64,6 @@ const HomeModel: HomeModelType = {
     // },
 
     *getUserEntryList({ payload }, { select, call, put }) {
-      console.log('payload: ', payload);
       const res = yield call(getUserEntryList, payload);
       if (res) {
         const { data } = res;

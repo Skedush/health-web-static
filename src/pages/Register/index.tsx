@@ -3,7 +3,7 @@ import { connect } from '@/utils/decorators';
 import { GlobalState, UmiComponentProps } from '@/common/type';
 import classNames from 'classnames';
 import { FormComponentProps } from '@/components/Library/type';
-import { Button, Input, Form, Message, Select } from '@/components/Library';
+import { Button, Input, Form, Message, RadioGroup, Radio } from '@/components/Library';
 import Config from '@/utils/config';
 const { detailDomain } = Config;
 
@@ -51,16 +51,17 @@ class Login extends PureComponent<LoginProps> {
 
             <Form.Item>
               {getFieldDecorator('gender', {
+                initialValue: 1,
                 rules: [{ required: true, message: '性别不能为空!' }],
               })(
-                <Select placeholder={'请选择性别'}>
-                  <Select.Option key={1} value={1}>
+                <RadioGroup>
+                  <Radio key={1} value={1}>
                     男
-                  </Select.Option>
-                  <Select.Option key={0} value={0}>
+                  </Radio>
+                  <Radio key={0} value={0}>
                     女
-                  </Select.Option>
-                </Select>,
+                  </Radio>
+                </RadioGroup>,
               )}
             </Form.Item>
 

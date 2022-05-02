@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
 import { Button as AntdButton } from 'antd';
-import { ButtonType, ButtonProps as AntButtonProps } from 'antd/lib/button/button';
+import { ButtonProps as AntButtonProps, ButtonType } from 'antd/lib/button/button';
+import React, { PureComponent } from 'react';
 import styles from './index.less';
 
 const ButtonTypes = ['default', 'primary', 'ghost', 'dashed', 'danger', 'link'];

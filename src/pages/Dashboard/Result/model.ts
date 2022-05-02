@@ -77,10 +77,18 @@ const ResultModel: ResultModelType = {
         // } else if (entryGroups && entryGroups.length > 1) {
         //   entryGroups[1] = entryGroups.splice(0, 1, entryGroups[1])[0];
         // }
+
+        // 根据指数排序
+        entryGroups.map(element => {
+          element.entrys.sort((x, y) => {
+            return x.number > y.number ? -1 : 1;
+          });
+          return element;
+        });
         yield put({
           type: 'updateState',
           payload: {
-            entryGroups,
+            entryGroups: entryGroups,
             resultData: res.data,
           },
         });
