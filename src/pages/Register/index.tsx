@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
-import { connect } from '@/utils/decorators';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import classNames from 'classnames';
+import { Button, Form, Input, Message, Radio, RadioGroup } from '@/components/Library';
 import { FormComponentProps } from '@/components/Library/type';
-import { Button, Input, Form, Message, RadioGroup, Radio } from '@/components/Library';
 import Config from '@/utils/config';
+import { connect } from '@/utils/decorators';
+import classNames from 'classnames';
+import React, { PureComponent } from 'react';
+import styles from './index.less';
 const { detailDomain } = Config;
 
 const mapStateToProps = (state: GlobalState) => ({});
@@ -21,8 +22,8 @@ class Login extends PureComponent<LoginProps> {
     const { form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <div className={classNames('flexCenter', 'height100', 'itemCenter')}>
-        <div className={classNames()}>
+      <div className={classNames('flexColCenter', 'itemCenter', styles.container)}>
+        <div>
           <Form onSubmit={this.onRegister} layout={'vertical'}>
             <Form.Item>
               {getFieldDecorator('username', {
