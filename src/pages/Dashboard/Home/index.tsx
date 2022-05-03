@@ -447,7 +447,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
       isStaff = userInfo.isStaff;
     }
     return (
-      <div className={classNames('height100', 'flexColCenter', 'itemCenter', styles.container)}>
+      <div className={classNames('flexColCenter', 'itemCenter', styles.container)}>
         {/* <div className={classNames('flexEnd', styles.passwordBtn)}>
           <div />
           <Button customtype={'master'} onClick={this.openEditPassWordModal}>

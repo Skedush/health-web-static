@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import { connect } from '@/utils/decorators';
 import { GlobalState, UmiComponentProps } from '@/common/type';
-import styles from './index.less';
-import classNames from 'classnames';
+import { Button, Form, Icon, Input } from '@/components/Library';
 import { FormComponentProps } from '@/components/Library/type';
-import { Button, Input, Icon, Form } from '@/components/Library';
+import { connect } from '@/utils/decorators';
+import classNames from 'classnames';
+import React, { PureComponent } from 'react';
 import Link from 'umi/link';
+import styles from './index.less';
 
 const mapStateToProps = (state: GlobalState) => ({});
 
@@ -21,26 +21,20 @@ class Login extends PureComponent<LoginProps> {
     const { form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <div className={classNames('flexCenter', 'height100', 'itemCenter')}>
-        <div className={classNames()}>
+      <div className={classNames('flexColCenter', 'itemCenter', styles.container)}>
+        <div className={styles.title}>健康管理系统</div>
+        <div>
           <Form onSubmit={this.onLogin} layout={'vertical'}>
-            <Form.Item className={styles.formItem}>
+            <Form.Item>
               {getFieldDecorator('username', {
                 rules: [{ required: true, message: '用户名不能为空!' }],
-              })(
-                <Input
-                  className={styles.input}
-                  prefix={<Icon type={'pm-user'} />}
-                  placeholder={'请输入用户名'}
-                />,
-              )}
+              })(<Input prefix={<Icon type={'pm-user'} />} placeholder={'请输入用户名'} />)}
             </Form.Item>
-            <Form.Item className={styles.formItem}>
+            <Form.Item>
               {getFieldDecorator('password', {
                 rules: [{ required: true, message: '密码不能为空!' }],
               })(
                 <Input
-                  className={styles.input}
                   prefix={<Icon type={'pm-lock'} />}
                   type={'password'}
                   placeholder={'请输入密码'}
@@ -55,7 +49,7 @@ class Login extends PureComponent<LoginProps> {
             </div>
           </Form>
         </div>
-        {/* <div className={styles.loginBottom}>LIDIG Science and technology information co. LTD</div> */}
+        {/* <div className={styles.loginBottom}>Science and technology information co. LTD</div> */}
       </div>
     );
   }
