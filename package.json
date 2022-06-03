@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@angular/compiler": "^8.2.2",
-    "@angular/core": "^8.2.2",
+    "@angular/core": "^11.0.5",
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@types/classnames": "^2.2.9",
