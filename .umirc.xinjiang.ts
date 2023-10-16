@@ -5,8 +5,8 @@ import { IConfig } from 'umi-types';
 const config: IConfig = {
   define: {
     API_PREFIX: 'https://hh.jkgl.cc', //集成测试服务器
-    DOMAIN: 'jkgl.cc',
-    PRE_DOMAIN: 't',
+    DOMAIN: 't.jkgl.cc',
+    // PRE_DOMAIN: 't',
     DETAIL_DOMAIN: '666',
   },
 };
