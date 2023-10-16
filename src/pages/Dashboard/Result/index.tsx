@@ -9,6 +9,8 @@ import moment from 'moment';
 import React, { PureComponent } from 'react';
 import store from 'store';
 import urlencode from 'urlencode';
+import Graph from './components/Graph';
+import Pie from './components/Pie';
 import styles from './index.less';
 
 const mapStateToProps = ({ result, loading: { effects } }: GlobalState) => {
@@ -25,7 +27,11 @@ type ResultProps = ResultStateProps & UmiComponentProps & FormComponentProps;
 
 interface ResultState {
   picture: string;
+  pieModalVisible: boolean;
   modalVisible: boolean;
+  pieData: any;
+  graphModalVisible: boolean;
+  graphData: any;
 }
 
 @connect(
@@ -39,6 +45,10 @@ class Result extends PureComponent<ResultProps, ResultState> {
     this.state = {
       picture: '',
       modalVisible: false,
+      pieModalVisible: false,
+      pieData: {},
+      graphModalVisible: false,
+      graphData: {},
     };
   }
 
@@ -46,14 +56,57 @@ class Result extends PureComponent<ResultProps, ResultState> {
     this.getData();
   }
 
-  getData() {
+  async getData() {
     const { dispatch } = this.props;
     if (this.props.match.params) {
-      dispatch({
+      const res = await dispatch({
         type: 'result/getResult',
         payload: { id: this.props.match.params.id },
       });
+
+      this.getGraphData(res);
     }
+  }
+  getGraphData(res: any) {
+    const categories: any[] = [];
+    const links: any[] = [];
+    const nodes: any[] = [];
+    res.forEach((item, index) => {
+      categories.push(item.category);
+      if (item.entrys && item.entrys.length > 0) {
+        item.entrys.forEach(entry => {
+          if (entry.number > entry.category.show_count || !entry.number) {
+            nodes.push({
+              name: entry.title,
+              category: index,
+              value: entry.number || '',
+              id: entry.id + '',
+              symbolSize: entry.number > 80 ? 100 : entry.number < 10 ? 10 : entry.number || 30,
+            });
+          }
+
+          if (entry.entrys && entry.entrys.length > 0) {
+            entry.entrys.forEach(subEntry => {
+              links.push({
+                source: entry.id + '',
+                target: subEntry.id + '',
+                label: {
+                  show: false,
+                },
+                ignoreForceLayout: true,
+              });
+            });
+          }
+        });
+      }
+    });
+    this.setState({
+      graphData: {
+        categories,
+        links,
+        nodes,
+      },
+    });
   }
 
   getHealthFormProps = () => {
@@ -117,7 +170,8 @@ class Result extends PureComponent<ResultProps, ResultState> {
     });
   };
 
-  renderTitle(category) {
+  renderTitle(item, index) {
+    const { category = {} } = item;
     return (
       <div className={classNames('flexStart', 'itemBaseline')}>
         <div className={styles.title} onClick={() => this.navCategory(category)}>
@@ -126,17 +180,32 @@ class Result extends PureComponent<ResultProps, ResultState> {
         {category.name === '病因' && (
           <span className={styles.titleTip}>(仅供参考，不具医学效力)</span>
         )}
+        <div className={classNames('flexAuto', 'flexEnd')}>
+          <Button
+            customtype="icon"
+            icon={index === 0 ? 'radar-chart' : 'pie-chart'}
+            onClick={() => (index === 0 ? this.showGraphModal() : this.showPieModal(item))}
+          />
+        </div>
       </div>
     );
   }
 
-  // eslint-disable-next-line max-lines-per-function
-  render() {
-    const { resultData, entryGroups, resultLoading } = this.props;
-    const userInfo = store.get('userInfo');
-    const { isStaff } = userInfo;
-    const len = entryGroups.length || 0;
+  showGraphModal = () => {
+    this.setState({
+      graphModalVisible: true,
+    });
+  };
+  showPieModal = (pieData): void => {
+    this.setState({
+      pieData,
+      pieModalVisible: true,
+    });
+  };
+
+  renderImgModal() {
     const { picture, modalVisible } = this.state;
+
     const modalProps = {
       onCancel: this.cancelModal,
       visible: modalVisible,
@@ -151,40 +220,119 @@ class Result extends PureComponent<ResultProps, ResultState> {
       wrapClassName: 'modal',
     };
     return (
+      <Modal {...modalProps}>
+        <Img image={picture} className={styles.image} previewImg={true} />
+      </Modal>
+    );
+  }
+
+  renderPieModal() {
+    const { pieModalVisible, pieData } = this.state;
+    if (!pieData || !pieModalVisible) return null;
+    const name = pieData && pieData.category ? pieData.category.name : '';
+    const modalProps = {
+      onCancel: this.cancelModal,
+      visible: pieModalVisible,
+      title: `${name}统计`,
+      destroyOnClose: true,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      bodyStyle: {},
+      width: '100%',
+      height: '90%',
+      wrapClassName: 'modal',
+    };
+
+    const data: any = {
+      category: pieData.category.name,
+      seriesData: [],
+      legendData: [],
+    };
+    pieData.entrys.forEach(item => {
+      data.seriesData.push({ name: item.title, value: item.number });
+      data.legendData.push(item.title);
+    });
+
+    return (
+      <Modal {...modalProps}>
+        <Pie data={data} />
+      </Modal>
+    );
+  }
+
+  renderGraphModal() {
+    const { graphModalVisible, graphData } = this.state;
+    if (isEmpty(graphData) || !graphModalVisible) return null;
+    const modalProps = {
+      onCancel: this.cancelModal,
+      visible: graphModalVisible,
+      title: '总关系图',
+      destroyOnClose: true,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      bodyStyle: {},
+      width: '100%',
+      height: '90%',
+      wrapClassName: 'modal',
+    };
+
+    return (
+      <Modal {...modalProps}>
+        <Graph data={graphData} />
+      </Modal>
+    );
+  }
+
+  renderBaseInfo(resultData) {
+    const userInfo = store.get('userInfo');
+    const { isStaff } = userInfo;
+    if (!isStaff) {
+      return null;
+    }
+    return (
+      <>
+        <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
+          <div className={styles.info}>
+            姓名：<b>{resultData.name}</b>
+          </div>
+          <div className={styles.info}>手机：{resultData.phone}</div>
+        </div>
+        <div className={classNames(styles.row)}>地址：{resultData.address}</div>
+        <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
+          <div className={styles.info}>年龄：{resultData.age}</div>
+          <div className={styles.info}>性别：{resultData.gender === '1' ? '男' : '女'}</div>
+        </div>
+        <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
+          <div className={styles.info}>身高：{resultData.height}</div>
+          <div className={styles.info}>体重：{resultData.weight}</div>
+        </div>
+        <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
+          <div className={styles.info}>腰围：{resultData.waistline}</div>
+          <div className={styles.info}>血糖：{resultData.blood_sugar}</div>
+        </div>
+        <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
+          <div className={styles.info}>收缩压：{resultData.systolic_pressure}</div>
+          <div className={styles.info}>舒张压：{resultData.diastolic_pressure}</div>
+        </div>
+      </>
+    );
+  }
+
+  render() {
+    const { resultData, entryGroups, resultLoading } = this.props;
+
+    const len = entryGroups.length || 0;
+
+    return (
       <Spin tip="分析中，稍等5-10秒..." spinning={!!resultLoading}>
         <div id={'result'} className={classNames('flexColStart', 'itemCenter', styles.container)}>
           <div className={styles.title}>自检结果</div>
           <div className={styles.createdTime}>
             提交时间：{moment(resultData.created).format('YYYY-MM-DD HH:mm:ss')}
           </div>
-
-          {isStaff && (
-            <>
-              <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
-                <div className={styles.info}>
-                  姓名：<b>{resultData.name}</b>
-                </div>
-                <div className={styles.info}>手机：{resultData.phone}</div>
-              </div>
-              <div className={classNames(styles.row)}>地址：{resultData.address}</div>
-              <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
-                <div className={styles.info}>年龄：{resultData.age}</div>
-                <div className={styles.info}>性别：{resultData.gender === '1' ? '男' : '女'}</div>
-              </div>
-              <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
-                <div className={styles.info}>身高：{resultData.height}</div>
-                <div className={styles.info}>体重：{resultData.weight}</div>
-              </div>
-              <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
-                <div className={styles.info}>腰围：{resultData.waistline}</div>
-                <div className={styles.info}>血糖：{resultData.blood_sugar}</div>
-              </div>
-              <div className={classNames('flexBetween', 'itemCenter', styles.row)}>
-                <div className={styles.info}>收缩压：{resultData.systolic_pressure}</div>
-                <div className={styles.info}>舒张压：{resultData.diastolic_pressure}</div>
-              </div>
-            </>
-          )}
+          {this.renderBaseInfo(resultData)}
           {resultData.remark && (
             <div className={classNames(styles.row)}>
               <div>备注或其他症状：{resultData.remark}</div>
@@ -212,7 +360,7 @@ class Result extends PureComponent<ResultProps, ResultState> {
             <div id={'card'} style={{ width: '100%' }}>
               {entryGroups.map((item, index) => {
                 return (
-                  <Card className={styles.card} title={this.renderTitle(item.category)} key={index}>
+                  <Card className={styles.card} title={this.renderTitle(item, index)} key={index}>
                     {item.entrys.map(entry => {
                       if (entry.number <= item.category.show_count) {
                         return null;
@@ -241,9 +389,9 @@ class Result extends PureComponent<ResultProps, ResultState> {
               分享
             </Button>
           </div>
-          <Modal {...modalProps}>
-            <Img image={picture} className={styles.image} previewImg={true} />
-          </Modal>
+          {this.renderPieModal()}
+          {this.renderGraphModal()}
+          {this.renderImgModal()}
         </div>
       </Spin>
     );
@@ -289,7 +437,10 @@ class Result extends PureComponent<ResultProps, ResultState> {
 
   cancelModal = () => {
     this.setState({
+      pieData: {},
+      pieModalVisible: false,
       modalVisible: false,
+      graphModalVisible: false,
     });
   };
   domToImage = async () => {

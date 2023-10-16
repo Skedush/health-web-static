@@ -92,7 +92,7 @@ const ResultModel: ResultModelType = {
             resultData: res.data,
           },
         });
-        return res.data;
+        return entryGroups;
       }
     },
 
